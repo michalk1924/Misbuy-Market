@@ -9,14 +9,12 @@ class Repository {
         this.collection = collection;
     }
 
-    async getAll() {
+    async getAll(filter) {
         try {
             await client.connect();
-
             const database = client.db("mydb");
-            const electricalProducts = await database.collection(this.collection).find().toArray();
+            const electricalProducts = await database.collection(this.collection).find(filter).toArray();
             console.log(electricalProducts);
-
             return electricalProducts;
         }
         catch (error) {
@@ -32,7 +30,18 @@ class Repository {
     }
 
     async insert(data) {
-
+        try {
+            await client.connect();
+            const database = client.db("mydb");
+            const result = await database.collection(this.collection).insertOne(data);
+            return result.insertedId;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
     }
 
     async update(id, data) {

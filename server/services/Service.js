@@ -16,7 +16,7 @@ class Service {
     }
 
     async insert(data) {
-
+        return this.repository.insert(data);
     }
 
     async update(id, data) {
