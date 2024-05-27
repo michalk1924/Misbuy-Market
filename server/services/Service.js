@@ -1,3 +1,5 @@
+const {Exception} = require('../Exception');
+
 
 class Service {
 
@@ -7,12 +9,20 @@ class Service {
 
     async getAll(parametersForQuery) {
         //to do...finish
-        return this.repository.getAll(parametersForQuery)
+        return this.repository.getAll(parametersForQuery);
     }
 
 
     async get(id) {
-
+        try{
+            return this.repository.get(id);
+        }
+        catch(error){
+            if (typeof(error) == Exception)
+                throw error;
+            console.log(error);
+            throw error;
+        }
     }
 
     async insert(data) {

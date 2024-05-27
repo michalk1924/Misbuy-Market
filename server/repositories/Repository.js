@@ -1,7 +1,13 @@
+require('dotenv').config();
 
-const { MongoClient } = require('mongodb');
-const url = "mongodb://localhost:27017/";
+const MongoClient = require('mongodb').MongoClient;
+const url = process.env.MONGODB_URL;
 const client = new MongoClient(url);
+const {BadRequestException} = require('../Exception');
+
+// const mongoose = require('mogoose');
+// const url = "mongodb://localhost:27017/";
+// const client = new MongoClient(url);
 
 class Repository {
 
@@ -13,9 +19,8 @@ class Repository {
         try {
             await client.connect();
             const database = client.db("mydb");
-            const electricalProducts = await database.collection(this.collection).find(filter).toArray();
-            console.log(electricalProducts);
-            return electricalProducts;
+            const products = await database.collection(this.collection).find(filter).toArray();
+            return products;
         }
         catch (error) {
             throw error;
@@ -26,7 +31,18 @@ class Repository {
     };
 
     async get(id) {
-
+        try {
+            await client.connect();
+            const database = client.db("mydb");
+            const product = await database.collection(this.collection).findOne({name: id});
+            return product;
+        }
+        catch (error) {
+            throw new BadRequestException(error);
+        }
+        finally {
+            await client.close();
+        }
     }
 
     async insert(data) {

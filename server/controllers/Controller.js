@@ -1,7 +1,8 @@
+const { Exception, NotFoundException } = require("../Exception");
 
 class Controller {
 
-    constructor( service ) {
+    constructor( service) {
         this.service = service;
     }
 
@@ -15,13 +16,18 @@ class Controller {
         }
     }
 
-    async get( req, res, next ) {
+    async get( req, res ) {
         const { id } = req.params;
+        console.log(id);
         try {
             const response = await this.service.get( id );
-            return res.status( response.statusCode ).json( response );
-        } catch (e) {
-            next(e);
+            if(response == null)
+                 throw new NotFoundException(null)
+            console.log(response);
+            return res.status(200).json( response );
+        }  catch(error){
+            console.log(error.message);
+            return res.status(error.statusCode).json(error.message);
         }
     }
 
