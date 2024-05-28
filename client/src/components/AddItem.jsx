@@ -3,7 +3,7 @@ import React from 'react'
 function AddItem() {
   return (
     <div>
-      Add Item:nhh
+      Add Item
     </div>
   )
 }

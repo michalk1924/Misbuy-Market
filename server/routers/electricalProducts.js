@@ -1,5 +1,5 @@
 
-const { Long } = require('mongodb');
+
 const electricalProductsController = require('../controllers/electricalProductsController')
 
 const express = require('express');
