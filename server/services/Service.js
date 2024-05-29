@@ -1,4 +1,4 @@
-const {Exception} = require('../Exception');
+const {Exception, InternalServerException} = require('../Exception');
 
 
 class Service {
@@ -7,9 +7,15 @@ class Service {
         this.repository = repository;
     }
 
-    async getAll(parametersForQuery) {
-        //to do...finish
-        return this.repository.getAll(parametersForQuery);
+    async getAll(filter) {
+        try{
+            return this.repository.getAll(filter);
+        }
+        catch(error){
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
     }
 
 
@@ -18,23 +24,43 @@ class Service {
             return this.repository.get(id);
         }
         catch(error){
-            if (typeof(error) == Exception)
-                throw error;
-            console.log(error);
+            if (!error instanceof Exception)
+                error = new InternalServerException()
             throw error;
         }
     }
 
     async insert(data) {
-        return this.repository.insert(data);
+        try{
+            return this.repository.insert(data);
+        }
+        catch(error){
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
     }
 
     async update(id, data) {
-
+        try{
+            return this.repository.update(id, data);
+        }
+        catch(error){
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
     }
 
     async delete(id) {
-
+        try{
+            return this.repository.delete(id);
+        }
+        catch(error){
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
     }
 }
 

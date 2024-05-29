@@ -8,4 +8,4 @@ class ElectricalProductsRepository extends Repository {
     }
 
 }
-module.exports = new ElectricalProductsRepository('electricalProducts');
+module.exports = new ElectricalProductsRepository('ElectricalProducts');

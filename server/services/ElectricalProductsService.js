@@ -2,8 +2,8 @@ const {Service} = require('./Service.js');
 const electricalProductsRepository = require('../repositories/ElectricalProductsRepositry');
 
 class StudentService extends Service {
-    constructor(repo) {
-        super(repo);
+    constructor(repositry) {
+        super(repositry);
     }
 }
 
