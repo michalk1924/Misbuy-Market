@@ -7,10 +7,6 @@ const {BadRequestException} = require('../Exception');
 const db_name = process.env.MONGODB_DB_NAME;
 
 
-// const mongoose = require('mogoose');
-// const url = "mongodb://localhost:27017/";
-// const client = new MongoClient(url);
-
 class Repository {
 
     constructor(collection) {

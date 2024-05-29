@@ -6,6 +6,8 @@ import Items from './components/Items';
 import Item from './components/Item';
 import ErrorPage from './components/ErrorPage';
 import AddItem from './components/AddItem';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
+            <Route path='signin' element={<SignIn />} />
+            <Route path='signup' element={<SignUp />} />
             <Route path='home' element={<Home />} />
             <Route path='items'>
               <Route index element={<Items />} />
