@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8a785c19714bcbdcc7f375909a434f905436de81
 const electricalProductsController = require('../controllers/electricalProductsController')
 
 const express = require('express');
