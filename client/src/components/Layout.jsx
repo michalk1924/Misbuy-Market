@@ -1,25 +1,27 @@
-import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import logo from '../images/logoWithText.png'; 
 
 function Layout() {
     return (
         <div>
-            {/* Navigation bar */}
             <nav>
-                <div className="logo">Logo</div>
+                <div className="logo">
+                    <Link to="/home">
+                        <img src={logo} alt="Logo" id='navLogo'/>
+                    </Link>
+                </div>
                 <ul>
-                    <li><Link to="/SignIn">התחברות</Link></li>
-                    <li><Link to="items/addItem">פרסום מודעה</Link></li>
+                    <li><Link to="/SignIn">Sign In</Link></li>
+                    <li><Link to="items/addItem">Add Item</Link></li>
                 </ul>
             </nav>
 
-            {/* Main content */}
             <main>
-                {/* Outlet will render the content based on your route */}
                 <Outlet />
             </main>
         </div>
-    )
+    );
 }
 
-export default Layout
+export default Layout;

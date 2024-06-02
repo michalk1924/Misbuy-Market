@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function SignUp() {
   return (
     <div className="container">
-      <form>
+      <form className='signInUpForm'>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" />
         <label htmlFor="password">Password</label>
