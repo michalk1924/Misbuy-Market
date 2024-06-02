@@ -9,7 +9,7 @@ class Controller {
     async getAll(req, res) {
         try {
             const response = await this.service.getAll(req.query);
-            console.log(response);
+            console.log("response" + response);
             return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)
