@@ -32,15 +32,12 @@ class Repository {
             const database = client.db(db_name);
             const products = await database.collection(this.collection).find(filter).toArray();
             console.log(products);
-            products.map(async product => {
-                const image = await getImage(product.imageUrl) ;
-                console.log("i" + image[2]);
-                return { ...product, image: image };
-            });
-            products.array.forEach(element => {
-                console.log(element);
-            });
-            console.log(products);
+            // products.map(async product => {
+            //     const image = await getImage(product.imageUrl) ;
+            //     console.log("i" + image[2]);
+            //     return { ...product, image: image };
+            // });
+            console.log("products" + products);
             return products;
         }
         catch (error) {
