@@ -2,6 +2,7 @@ class Exception {
     constructor(error) {
         this.error = error;
         this.message = error?.message;
+        this.statusCode = 500;
     }
 }
 //בקשה לא תקינה- השרת לא הצליח להבין את הבקשה עקב נתונים חסרים, שגויים או לא חוקיים
