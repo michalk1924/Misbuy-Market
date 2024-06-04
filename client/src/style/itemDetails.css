@@ -1,0 +1,31 @@
+.details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .image-container {
+    flex: 1;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .info-container {
+    flex: 2;
+  }
+  
+  .info-container > div {
+    margin-bottom: 20px;
+  }
+  
+  .info-container h2 {
+    margin-bottom: 10px;
+  }
+  
+  .info-container p {
+    margin: 5px 0;
+  }
+  
