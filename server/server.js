@@ -4,6 +4,7 @@ const cors = require('cors');
 //const auth = require('../middleware/auth');
 
 const electricalProductsRouter = require('./routers/electricalProducts');
+const signRouter = require('./routers/AccountAccess');
 
 const server = express();
 const host = process.env.HOST;
@@ -20,7 +21,7 @@ server.use(cors({
 
 //auth add
 server.use('/api/electricalProducts',electricalProductsRouter);
-//server.use('/signin', signInRouter);
+server.use('/', signRouter);
 
 server.get('/', (req, res) => {
     res.send('main page!');
