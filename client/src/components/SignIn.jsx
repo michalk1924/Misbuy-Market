@@ -1,20 +1,62 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
 
 function SignIn() {
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [worng, setWorng] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    console.log(formData);
+  };
+
+  const saveSignIn = async (e) => {
+    console.log(formData);
+    e.preventDefault();
+    const response = await fetch(`http://localhost:3000/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          "password": formData.password,
+          "email": formData.email
+        }
+      )
+    });
+    console.log(response.status);
+    if (response.status != 200) {
+      setWorng(true);
+    }
+    else {
+      const result = await response;
+      console.log(result);
+      localStorage.setItem("currentUser", formData.email);
+      navigate(`/items`, { state: formData.email });
+    };
+
+  }
+
   return (
     <div className="container">
-      <form className='signInUpForm'>
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" />
+      <form className='signInUpForm' onSubmit={saveSignIn}>
+        <label htmlFor="email">Email</label>
+        <input type="text" id="email" name='email' onChange={handleChange}/>
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" />
+        <input type="password" id="password" name='password' onChange={handleChange} />
         <button className="submit-button">Sign In</button>
         <Link to="/signup" className="link">Don't have an account? Sign Up</Link>
       </form>
+      {worng && <p>email or password aren't correct!</p>}
     </div>
   );
+
 }
 
 export default SignIn;

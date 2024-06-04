@@ -15,6 +15,7 @@ class AccountAccessService {
 
     async SignIn({ email, password }) {
         try {
+            console.log("p" + password);
             const [hashPassword, salt] = await this.repository.SignIn(email);
             const newHashPassword = await bcrypt.hash(password, salt);
             console.log("newHashPassword " + newHashPassword);

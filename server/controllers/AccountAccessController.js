@@ -14,7 +14,7 @@ class SignInController {
                 throw new BadRequestException("email or password not found");
             } 
             const token = await this.service.SignIn({ email: email, password: password});
-            return res.status(200).json(token);
+            return res.status(200).send(token);
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
