@@ -3,7 +3,7 @@ import './App.css';
 import Layout from './components/Layout';
 import Home from './components/Home'
 import Items from './components/Items';
-import Item from './components/Item';
+import Item from './components/ItemDetails';
 import ErrorPage from './components/ErrorPage';
 import AddItem from './components/AddItem';
 import SignIn from './components/SignIn';
