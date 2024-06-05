@@ -9,7 +9,7 @@ function SignUp() {
 
   const tokenContext = useContext(Token);
 
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({});
   const [worng, setWorng] = useState(false);
   const [worngExists, setWorngExists] = useState(false);
   const [token, setToken] = useState(tokenContext);
@@ -28,12 +28,7 @@ function SignUp() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(
-        {
-          "password": formData.password,
-          "email": formData.email
-        }
-      )
+      body: JSON.stringify(formData)
     });
     console.log(response.status);
     if (response.status != 200) {
@@ -52,10 +47,28 @@ function SignUp() {
   return (
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignUp}>
-        <label htmlFor="email">Username</label>
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" name='name' onChange={handleChange} />
+
+        <label htmlFor="email">Email</label>
         <input type="text" id="email" name='email' onChange={handleChange} />
+
+        <label htmlFor="phone">Phone</label>
+        <input type="tel" id="phone" name='phone' onChange={handleChange} />
+
+        <label htmlFor="area">Area</label>
+        <select id="area" name="area" onChange={handleChange}>
+          <option value="jerusalem">jerusalem</option>
+          <option value="TLV">TLV</option>
+          <option value="Elad">Elad</option>
+        </select>
+
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name='password' onChange={handleChange} />
+
+        <label htmlFor="verifyPassword">Verify Password</label>
+        <input type="password" id="verifyPassword" name='verifyPassword' onChange={handleChange} />
+
         <button className="submit-button">Sign Up</button>
         <Link to="/signin" className="link">Already have an account? Sign In</Link>
       </form>
