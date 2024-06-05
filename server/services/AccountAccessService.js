@@ -6,6 +6,7 @@ const { Exception, UnauthorizedException, InternalServerException } = require('.
 
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 class AccountAccessService {
 
@@ -15,15 +16,23 @@ class AccountAccessService {
 
     async SignIn({ email, password }) {
         try {
-            console.log("p" + password);
-            const [hashPassword, salt] = await this.repository.SignIn(email);
-            const newHashPassword = await bcrypt.hash(password, salt);
+            const user = await this.repository.SignIn(email);
+            const newHashPassword = await bcrypt.hash(password, user.salt);
             console.log("newHashPassword " + newHashPassword);
-            const isMatch = hashPassword == newHashPassword;
+            const isMatch = user.hashPassword == newHashPassword;
             if (!isMatch) {
                 throw new UnauthorizedException('worng password');
             }
-            return "success";
+            const tokenSecrete = process.env.TOKEN_SECRET;
+            const token = jwt.sign({
+                role: 'connected',
+            }, tokenSecrete, {
+                algorithm: 'HS256',
+                expiresIn: '5m',
+                issuer: 'my-api',
+                subject: user.email
+            })
+            return { token };
         }
         catch (error) {
             if (!error instanceof Exception)
@@ -45,7 +54,16 @@ class AccountAccessService {
             user.salt = salt;
             user.password = null;
             await this.repository.SignUp(user);
-            return "success";
+            const tokenSecrete = process.env.TOKEN_SECRET;
+            const token = jwt.sign({
+                role: 'connected',
+            }, tokenSecrete, {
+                algorithm: 'HS256',
+                expiresIn: '5m',
+                issuer: 'my-api',
+                subject: user.email
+            })
+            return { token };
         }
         catch (error) {
             if (!error instanceof Exception)
@@ -60,6 +78,11 @@ generateSalt = async () => {
     const saltBuffer = await crypto.randomBytes(saltLength);
     const salt = saltBuffer.toString('hex');
     return salt;
+}
+
+
+generateTokenSecret = () => {
+    return crypto.randomBytes(32).toString('hex');
 }
 
 

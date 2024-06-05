@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-//const auth = require('../middleware/auth');
+const {auth} = require('./middleware');
 
 const electricalProductsRouter = require('./routers/electricalProducts');
 const signRouter = require('./routers/AccountAccess');
@@ -20,7 +20,7 @@ server.use(cors({
 }))
 
 //auth add
-server.use('/api/electricalProducts',electricalProductsRouter);
+server.use('/api/electricalProducts', electricalProductsRouter);
 server.use('/', signRouter);
 
 server.get('/', (req, res) => {

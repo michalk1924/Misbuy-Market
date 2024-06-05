@@ -17,14 +17,14 @@ class SignInRepository extends Repository {
         const user = await this.getUser(email);
         if(!user)
             throw new NotFoundException("User not found");
-        return [user.hashPassword, user.salt ];
+        return user;
     }
 
     async SignUp(user) {
         const userData = await this.getUser(user.email);
         console.log("userData: ", userData);
         if(userData)
-            throw new ConflictException("User not found");
+            throw new ConflictException("User exists");
         this.insert(user);
         console.log("user password" + user.password);
     }

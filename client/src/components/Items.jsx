@@ -18,17 +18,6 @@ function Items(){
     getItems()
   }, [])
 
-  // return (
-  //   <div>
-  //     {items.map(item =>
-  //       <div className='item' style={{ backgroundImage: `url(data:image/png;base64,${item.image})`  }}>
-  //         <p>{item.name}</p>
-  //         <h3> price: {item.price && "np price"}</h3>
-  //         <p>{item.description && "no description"}</p>
-  //         <p>{item.image}</p>
-  //       </div>)}
-  //   </div>
-  // )
   return (
     <div className="item-list">
       {items.map((item, index) => (

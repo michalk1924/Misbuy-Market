@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
+import {Token} from './UserContext';
 
 function SignIn() {
 
   const navigate = useNavigate();
 
+  const tokenContext = useContext(Token);
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [worng, setWorng] = useState(false);
+  const [token, setToken] = useState(tokenContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,15 +39,16 @@ function SignIn() {
       setWorng(true);
     }
     else {
-      const result = await response;
-      console.log(result);
+      const token = await response.json();
+      setToken(token);
+      console.log(token);
       localStorage.setItem("currentUser", formData.email);
-      navigate(`/items`, { state: formData.email });
+      navigate(`/home`, { state: token });
     };
-
   }
 
   return (
+    <Token.Provider value={token}>
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignIn}>
         <label htmlFor="email">Email</label>
@@ -55,6 +60,7 @@ function SignIn() {
       </form>
       {worng && <p>email or password aren't correct!</p>}
     </div>
+    </Token.Provider>
   );
 
 }
