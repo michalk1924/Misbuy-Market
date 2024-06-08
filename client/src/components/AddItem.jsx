@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
+import React, { useContext,useState } from 'react';
 import '../style/addItem.css'
+import { Link, useNavigate } from 'react-router-dom';
+import { Token } from './UserContext'
+
 function AddItem() {
-    const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+    const tokenContext = useContext(Token);
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({});
     const [images, setImages] = useState([]);
+    const [worng, setWorng] = useState(false);
+    const [worngExists, setWorngExists] = useState(false);
+    const [token, setToken] = useState(tokenContext);
 
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
-    };
-
-    const handleDescriptionChange = (e) => {
-        setDescription(e.target.value);
-    };
-
-    const handlePriceChange = (e) => {
-        setPrice(e.target.value);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        console.log(formData);
     };
 
     const handleImageChange = (e) => {
-        // Handle image upload and update state accordingly
+        setImages(e.target.value)
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        console.log(formData);
         e.preventDefault();
-        // Submit form data to backend or handle as required
+        const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            file:images
+        });
+        console.log(response.status);
+        if (response.status != 200) {
+            if (response.status == 409) { setWorngExists(true); setWorng(false); }
+            else { setWorng(true); setWorngExists(false); }
+        }
+        else {
+            const token = await response.json();
+            setToken(token);
+            console.log(token);
+            navigate(`/home`, { state: token });
+        };
     };
 
     return (
@@ -33,7 +53,7 @@ function AddItem() {
             <form className="addItemForm" onSubmit={handleSubmit}>
                 <div>
                     <label className="addItemLabel" htmlFor="category">Select Category:</label>
-                    <select className="addItemInput" id="category" value={category} onChange={handleCategoryChange}>
+                    <select className="addItemInput" id="category" onChange={handleChange}>
                         <option value="shoes">Shoes</option>
                         <option value="shirts">Shirts</option>
                         <option value="skirts">Skirts</option>
@@ -42,12 +62,12 @@ function AddItem() {
                 </div>
                 <div>
                     <label className="addItemLabel" htmlFor="price">Price:</label>
-                    <input className="addItemInput" type="number" id="price" value={price} onChange={handlePriceChange} />
+                    <input className="addItemInput" type="number" id="price" onChange={handleChange} />
                 </div>
                 <div>
                     <label className="addItemLabel" htmlFor="description">Description:</label>
-                    <textarea className="addItemInput" id="description" value={description} onChange={handleDescriptionChange} />
-                </div>  
+                    <textarea className="addItemInput" id="description" onChange={handleChange} />
+                </div>
                 <div>
                     <label className="addItemLabel" htmlFor="images">Upload Images:</label>
                     <input className="addItemInput" type="file" id="images" multiple onChange={handleImageChange} />
