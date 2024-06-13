@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-
+const converters=require('../converters')
 const { MongoClient, ObjectId } = require('mongodb');
 const url = process.env.MONGODB_URL;
 const client = new MongoClient(url);
@@ -39,9 +39,13 @@ class Repository {
             //     return { ...product, image: image };
             // });
             products.forEach(async product => {
-                const image = await getImage(product.imageUrl);
-                console.log("i" + image[5]);
-                product.image = image;
+                const {imageUrl,...productWithoutImg}=product;
+                console.log(imageUrl, productWithoutImg);
+                const img=converters.convertUrlToImage(imageUrl);
+                return({...productWithoutImg, image:img});
+                // const image = await getImage(product.imageUrl);
+                // console.log("i" + image[5]);
+                // product.image = image;
             });
             console.log("products" + products);
             return products;
