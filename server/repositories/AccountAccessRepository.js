@@ -1,4 +1,3 @@
-const { Repository } = require('./Repository');
 
 const { NotFoundException, BadRequestException, ConflictException } = require('../Exception');
 
@@ -7,11 +6,9 @@ const url = process.env.MONGODB_URL;
 const client = new MongoClient(url);
 const db_name = process.env.MONGODB_DB_NAME;
 
-class SignInRepository extends Repository {
+const usersRepository = require('../repositories/UsersRepository');
 
-    constructor(collection) {
-        super(collection);
-    }
+class SignInRepository {
 
     async SignIn(email) {
         const user = await this.getUser(email);
@@ -22,19 +19,19 @@ class SignInRepository extends Repository {
 
     async SignUp(user) {
         const userData = await this.getUser(user.email);
-        console.log("userData: ", userData);
         if(userData)
             throw new ConflictException("User exists");
-        this.insert(user);
-        console.log("user password" + user.password);
+        const userId = usersRepository.insert(user);
+        console.log("userid" + userId);
+        return userId;
     }
 
     async getUser(email) {
         try {
             await client.connect();
             const database = client.db(db_name);
-            console.log("email: " + email + " collection " + this.collection);
-            const user = await database.collection(this.collection).findOne({ "email": email })
+            //console.log("email: " + email + " collection " + this.collection);
+            const user = await database.collection('Users').findOne({ "email": email })
             return user;
         }
         catch (error) {
@@ -47,4 +44,4 @@ class SignInRepository extends Repository {
     }
 
 }
-module.exports = new SignInRepository('users');
+module.exports = new SignInRepository();

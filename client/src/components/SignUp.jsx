@@ -1,18 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
-import { Token } from './UserContext';
+import { Token } from './TokenProvider';
 
 function SignUp() {
 
   const navigate = useNavigate();
 
-  const tokenContext = useContext(Token);
+  const { token, setToken } = useContext(Token);
 
   const [formData, setFormData] = useState({});
   const [worng, setWorng] = useState(false);
   const [worngExists, setWorngExists] = useState(false);
-  const [token, setToken] = useState(tokenContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

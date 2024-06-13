@@ -8,8 +8,10 @@ import ErrorPage from './components/ErrorPage';
 import AddItem from './components/AddItem';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import { Token } from './components/TokenProvider';
 
 function App() {
+
   return (
     <>
       <BrowserRouter>

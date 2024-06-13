@@ -1,4 +1,7 @@
 const { Exception, NotFoundException, InternalServerException } = require("../Exception");
+//const fileUpload = require('express-fileupload');
+const path = require('path');
+const fs = require('fs');
 
 class Controller {
 
@@ -21,60 +24,105 @@ class Controller {
 
 
     async get(req, res) {
-    const { id } = req.params;
-    console.log(id);
-    try {
-        const response = await this.service.get(id);
-        //console.log("response" + response.image.ToString());
-        if (response == null)
-            throw new NotFoundException(null)
-        return res.status(200).json(response);
-    } catch (error) {
-        if (!error instanceof Exception)
-            error = new InternalServerException()
-        console.log(error?.message);
-        return res.status(error.statusCode).json(error.message);
+        const { id } = req.params;
+        console.log(id);
+        try {
+            const response = await this.service.get(id);
+            //console.log("response" + response.image.ToString());
+            if (response == null)
+                throw new NotFoundException(null)
+            return res.status(200).json(response);
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error?.message);
+            return res.status(error.statusCode).json(error.message);
+        }
     }
-}
+
+    //     async insert(req, res) {
+    //     try {
+    //         const response = await this.service.insert(req.body);
+    //         return res.status(200).json(response);
+    //     } catch (error) {
+    //         if (!error instanceof Exception)
+    //             error = new InternalServerException()
+    //         console.log(error.message);
+    //         return res.status(error.statusCode).json(error.message);
+    //     }
+    // }
 
     async insert(req, res) {
-    try {
-        const response = await this.service.insert(req.body);
-        return res.status(200).json(response);
-    } catch (error) {
-        if (!error instanceof Exception)
-            error = new InternalServerException()
-        console.log(error.message);
-        return res.status(error.statusCode).json(error.message);
+        try {
+            let response = "";
+            const image = req.file;
+            const product = req.body;
+            let productDataWithImg;
+            if (image) {
+                const imgName = await uploadProductImage(image);
+                productDataWithImg = { ...product, image: imgName };
+            }
+            productDataWithImg = product;
+            console.log("123" + JSON.stringify(productDataWithImg));
+            response = await this.service.insert(productDataWithImg);
+            return res.status(200).json(response);
+
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode).json(error.message);
+        }
     }
-}
 
     async update(req, res) {
-    const {id} = req.params;
-    try {
-        const response = await this.service.update(id, req.body);
-        return res.status(200).json(response);
-    } catch (error) {
-        if (!error instanceof Exception)
-            error = new InternalServerException()
-        console.log(error.message);
-        return res.status(error.statusCode).json(error.message);
+        const { id } = req.params;
+        try {
+            const response = await this.service.update(id, req.body);
+            return res.status(200).json(response);
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode).json(error.message);
+        }
     }
+
+    async delete(req, res) {
+        const { id } = req.params;
+        try {
+            const response = await this.service.delete(id);
+            return res.status(200).json(response);
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode).json(error.message);
+        }
+    }
+
 }
 
-    async delete (req, res, next) {
-    const {id} = req.params;
+async function uploadProductImage(file) {
     try {
-        const response = await this.service.delete(id);
-        return res.status(200).json(response);
-    } catch (error) {
-        if (!error instanceof Exception)
-            error = new InternalServerException()
-        console.log(error.message);
-        return res.status(error.statusCode).json(error.message);
-    }
-}
+        // let id = await ProductsServices.getNextProductId();
+        const newFileName = `1.png`;
+        const uploadDir = path.join(__dirname, '../images'); // Relative path to the images directory
 
+        // Read the file buffer from the file object
+        const fileBuffer = file.buffer;
+
+        // Construct the full path to save the file
+        const filePath = path.join(uploadDir, newFileName);
+
+        // Write the file buffer to the specified file path
+        await fs.promises.writeFile(filePath, fileBuffer);
+
+        return `../../images/${newFileName}`;
+    } catch (error) {
+        console.error('Error uploading product image:', error);
+        throw error; // Re-throw the error to handle it in the caller function
+    }
 }
 
 module.exports = { Controller };
