@@ -1,6 +1,8 @@
 require('dotenv').config();
 const fs = require('fs');
 
+const converters=require('../converters');
+
 const url = process.env.MONGODB_URL;
 const db_name = process.env.MONGODB_DB_NAME;
 
@@ -25,6 +27,9 @@ class Repository {
                 console.log(imageUrl, productWithoutImg);
                 const img=converters.convertUrlToImage(imageUrl);
                 return({...productWithoutImg, image:img});
+                // const image = await getImage(product.imageUrl);
+                // console.log("i" + image[5]);
+                // product.image = image;
             });
             console.log("products" + products);
             return products;

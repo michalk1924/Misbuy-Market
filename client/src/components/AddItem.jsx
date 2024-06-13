@@ -26,13 +26,18 @@ function AddItem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        {const formDataWithImage = new FormData();
+        console.log(formData);
+
+        let formDataWithImage = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
         });
+
         if (image) {
             formDataWithImage.append('image', image);
-        }}.then(() => {
+        }
+        
+        console.log(formDataWithImage);
 
         try {
             const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
@@ -59,7 +64,6 @@ function AddItem() {
         } catch (error) {
             console.error('Error:', error);
         }
-    })
     };
 
     return (

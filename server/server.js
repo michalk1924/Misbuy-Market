@@ -19,6 +19,8 @@ server.use(cors({
     credentials: true
 }))
 
+server.use(express.urlencoded({ extended: true }));
+
 //auth add
 server.use('/api/electricalProducts', electricalProductsRouter);
 server.use('/', signRouter);

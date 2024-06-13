@@ -4,6 +4,8 @@ const electricalProductsController = require('../controllers/electricalProductsC
 const express = require('express');
 const router = express.Router();
 const {auth} = require('../middleware');
+const multer = require('multer');
+const upload = multer();
 
 router.get('/', async (req, res) => await electricalProductsController.getAll(req ,res));
 router.get('/:id', async (req, res) => await electricalProductsController.get(req, res));

@@ -1,7 +1,8 @@
 const { Exception, NotFoundException, InternalServerException } = require("../Exception");
-//const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require('fs');
+
 
 class Controller {
 
@@ -102,6 +103,7 @@ class Controller {
     }
 
 }
+
 
 async function uploadProductImage(file) {
     try {

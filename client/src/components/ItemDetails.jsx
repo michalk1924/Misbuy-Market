@@ -25,7 +25,7 @@ function ItemDetails() {
   return (
     <div className="details-container">
       <div className="image-container">
-        <img src={item && item.image} alt="Item" />
+        <img src={item && `data:image/png;base64,${item.image}`} alt="image" />
       </div>
       <div className="info-container">
         <div>
