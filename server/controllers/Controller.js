@@ -58,13 +58,14 @@ class Controller {
             let response = "";
             const image = req.file;
             const product = req.body;
+            console.log("product: " + JSON.stringify(product));
             let productDataWithImg;
             if (image) {
                 const imgName = await uploadProductImage(image);
                 productDataWithImg = { ...product, image: imgName };
             }
-            productDataWithImg = product;
-            console.log("123" + JSON.stringify(productDataWithImg));
+            else productDataWithImg = product;
+            console.log("product with image" + JSON.stringify(productDataWithImg));
             response = await this.service.insert(productDataWithImg);
             return res.status(200).json(response);
 

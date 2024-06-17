@@ -32,25 +32,3 @@ server.get('/', (req, res) => {
 server.listen(port, () => {
     console.log(`listening to requests at http://${host}:${port}`);
 });
-
-
-
-// require('dotenv').config()
-// const express = require('express');
-// const app = express();
-
-// app.use(express.json());
-
-// const port = process.env.PORT;
-
-// app.get('/', (req, res) => {
-//     res.send('Welcome');
-// });
-
-// const electricalProductsRouter = require('./routers/electricalProducts');
-
-// app.use('/electricalProducts', electricalProductsRouter);
-
-// app.listen(port, () => {
-//     console.log(`listening at http://localhost:${port}`);
-// });

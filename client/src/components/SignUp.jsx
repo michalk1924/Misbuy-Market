@@ -36,7 +36,7 @@ function SignUp() {
     }
     else {
       const token = await response.json();
-      setToken(token);
+      //setToken(token);
       console.log(token);
       localStorage.setItem("currentUser", formData.email);
       navigate(`/home`, { state: token });

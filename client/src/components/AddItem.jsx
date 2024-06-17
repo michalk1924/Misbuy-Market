@@ -26,23 +26,18 @@ function AddItem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData);
-
-        let formDataWithImage = new FormData();
+        const formDataWithImage = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
         });
-
         if (image) {
             formDataWithImage.append('image', image);
         }
-        
-        console.log(formDataWithImage);
 
         try {
             const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
                 method: 'POST',
-                body: formDataWithImage,
+                body: formData,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
