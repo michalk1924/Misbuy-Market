@@ -31,7 +31,7 @@ class AccountAccessService {
                 issuer: 'my-api',
                 subject: user.email
             })
-            return { token };
+            return { user, token };
         }
         catch (error) {
             if (!error instanceof Exception)

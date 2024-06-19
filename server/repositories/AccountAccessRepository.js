@@ -8,7 +8,7 @@ const db_name = process.env.MONGODB_DB_NAME;
 
 const usersRepository = require('../repositories/UsersRepository');
 
-class SignInRepository {
+class AccountAccessRipository {
 
     async SignIn(email) {
         const user = await this.getUser(email);
@@ -44,4 +44,4 @@ class SignInRepository {
     }
 
 }
-module.exports = new SignInRepository();
+module.exports = new AccountAccessRipository();

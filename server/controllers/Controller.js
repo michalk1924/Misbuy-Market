@@ -58,7 +58,7 @@ class Controller {
             let response = "";
             const image = req.file;
             const product = req.body;
-            console.log("product: " + JSON.stringify(product));
+            console.log("product: " + product);
             let productDataWithImg;
             if (image) {
                 const imgName = await uploadProductImage(image);
