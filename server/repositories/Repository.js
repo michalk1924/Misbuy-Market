@@ -22,15 +22,17 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const products = await database.collection(this.collection).find(filter).toArray();
-            products.forEach(async product => {
-                const {imageUrl,...productWithoutImg}=product;
-                console.log(imageUrl, productWithoutImg);
-                const img=converters.convertUrlToImage(imageUrl);
-                return({...productWithoutImg, image:img});
+            // products.forEach(async product => {
+            //     const {imageUrl,...productWithoutImg}=product;
+            //     console.log(imageUrl, productWithoutImg);
+            //     const img=converters.convertUrlToImage(imageUrl);
+            //     return({...productWithoutImg, image:img});
+
+
                 // const image = await getImage(product.imageUrl);
                 // console.log("i" + image[5]);
                 // product.image = image;
-            });
+            // });
             console.log("products" + products);
             return products;
         }
@@ -112,6 +114,26 @@ class Repository {
             await client.close();
         }
     }
+
+    async deleteAll() {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const result = await database.collection(this.collection).deleteMany({});
+            if (result.deletedCount === 0) {
+                throw new NotFoundException();
+            }
+        }
+        catch (error) {
+            if(!error instanceof Exception)
+                error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
+    }
+    
 }
 
 module.exports = { Repository };

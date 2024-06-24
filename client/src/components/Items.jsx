@@ -39,7 +39,7 @@ function Items() {
   }, [selectSort, searchValue, allItems]);
 
   async function getItems() {
-    const url = 'http://localhost:3000/api/electricalProducts';
+    const url = 'http://localhost:3000/api/allItems';
     const response = await fetch(url);
     const data = await response.json();
     setAllItems(data);
@@ -141,6 +141,7 @@ function Items() {
         ))}
       </div>
     </div>
+    
   );
 };
 

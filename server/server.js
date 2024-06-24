@@ -3,11 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const {auth} = require('./middleware');
 
-//const electricalProductsRouter = require('./routers/electricalProducts');
 const shoesRouter = require('./routers/ShoesRouter');
 const bagsController = require('./routers/BagsRouter');
 const clothesRouter = require('./routers/ClothesRouter');
 const signRouter = require('./routers/AccountAccess');
+const allItemsRouter = require('./routers/AllItemsRouter');
 
 const server = express();
 const host = process.env.HOST;
@@ -28,6 +28,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use('/api/shoes', shoesRouter);
 server.use('/api/bags', bagsController);
 server.use('/api/clothes', clothesRouter);
+server.use('/api/allitems', allItemsRouter);
 
 server.use('/', signRouter);
 

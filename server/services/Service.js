@@ -46,6 +46,7 @@ class Service {
 
     async get(id) {
         try {
+            await this.update(id, {"viewsCounter": ++this.viewsCounter});
             const product = await this.repository.get(id);
             const user = await usersRepository.get(product.userId);
             product.userName = user.name;
@@ -68,6 +69,7 @@ class Service {
         try {
             const user = await usersRepository.get(data.userId);
             data.area = user?.area;
+            data.viewsCounter = 0;
             return this.repository.insert(data);
         }
         catch (error) {
@@ -91,6 +93,18 @@ class Service {
     async delete(id) {
         try {
             return this.repository.delete(id);
+        }
+        catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
+    }
+
+    async deleteAll()
+    {
+        try {
+            return this.repository.deleteAll();
         }
         catch (error) {
             if (!error instanceof Exception)

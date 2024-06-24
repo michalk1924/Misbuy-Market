@@ -75,8 +75,8 @@ function AddItem() {
                     <select className="addItemInput" id="category" name="category" onChange={handleChange}>
                         <option value=""></option> {/* Empty option */}
                         <option value="shoes">Shoes</option>
-                        <option value="shirts">Shirts</option>
-                        <option value="skirts">Skirts</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="bags">Bags</option>
                         <option value="accessories">Accessories</option>
                     </select>
                 </div>
