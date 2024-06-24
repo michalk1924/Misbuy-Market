@@ -58,14 +58,13 @@ class Controller {
             let response = "";
             const image = req.file;
             const product = req.body;
-            console.log("product: " + product);
-            let productDataWithImg;
+            let productDataWithImg=product;
             if (image) {
                 const imgName = await uploadProductImage(image);
-                productDataWithImg = { ...product, image: imgName };
+                console.log(imgName);
+                productDataWithImg = { ...product, imageUrl: imgName };
             }
-            else productDataWithImg = product;
-            console.log("product with image" + JSON.stringify(productDataWithImg));
+            console.log(productDataWithImg);
             response = await this.service.insert(productDataWithImg);
             return res.status(200).json(response);
 
@@ -120,8 +119,7 @@ async function uploadProductImage(file) {
 
         // Write the file buffer to the specified file path
         await fs.promises.writeFile(filePath, fileBuffer);
-
-        return `../../images/${newFileName}`;
+        return `./images/${newFileName}`;
     } catch (error) {
         console.error('Error uploading product image:', error);
         throw error; // Re-throw the error to handle it in the caller function

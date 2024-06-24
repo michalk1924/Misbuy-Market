@@ -1,15 +1,24 @@
 require('dotenv').config();
 const fs = require('fs');
-
 const converters=require('../converters');
-
-const url = process.env.MONGODB_URL;
-const db_name = process.env.MONGODB_DB_NAME;
-
 const { MongoClient, ObjectId } = require('mongodb');
+const url = process.env.MONGODB_URL;
 const client = new MongoClient(url);
 const { BadRequestException, NotFoundException, Exception } = require('../Exception');
+const { error } = require('console');
+const db_name = process.env.MONGODB_DB_NAME;
 
+async function getImage(url) {
+    if (url == null || url == undefined) {
+        return 'no image';
+    }
+    else {
+        const imageURL = url 
+        const imageData = await fs.promises.readFile(imageURL);
+        const base64Image = imageData.toString('base64');
+        return `data:image/jpeg;base64,${base64Image}`;
+    }
+}
 
 class Repository {
 
@@ -22,17 +31,12 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const products = await database.collection(this.collection).find(filter).toArray();
-            // products.forEach(async product => {
-            //     const {imageUrl,...productWithoutImg}=product;
-            //     console.log(imageUrl, productWithoutImg);
-            //     const img=converters.convertUrlToImage(imageUrl);
-            //     return({...productWithoutImg, image:img});
-
-
-                // const image = await getImage(product.imageUrl);
-                // console.log("i" + image[5]);
-                // product.image = image;
-            // });
+            products.forEach(async product => {
+                const {imageUrl,...productWithoutImg}=product;
+                console.log(imageUrl, productWithoutImg);
+                const img=converters.convertUrlToImage(imageUrl);
+                return({...productWithoutImg, image:img});
+            });
             console.log("products" + products);
             return products;
         }
@@ -50,7 +54,10 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const o_id = new ObjectId(id);
-            const product = await database.collection(this.collection).findOne({ "_id": o_id })
+            let product = await database.collection(this.collection).findOne({ "_id": o_id })
+            console.log(product.imageUrl);
+            product = {...product, image:getImage(product.imageUrl)};
+            console.log(product.image);
             return product;
         }
         catch (error) {
@@ -67,7 +74,8 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const result = await database.collection(this.collection).insertOne(data);
-            return result.insertedId.toString();
+            console.log("res Id:"+ result.insertedId);
+            return result.insertedId;
         }
         catch (error) {
             error = new BadRequestException("Repository Error: " + error.message);
