@@ -10,5 +10,5 @@ async function convertUrlToImage(url){
 }
 
 module.exports={
-    convertUrlToImage
+    convertUrlToImage, 
 }

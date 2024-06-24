@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import '../style/addItem.css';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import { Token } from './TokenProvider';
 
 function AddItem() {
@@ -25,11 +25,8 @@ function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //console.log('abc');
+
         const formDataWithImage = new FormData();
-        //console.log(formDataWithImage.append)
-        formDataWithImage.append('sara','aaaa');
-        //console.log(formDataWithImage.entries());
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
         });
@@ -38,9 +35,9 @@ function AddItem() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
+            const response = await fetch(`http://localhost:3000/api/bags`, {
                 method: 'POST',
-                body: JSON.stringify({"a":"aa"}),//(formDataWithImage),
+                body: formDataWithImage,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -77,7 +74,6 @@ function AddItem() {
                         <option value="shoes">Shoes</option>
                         <option value="clothes">Clothes</option>
                         <option value="bags">Bags</option>
-                        <option value="accessories">Accessories</option>
                     </select>
                 </div>
                 <div>

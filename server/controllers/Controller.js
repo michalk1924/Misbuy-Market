@@ -75,7 +75,6 @@ class Controller {
             return res.status(error.statusCode).json(error.message);
         }
     }
-
     async update(req, res) {
         const { id } = req.params;
         try {
