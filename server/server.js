@@ -3,8 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const {auth} = require('./middleware');
 
-const electricalProductsRouter = require('./routers/electricalProducts');
+const shoesRouter = require('./routers/ShoesRouter');
+const bagsController = require('./routers/BagsRouter');
+const clothesRouter = require('./routers/ClothesRouter');
 const signRouter = require('./routers/AccountAccess');
+const allItemsRouter = require('./routers/AllItemsRouter');
 
 const server = express();
 const host = process.env.HOST;
@@ -21,8 +24,12 @@ server.use(cors({
 
 server.use(express.urlencoded({ extended: true }));
 
-//auth add
-server.use('/api/electricalProducts', electricalProductsRouter);
+//server.use('/api/electricalProducts', electricalProductsRouter);
+server.use('/api/shoes', shoesRouter);
+server.use('/api/bags', bagsController);
+server.use('/api/clothes', clothesRouter);
+server.use('/api/allitems', allItemsRouter);
+
 server.use('/', signRouter);
 
 server.get('/', (req, res) => {
@@ -32,25 +39,3 @@ server.get('/', (req, res) => {
 server.listen(port, () => {
     console.log(`listening to requests at http://${host}:${port}`);
 });
-
-
-
-// require('dotenv').config()
-// const express = require('express');
-// const app = express();
-
-// app.use(express.json());
-
-// const port = process.env.PORT;
-
-// app.get('/', (req, res) => {
-//     res.send('Welcome');
-// });
-
-// const electricalProductsRouter = require('./routers/electricalProducts');
-
-// app.use('/electricalProducts', electricalProductsRouter);
-
-// app.listen(port, () => {
-//     console.log(`listening at http://localhost:${port}`);
-// });

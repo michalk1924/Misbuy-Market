@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/itemBox.css'
 
 
-const ItemBox = ({ item }) => {
+const ItemBox = ({item}) => {
+
   return (
     <div className="item-box">
       <Link to={`${item._id}`}>

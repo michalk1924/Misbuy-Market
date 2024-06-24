@@ -1,5 +1,18 @@
-const {Exception, InternalServerException} = require('../Exception');
+const { Exception, InternalServerException } = require('../Exception');
+const usersRepository = require('../repositories/UsersRepository');
 
+async function getImage(url) {
+    if (url == null || url == undefined) {
+        return 'no image';
+    }
+    else {
+        const imageURL = url //`${url.split("\\").join("/")}`;
+        const imageData = await fs.promises.readFile(imageURL);
+        //const imageBuffer = await imageData.buffer();
+        const base64Image = imageData.toString('base64');
+        return `data:image/jpeg;base64,${base64Image}`;
+    }
+}
 
 class Service {
 
@@ -7,11 +20,23 @@ class Service {
         this.repository = repository;
     }
 
+
     async getAll(filter) {
-        try{
-            return this.repository.getAll(filter);
+        try {
+            const products = this.repository.getAll(filter);
+            // products = products.map(async product => {
+            //     const image = await getImage(product.imageUrl) ;
+            //     console.log("i" + image[2]);
+            //     return { ...product, image: image };
+            // });
+            // products.forEach(async product => {
+            //     const image = await getImage(product.imageUrl);
+            //     console.log("image" + image[5]);
+            //     product.image = image;
+            // });
+            return products;
         }
-        catch(error){
+        catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -20,10 +45,20 @@ class Service {
 
 
     async get(id) {
-        try{
-            return this.repository.get(id);
+        try {
+            await this.update(id, {"viewsCounter": ++this.viewsCounter});
+            const product = await this.repository.get(id);
+            const user = await usersRepository.get(product.userId);
+            product.userName = user.name;
+            product.phone = user.phone;
+            if (product.imageUrl) {
+                const image = await getImage(product.imageUrl);
+                console.log("image" + image[7]);
+                product.image = image;
+            }
+            return product;
         }
-        catch(error){
+        catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -31,10 +66,13 @@ class Service {
     }
 
     async insert(data) {
-        try{
+        try {
+            const user = await usersRepository.get(data.userId);
+            data.area = user?.area;
+            data.viewsCounter = 0;
             return this.repository.insert(data);
         }
-        catch(error){
+        catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -42,10 +80,10 @@ class Service {
     }
 
     async update(id, data) {
-        try{
+        try {
             return this.repository.update(id, data);
         }
-        catch(error){
+        catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -53,10 +91,22 @@ class Service {
     }
 
     async delete(id) {
-        try{
+        try {
             return this.repository.delete(id);
         }
-        catch(error){
+        catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
+    }
+
+    async deleteAll()
+    {
+        try {
+            return this.repository.deleteAll();
+        }
+        catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -64,49 +114,5 @@ class Service {
     }
 }
 
-const nodemailer = require('nodemailer');
-
-async function sendVerificationCodeEmail(emailAddress) {
-  // הגדרת משתני SMTP
-  const transporter = nodemailer.createTransport({
-    host:'172.253.63.27', // החלף בשרת SMTP שלך
-    port: 587,
-    secure: true, // השתמש ב-TLS
-    auth: {
-      user: 'mkastner@g.jct.ac.il', // כתובת הדואר האלקטרוני שלך
-      pass: 'MKmk1924' // סיסמת הדואר האלקטרוני שלך
-    }
-  });
-
-  // יצירת קוד אימות אקראי
-  const verificationCode = randomString(6); // פונקציה זו אינה מוגדרת בדוגמה זו
-
-  // יצירת תוכן הודעת הדואר האלקטרוני
-  const message = {
-    from: '"Misbuy - Market" <mkastner@g.jct.ac.il>', // שם ושליח
-    to: emailAddress,
-    subject: 'Verification Code',
-    text: `Your verification code is: ${verificationCode}`
-  };
-
-  // שליחת הודעת הדואר האלקטרוני
-  await transporter.sendMail(message);
-
-  console.log(`Verification code sent to ${emailAddress}`);
-}
-
-// פונקציה לדוגמה ליצירת מחרוזת אקראית
-function randomString(length) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
-
-//sendVerificationCodeEmail("michalk1924@gmail.com")
-
-  
 
 module.exports = { Service };

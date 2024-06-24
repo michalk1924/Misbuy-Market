@@ -41,6 +41,18 @@ class Controller {
         }
     }
 
+    //     async insert(req, res) {
+    //     try {
+    //         const response = await this.service.insert(req.body);
+    //         return res.status(200).json(response);
+    //     } catch (error) {
+    //         if (!error instanceof Exception)
+    //             error = new InternalServerException()
+    //         console.log(error.message);
+    //         return res.status(error.statusCode).json(error.message);
+    //     }
+    // }
+
     async insert(req, res) {
         try {
             let response = "";
@@ -77,7 +89,7 @@ class Controller {
         }
     }
 
-    async delete(req, res, next) {
+    async delete(req, res) {
         const { id } = req.params;
         try {
             const response = await this.service.delete(id);

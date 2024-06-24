@@ -11,8 +11,9 @@ function ItemDetails() {
 
   async function getItem(id) {
     if (id) {
-      const url = `http://localhost:3000/api/electricalProducts/${id}`
-      const response = await fetch(url)
+      console.log(id);
+      const url = `http://localhost:3000/api/allItems/${id}`;
+      const response = await fetch(url);
       const data = await response.json()
       console.log(data);
       setItem(data)

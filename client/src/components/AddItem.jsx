@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import '../style/addItem.css';
-import {useNavigate } from 'react-router-dom';
-import { Token } from './UserContext';
+import { useNavigate } from 'react-router-dom';
+import { Token } from './TokenProvider';
 
 function AddItem() {
     const tokenContext = useContext(Token);
@@ -25,8 +25,11 @@ function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        //console.log('abc');
         const formDataWithImage = new FormData();
+        //console.log(formDataWithImage.append)
+        formDataWithImage.append('sara','aaaa');
+        //console.log(formDataWithImage.entries());
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
         });
@@ -37,7 +40,7 @@ function AddItem() {
         try {
             const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
                 method: 'POST',
-                body: formDataWithImage,
+                body: JSON.stringify({"a":"aa"}),//(formDataWithImage),
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -72,8 +75,8 @@ function AddItem() {
                     <select className="addItemInput" id="category" name="category" onChange={handleChange}>
                         <option value=""></option> {/* Empty option */}
                         <option value="shoes">Shoes</option>
-                        <option value="shirts">Shirts</option>
-                        <option value="skirts">Skirts</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="bags">Bags</option>
                         <option value="accessories">Accessories</option>
                     </select>
                 </div>

@@ -122,6 +122,26 @@ class Repository {
             await client.close();
         }
     }
+
+    async deleteAll() {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const result = await database.collection(this.collection).deleteMany({});
+            if (result.deletedCount === 0) {
+                throw new NotFoundException();
+            }
+        }
+        catch (error) {
+            if(!error instanceof Exception)
+                error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
+    }
+    
 }
 
 module.exports = { Repository };

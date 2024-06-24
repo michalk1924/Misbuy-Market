@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
-import {Token} from './UserContext';
+import {Token} from './TokenProvider';
 
 function SignIn() {
 
@@ -40,15 +40,14 @@ function SignIn() {
     }
     else {
       const token = await response.json();
-      setToken(token);
-      console.log(token);
+      setToken(token.token);
+      console.log(token.token);
       localStorage.setItem("currentUser", formData.email);
       navigate(`/home`, { state: token });
     };
   }
 
   return (
-    <Token.Provider value={token}>
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignIn}>
         <label htmlFor="email">Email</label>
@@ -60,7 +59,6 @@ function SignIn() {
       </form>
       {worng && <p>email or password aren't correct!</p>}
     </div>
-    </Token.Provider>
   );
 
 }

@@ -1,7 +1,7 @@
 class Exception {
     constructor(error) {
         this.error = error;
-        this.message = error?.message;
+        this.message = error.message && "Error";
         this.statusCode = 500;
     }
 }
