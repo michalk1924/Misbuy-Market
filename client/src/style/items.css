@@ -2,4 +2,24 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    width: 80vw;
+    margin-top: 20vh;
+
+}
+
+#selectSort {
+    width: 20vw;
+    position: fixed;
+}
+
+#searchControls {
+    width: 10vw;
+    margin-left: 8vw;
+    position:static;
+    justify-self: flex-end;
+}
+
+#mainContent {
+    display: flex;
+    flex-direction: row;
 }

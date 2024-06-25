@@ -1,7 +1,7 @@
 const { Exception, InternalServerException, NotFoundException } = require('../Exception'); 4
 const { Service } = require('./Service');
 const shoesRepository = require('../repositories/ShoesRepository');
-const bagsRepository = require('../repositories/AccessoriesRepository');
+const accessoriesRepository = require('../repositories/AccessoriesRepository');
 const clothesRepository = require('../repositories/ClothesRepository');
 
 // פונקציה לערבוב המערך
@@ -42,17 +42,17 @@ class AllItemsService extends Service {
     async getAll(filter) {
         try {
             const shoes = await shoesRepository.getAll(filter);
-            const bags = await bagsRepository.getAll(filter);
+            const accessories = await accessoriesRepository.getAll(filter);
             const clothes = await clothesRepository.getAll(filter);
 
             // לוודא שכל אחת מהקריאות מחזירה מערך
-            if (!Array.isArray(shoes) || !Array.isArray(bags) || !Array.isArray(clothes)) {
+            if (!Array.isArray(shoes) || !Array.isArray(accessories) || !Array.isArray(clothes)) {
                 throw new Error("One of the repositories did not return an array");
             }
 
             let products = [];
             // צירוף המערכים למערך אחד
-            products = products.concat(shoes, bags, clothes);
+            products = products.concat(shoes, accessories, clothes);
 
             // פונקציה לערבוב המערך
             function shuffleArray(array) {
