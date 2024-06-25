@@ -6,7 +6,6 @@ import { Token } from './TokenProvider';
 function AddItem() {
     const tokenContext = useContext(Token);
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);
     const [wrong, setWrong] = useState(false);
@@ -33,9 +32,8 @@ function AddItem() {
         if (image) {
             formDataWithImage.append('image', image);
         }
-
         try {
-            const response = await fetch(`http://localhost:3000/api/bags`, {
+            const response = await fetch(`http://localhost:3000/api/${category.value}`, {
                 method: 'POST',
                 body: formDataWithImage,
                 headers: {
@@ -73,7 +71,7 @@ function AddItem() {
                         <option value=""></option> {/* Empty option */}
                         <option value="shoes">Shoes</option>
                         <option value="clothes">Clothes</option>
-                        <option value="bags">Bags</option>
+                        <option value="Accessories">Accessories</option>
                     </select>
                 </div>
                 <div>

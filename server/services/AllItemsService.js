@@ -1,7 +1,7 @@
 const { Exception, InternalServerException, NotFoundException } = require('../Exception');4
 const {Service} = require('./Service');
 const shoesRepository = require('../repositories/ShoesRepository');
-const bagsRepository = require('../repositories/BagsRepository');
+const bagsRepository = require('../repositories/AccessoriesRepository');
 const clothesRepository = require('../repositories/ClothesRepository');
 
 // פונקציה לערבוב המערך
