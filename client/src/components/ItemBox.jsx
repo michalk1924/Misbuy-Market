@@ -7,7 +7,7 @@ const ItemBox = ({item}) => {
 
   return (
     <div className="item-box">
-      <Link to={`${item._id}`}>
+      <Link to={`../items/${item._id}`}>
         <img src={`data:image/png;base64,${item.image}`} alt="Item" />
         <p>Price: {item.price}</p>
         <p>Area: {item.area}</p>

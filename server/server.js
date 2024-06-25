@@ -28,7 +28,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use('/api/shoes', shoesRouter);
 server.use('/api/bags', bagsController);
 server.use('/api/clothes', clothesRouter);
-server.use('/api/allitems', allItemsRouter);
+server.use('/api/allItems', allItemsRouter);
 
 server.use('/', signRouter);
 

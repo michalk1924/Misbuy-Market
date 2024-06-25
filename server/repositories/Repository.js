@@ -55,9 +55,8 @@ class Repository {
             const database = client.db(db_name);
             const o_id = new ObjectId(id);
             let product = await database.collection(this.collection).findOne({ "_id": o_id })
-            console.log(product.imageUrl);
-            product = {...product, image:getImage(product.imageUrl)};
-            console.log(product.image);
+            if(product.imageUrl)
+                    product = {...product, image:getImage(product.imageUrl)};
             return product;
         }
         catch (error) {

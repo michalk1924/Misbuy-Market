@@ -3,8 +3,6 @@ import '../style/itemDetails.css'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-
-
 function ItemDetails() {
   const [item, setItem] = useState({});
   let {itemId} = useParams(); // Accessing URL parameter directly

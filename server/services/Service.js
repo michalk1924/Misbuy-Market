@@ -46,7 +46,7 @@ class Service {
 
     async get(id) {
         try {
-            await this.update(id, {"viewsCounter": ++this.viewsCounter});
+            //await this.update(id, {"viewsCounter": ++this.viewsCounter});
             const product = await this.repository.get(id);
             const user = await usersRepository.get(product.userId);
             product.userName = user.name;
@@ -81,7 +81,7 @@ class Service {
 
     async update(id, data) {
         try {
-            return this.repository.update(id, data);
+            return this.repository.update(id, product);
         }
         catch (error) {
             if (!error instanceof Exception)

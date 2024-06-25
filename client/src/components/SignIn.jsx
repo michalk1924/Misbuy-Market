@@ -23,6 +23,7 @@ function SignIn() {
     console.log(formData);
     e.preventDefault();
     const response = await fetch(`http://localhost:3000/signin`, {
+      // const response = await fetch(`http://localhost:3000/api/bags`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

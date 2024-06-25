@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom'
-import {Token} from './TokenProvider'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Token } from './TokenProvider'
 import ItemBox from './ItemBox';
 
 function Home() {
@@ -8,9 +8,9 @@ function Home() {
   //const { state } = useLocation()
   const token = useContext(Token);
 
-  const [items , setItems] = useState([]);
+  const [items, setItems] = useState([]);
 
-  useEffect(() => {console.log("token" + console.log(JSON.stringify(token)))}, [])
+  useEffect(() => { console.log("token" + console.log(JSON.stringify(token))) }, [])
 
   useEffect(() => {
     getItems();

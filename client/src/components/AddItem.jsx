@@ -25,25 +25,25 @@ function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //console.log('abc');
         const formDataWithImage = new FormData();
-        //console.log(formDataWithImage.append)
-        formDataWithImage.append('sara','aaaa');
-        //console.log(formDataWithImage.entries());
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
         });
         if (image) {
             formDataWithImage.append('image', image);
         }
+        formDataWithImage.append('userId', '666abc8d631e38cb091ca0ec')
 
         try {
-            const response = await fetch(`http://localhost:3000/api/electricalProducts`, {
+            const response = await fetch(`http://localhost:3000/api/bags`, {
                 method: 'POST',
-                body: JSON.stringify({"a":"aa"}),//(formDataWithImage),
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                body: formDataWithImage,
+                 //JSON.stringify({A: "A"}), //
+                //headers: {'Content-Type': 'multipart/form-data'},
+                //headers: {'Content-Type': 'application/json'},
+                // headers: {
+                //     Authorization: `Bearer ${token}`,
+                // },
             });
 
             if (!response.ok) {
