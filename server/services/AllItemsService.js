@@ -1,5 +1,5 @@
-const { Exception, InternalServerException, NotFoundException } = require('../Exception');4
-const {Service} = require('./Service');
+const { Exception, InternalServerException, NotFoundException } = require('../Exception'); 4
+const { Service } = require('./Service');
 const shoesRepository = require('../repositories/ShoesRepository');
 const bagsRepository = require('../repositories/AccessoriesRepository');
 const clothesRepository = require('../repositories/ClothesRepository');
@@ -16,13 +16,21 @@ class AllItemsService extends Service {
 
     async get(id) {
         try {
-            await this.update(id, {"viewsCounter": ++this.viewsCounter});
             const shoes = await shoesRepository.get(id);
-            if (shoes) return shoes;
+            if (shoes) {
+                await shoesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                return shoes;
+            }
             const bag = await bagsRepository.get(id);
-            if (bag) return bag;
+            if (bag) {
+                await bagsRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                return bag;
+            }
             const cloth = await clothesRepository.get(id);
-            if (cloth) return cloth;
+            if (cloth) {
+                await clothesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                return cloth;
+            }
             throw new NotFoundException("Item not found");
         } catch (error) {
             if (!error instanceof Exception)
