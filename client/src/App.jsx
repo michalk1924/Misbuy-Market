@@ -8,6 +8,7 @@ import ErrorPage from './components/ErrorPage';
 import AddItem from './components/AddItem';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import CategoryItems from './components/CategoryItems'
 import { Token } from './components/TokenProvider';
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
             <Route path='home' element={<Home />} />
             <Route path='items'>
               <Route index element={<Items />} />
-              <Route path=':itemId' element={<Item />} />
+              <Route path=':category' element={<CategoryItems />}>
+                <Route path=':itemId' element={<Item/>} />
+              </Route>
               <Route path='addItem' element={<AddItem />} />
             </Route>
           </Route>

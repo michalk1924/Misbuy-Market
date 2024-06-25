@@ -14,3 +14,4 @@ router.delete('/:id', auth('connected'), async (req, res) => await bagsControlle
 router.put('/:id', auth('connected'), async (req, res) => await bagsController.put(req, res));
 
 module.exports = router;
+

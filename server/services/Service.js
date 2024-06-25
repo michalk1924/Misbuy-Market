@@ -67,8 +67,8 @@ class Service {
 
     async insert(data) {
         try {
-            const user = await usersRepository.get(data.userId);
-            data.area = user?.area;
+            //const user = await usersRepository.get(data.userId);
+            //data.area = user?.area;
             data.viewsCounter = 0;
             return this.repository.insert(data);
         }

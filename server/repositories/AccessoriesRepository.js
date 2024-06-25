@@ -1,11 +1,11 @@
 
 const {Repository} = require('./Repository');
 
-class BagsProductsRepository extends Repository {
+class AccessoriesRepository extends Repository {
 
     constructor(collection) {
         super(collection);
     }
 
 }
-module.exports = new BagsProductsRepository('Bags');
+module.exports = new AccessoriesRepository('Accessories');
