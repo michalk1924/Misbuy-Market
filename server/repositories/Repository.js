@@ -107,8 +107,8 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const o_id = new ObjectId(id);
-            const result = await database.collection(this.collection).deleteOne({ _id: o_id });
-            if (result.deletedCount === 0) {
+            const result = await database.collection(this.collection).findOneAndDelete({ _id: o_id });
+            if (result == null) {
                 throw new NotFoundException();
             }
             return result;

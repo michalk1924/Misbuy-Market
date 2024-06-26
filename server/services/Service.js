@@ -95,7 +95,7 @@ class Service {
         try {
             const product =  this.repository.delete(id);
             console.log("deleted product" + JSON.stringify(product));
-            if (product.imageUrl) {
+            if (product.imageUrl !== undefined) {
                 //await deleteProductImage(product.imageUrl);
             }
         }
