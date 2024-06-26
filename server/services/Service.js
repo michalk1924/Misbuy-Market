@@ -9,31 +9,19 @@ class Service {
         this.repository = repository;
     }
 
-
     async getAll(filter) {
         try {
-            const products = this.repository.getAll(filter);
-
-            // products = await Promise.all(products)
-            // console.log("products serived", products);
-
-
-            // const productsWithImages = await Promise.all(products.map(async product => {
-            //     const image = await getProductImage(product.imageUrl);
-            //     return { ...product, image: image };
-            // }));
-
-            // products = products.map(async product => {
-            //     const image = await getImage(product.imageUrl) ;
-            //     return { ...product, image: image };
-            // });
-            // products.forEach(async product => {
-            //     const image = await getProductImage(product.imageUrl);
-            //     product.image = image;
-            // });
-            return products;
-        }
-        catch (error) {
+            const products = await this.repository.getAll(filter);
+            const productsWithImages = await Promise.all(products.map(async product => {
+                const { imageUrl, ...productWithoutImg } = product;
+                let image = null;
+                if (imageUrl) {
+                    image = await getProductImage(imageUrl);
+                }
+                return { ...productWithoutImg, image: image };
+            }));
+            return productsWithImages;
+        } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             throw error;
@@ -41,13 +29,14 @@ class Service {
     }
 
 
+
     async get(id) {
         try {
             //await this.update(id, {"viewsCounter": ++this.viewsCounter});
             const product = await this.repository.get(id);
-            // const user = await usersRepository.get(product.userId);
-            // product.userName = user.name;
-            // product.phone = user.phone;
+            const user = await usersRepository.getById(product.userId);
+            product.userName = user.name;
+            product.phone = user.phone;
             if (product.imageUrl) {
                 const image = await getProductImage(product.imageUrl);
                 product.image = image;
@@ -68,8 +57,8 @@ class Service {
                 const imgName = await uploadProductImage(image);
                 productDataWithImg = { ...productData, imageUrl: imgName };
             }
-            //const user = await usersRepository.get(data.userId);
-            //data.area = user?.area;
+            const user = await usersRepository.getById(productData.userId);
+            productDataWithImg.area = user?.area;
             productDataWithImg.viewsCounter = 0;
             return this.repository.insert(productDataWithImg);
         }
@@ -93,10 +82,10 @@ class Service {
 
     async delete(id) {
         try {
-            const product =  this.repository.delete(id);
+            const product = await this.repository.delete(id);
             console.log("deleted product" + JSON.stringify(product));
             if (product.imageUrl !== undefined) {
-                //await deleteProductImage(product.imageUrl);
+                await deleteProductImage(product.imageUrl);
             }
         }
         catch (error) {
@@ -122,72 +111,58 @@ async function uploadProductImage(file) {
     try {
         let id = getNextId();
         const newFileName = `${id}.png`;
-        const uploadDir = path.join(__dirname, '../images'); // Relative path to the images directory
-
-        // Read the file buffer from the file object
+        const uploadDir = path.join(__dirname, '../images');
         const fileBuffer = file.buffer;
-
-        // Construct the full path to save the file
         const filePath = path.join(uploadDir, newFileName);
-
-        // Write the file buffer to the specified file path
         await fs.promises.writeFile(filePath, fileBuffer);
         return `./images/${newFileName}`;
     } catch (error) {
         console.error('Error uploading product image:', error);
-        throw error; // Re-throw the error to handle it in the caller function
+        throw error;
     }
 }
 
 function getNextId() {
     let currentId;
     const idFilePath = './files/id.txt';
-    // בדיקת אם הקובץ קיים
     if (fs.existsSync(idFilePath)) {
-        // קריאת ה-ID מהקובץ
         const idData = fs.readFileSync(idFilePath, 'utf8');
         currentId = parseInt(idData, 10);
     } else {
-        // אם הקובץ לא קיים, אתחל את ה-ID ל-0
         currentId = 0;
     }
-
-    // העלאת ה-ID ב-1
     currentId += 1;
-
-    // שמירת ה-ID החדש בקובץ
     fs.writeFileSync(idFilePath, currentId.toString(), 'utf8');
 
     return currentId;
 }
 
-async function getImage(url) {
-    if (url == null || url == undefined) {
-        return 'no image';
-    }
-    else {
-        const imageURL = url //`${url.split("\\").join("/")}`;
-        const imageData = await fs.promises.readFile(imageURL);
-        //const imageBuffer = await imageData.buffer();
-        const base64Image = imageData.toString('base64');
-        return `data:image/jpeg;base64,${base64Image}`;
-    }
-}
 async function getProductImage(filePath) {
     try {
-        // Read the file buffer from the specified file path
         const fileBuffer = await fs.promises.readFile(filePath);
-
-        // Convert the buffer to a base64 string for displaying as an image
         const base64Image = fileBuffer.toString('base64');
-
-        // Return the base64 string in a format suitable for displaying in HTML
         return `data:image/png;base64,${base64Image}`;
     } catch (error) {
         console.error('Error reading product image:', error);
-        throw error; // Re-throw the error to handle it in the caller function
+        throw error;
     }
 }
 
+async function deleteProductImage(imagePath) {
+    try {
+        const fullPath = path.join(__dirname, '../', imagePath);
+        await fs.promises.access(fullPath, fs.constants.F_OK);
+        await fs.promises.unlink(fullPath);
+        console.log(`Deleted image: ${imagePath}`);
+        return true;
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            console.error(`Image not found: ${imagePath}`);
+        } else {
+            console.error('Error deleting product image:', error);
+        }
+        throw error;
+    }
+}
 
 module.exports = { Service };

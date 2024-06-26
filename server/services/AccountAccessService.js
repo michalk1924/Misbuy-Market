@@ -1,8 +1,7 @@
 require('dotenv').config();
-
+const { MongoClient, ObjectId } = require('mongodb');
 const AccountAccessRepository = require('../repositories/AccountAccessRepository');
 const { Exception, UnauthorizedException, InternalServerException } = require('../Exception');
-
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
@@ -16,8 +15,9 @@ class AccountAccessService {
     async SignIn({ email, password }) {
         try {
             const user = await this.repository.SignIn(email);
+            const userId = user._id;
+            const userIdString = userId.toString();
             const newHashPassword = await bcrypt.hash(password, user.salt);
-            console.log("newHashPassword " + newHashPassword);
             const isMatch = user.hashPassword == newHashPassword;
             if (!isMatch) {
                 throw new UnauthorizedException('worng password');
@@ -29,7 +29,7 @@ class AccountAccessService {
                 algorithm: 'HS256',
                 expiresIn: '5m',
                 issuer: 'my-api',
-                subject: user.email
+                subject: userIdString
             })
             return { user, token };
         }
@@ -43,8 +43,7 @@ class AccountAccessService {
     async SignUp(user) {
         try {
             const password = user.password;
-            const saltRounds = 10 //process.env.SALT_ROUNDS;
-            console.log(saltRounds);
+            const saltRounds = 10 // process.env.SALT_ROUNDS;
             const salt = await bcrypt.genSalt(saltRounds);
             console.log("salt: ", salt);
             const hashPassword = await bcrypt.hash(password, salt);

@@ -1,16 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../style/addItem.css';
 import { useNavigate } from 'react-router-dom';
-import { Token } from './TokenProvider';
+//import { Token } from './TokenProvider';
 
 function AddItem() {
-    const tokenContext = useContext(Token);
+    //const tokenContext = useContext(Token);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);
     const [wrong, setWrong] = useState(false);
     const [wrongExists, setWrongExists] = useState(false);
-    const [token, setToken] = useState(tokenContext);
+    const [token, setToken] = useState();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setToken(token)
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +41,7 @@ function AddItem() {
                 method: 'POST',
                 body: formDataWithImage,
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: token,
                 },
             });
 
