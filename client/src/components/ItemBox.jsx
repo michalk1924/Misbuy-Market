@@ -6,8 +6,8 @@ const ItemBox = ({item}) => {
 
   return (
     <div className="item-box">
-      <Link to={`../items/${item._id}`}>
-        <img src={`data:image/png;base64,${item.image}`} alt="Item" />
+      <Link to={`../${item.category}/${item._id}`}>
+        <img src={item.image} alt="image item" />
         <p>Price: {item.price}</p>
         <p>Area: {item.area}</p>
       </Link>
