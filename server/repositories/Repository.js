@@ -111,6 +111,7 @@ class Repository {
             if (result.deletedCount === 0) {
                 throw new NotFoundException();
             }
+            return result;
         }
         catch (error) {
             if(!error instanceof Exception)
