@@ -50,7 +50,6 @@ class Service {
             // product.phone = user.phone;
             if (product.imageUrl) {
                 const image = await getProductImage(product.imageUrl);
-                console.log("image service get", image);
                 product.image = image;
             }
             return product;
@@ -63,8 +62,7 @@ class Service {
     }
 
     async insert(productData, image) {
-        console.log("image service insert", image);
-        let productDataWithImg;
+        let productDataWithImg = productData;
         try {
             if (image) {
                 const imgName = await uploadProductImage(image);
@@ -95,7 +93,11 @@ class Service {
 
     async delete(id) {
         try {
-            return this.repository.delete(id);
+            const product =  this.repository.delete(id);
+            console.log("deleted product" + JSON.stringify(product));
+            if (product.imageUrl) {
+                //await deleteProductImage(product.imageUrl);
+            }
         }
         catch (error) {
             if (!error instanceof Exception)
@@ -104,8 +106,7 @@ class Service {
         }
     }
 
-    async deleteAll()
-    {
+    async deleteAll() {
         try {
             return this.repository.deleteAll();
         }
