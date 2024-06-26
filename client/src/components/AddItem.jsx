@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import '../style/addItem.css';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Token } from './TokenProvider';
 
 function AddItem() {
@@ -24,7 +24,6 @@ function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formDataWithImage = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);

@@ -28,7 +28,6 @@ server.use('/api/shoes', shoesRouter);
 server.use('/api/clothes', clothesRouter);
 server.use('/api/accessories', accessoriesController);
 server.use('/api/allitems', allItemsRouter);
-
 server.use('/', accountAccessRouter);
 
 server.get('/', (req, res) => {

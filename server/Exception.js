@@ -8,7 +8,7 @@ class Exception {
 //בקשה לא תקינה- השרת לא הצליח להבין את הבקשה עקב נתונים חסרים, שגויים או לא חוקיים
 class BadRequestException extends Exception {
     constructor(error) {
-        super(error!=null ? error : { message: 'bad request' });
+        super(error.message!=undefined ? error : { message: 'bad request' });
         this.statusCode = 400;
     }
 }
@@ -16,7 +16,7 @@ class BadRequestException extends Exception {
 //אימות נכשל. המשתמש לא מורשה לבצע את הפעולה המבוקשת
 class UnauthorizedException extends Exception {
     constructor(error) {
-        super(error!=null ? error : { message: 'Unauthorized' });
+        super(error.message!=undefined ? error : { message: 'Unauthorized' });
         this.statusCode = 401;
     }
 }
@@ -24,7 +24,7 @@ class UnauthorizedException extends Exception {
 //גישה אסורה. המשאב המבוקש זמין, אך המשתמש אינו מורשה לגשת אליו
 class ForbiddenException extends Exception {
     constructor(error) {
-        super(error!=null ? error :{ message: 'Forbidden' });
+        super(error.message!=undefined ? error :{ message: 'Forbidden' });
         this.statusCode = 403;
     }
 }
@@ -32,7 +32,7 @@ class ForbiddenException extends Exception {
 //לא נמצא. המשאב המבוקש לא קיים
 class NotFoundException extends Exception {
     constructor(error) {
-        super(error!=null ? error : { message: 'Not Found' });
+        super(error.message!=undefined ? error : { message: 'Not Found' });
         this.statusCode = 404;
     }
 }
@@ -40,7 +40,7 @@ class NotFoundException extends Exception {
 //קונפליקט. המצב הנוכחי לא מאפשר את ביצוע הבקשה. לדוגמא- נסיון ליצור משאב שכבר קיים
 class ConflictException extends Exception {
     constructor(error) {
-        super(error!=null ? error :{ message: 'conflict' });
+        super(error.message!=undefined ? error :{ message: 'conflict' });
         this.statusCode = 409;
     }
 }
@@ -48,7 +48,7 @@ class ConflictException extends Exception {
 //שגיאת שרת פנימית. השרת נתקל בבעיה בלתי צפויה ואינו יכול לטפל בבקשה
 class InternalServerException extends Exception {
     constructor(error) {
-        super(error!=null ? error :{ message: 'Internal Server' });
+        super(error.message!=undefined ? error :{ message: 'Internal Server' });
         this.statusCode = 500;
     }
 }
@@ -56,7 +56,7 @@ class InternalServerException extends Exception {
 //השירות אינו זמין. השרת זמנית לא יכול לטפל בבקשות
 class ServiceUnavailableException extends Exception {
     constructor(error) {
-        super(error!=null ? error :{ message: 'Service unavailable' });
+        super(error.message!=undefined ? error :{ message: 'Service unavailable' });
         this.statusCode = 503;
     }
 }

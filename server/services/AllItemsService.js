@@ -16,19 +16,23 @@ class AllItemsService extends Service {
 
     async get(id) {
         try {
-            const shoes = await shoesRepository.get(id);
+            const shoes = 
+            await shoesRepository.get(id);
+            log("1" + JSON.stringify(shoes));
             if (shoes) {
-                await shoesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                //await shoesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
                 return shoes;
             }
             const bag = await bagsRepository.get(id);
+            log("1" + JSON.stringify(shoes));
             if (bag) {
-                await bagsRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                //await bagsRepository.update(id, { "viewsCounter": ++this.viewsCounter });
                 return bag;
             }
             const cloth = await clothesRepository.get(id);
+            log("3" + JSON.stringify(shoes));
             if (cloth) {
-                await clothesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                //await clothesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
                 return cloth;
             }
             throw new NotFoundException("Item not found");
