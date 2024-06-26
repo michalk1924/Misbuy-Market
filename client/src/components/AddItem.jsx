@@ -66,7 +66,7 @@ function AddItem() {
                     <label className="addItemLabel" htmlFor="category">
                         Select Category:
                     </label>
-                    <select className="addItemInput" id="category" name="category" onChange={handleChange}>
+                    <select className="addItemInput" id="category" name="category" onChange={handleChange} required>
                         <option value=""></option> {/* Empty option */}
                         <option value="shoes">Shoes</option>
                         <option value="clothes">Clothes</option>

@@ -5,12 +5,12 @@ import { useParams } from 'react-router-dom';
 
 function ItemDetails() {
   const [item, setItem] = useState({});
-  let {itemId} = useParams(); // Accessing URL parameter directly
+  const {itemId, category} = useParams(); // Accessing URL parameter directly
 
   async function getItem(id) {
     if (id) {
       console.log(id);
-      const url = `http://localhost:3000/api/allItems/${id}`;
+      const url = `http://localhost:3000/api/${category}/${id}`;
       const response = await fetch(url);
       const data = await response.json()
       console.log(data);
@@ -25,7 +25,7 @@ function ItemDetails() {
   return (
     <div className="details-container">
       <div className="image-container">
-        <img src={item && `data:image/png;base64,${item.image}`} alt="image" />
+        <img src={item.image} alt="image" />
       </div>
       <div className="info-container">
         <div>

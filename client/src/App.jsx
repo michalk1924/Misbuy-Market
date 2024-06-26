@@ -23,9 +23,9 @@ function App() {
             <Route path='home' element={<Home />} />
             <Route path='items'>
               <Route index element={<Items />} />
-              <Route path=':category' element={<CategoryItems />}>
-                <Route path=':itemId' element={<Item/>} />
-              </Route>
+              <Route path=':category' element={<CategoryItems />}/>
+              <Route path=':category/:itemId' element={<Item/>} />
+              {/* </Route> */}
               <Route path='addItem' element={<AddItem />} />
             </Route>
           </Route>

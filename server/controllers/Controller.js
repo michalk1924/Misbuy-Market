@@ -45,14 +45,7 @@ class Controller {
             let response = "";
             const image = req.file;
             const product = req.body;
-            let productDataWithImg=product;
-            if (image) {
-                const imgName = await uploadProductImage(image);
-                console.log(imgName);
-                productDataWithImg = { ...product, imageUrl: imgName };
-            }
-            console.log(productDataWithImg);
-            response = await this.service.insert(productDataWithImg);
+            response = await this.service.insert(product, image);
             return res.status(200).json(response);
 
         } catch (error) {
@@ -90,26 +83,5 @@ class Controller {
 
 }
 
-
-async function uploadProductImage(file) {
-    try {
-        // let id = await ProductsServices.getNextProductId();
-        const newFileName = `1.png`;
-        const uploadDir = path.join(__dirname, '../images'); // Relative path to the images directory
-
-        // Read the file buffer from the file object
-        const fileBuffer = file.buffer;
-
-        // Construct the full path to save the file
-        const filePath = path.join(uploadDir, newFileName);
-
-        // Write the file buffer to the specified file path
-        await fs.promises.writeFile(filePath, fileBuffer);
-        return `./images/${newFileName}`;
-    } catch (error) {
-        console.error('Error uploading product image:', error);
-        throw error; // Re-throw the error to handle it in the caller function
-    }
-}
 
 module.exports = { Controller };
