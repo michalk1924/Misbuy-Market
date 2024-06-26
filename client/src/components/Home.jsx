@@ -9,7 +9,7 @@ function Home() {
   const token = useContext(Token);
 
 
-  useEffect(() => {console.log("token" + console.log(JSON.stringify(token)))}, [])
+  useEffect(() => { console.log("token" + console.log(JSON.stringify(token))) }, [])
 
   return (
     <div>

@@ -94,9 +94,7 @@ function Items() {
           <option value="up">low to high</option>
           <option value="down">high to low</option>
         </select>
-      </div>
-      <div id='mainContent'>
-        
+      </div>     
         {/* Item list */}
         <div className="item-list">
           {items.map((item, index) => (
@@ -141,8 +139,6 @@ function Items() {
             <label htmlFor="type3">Boat</label>
           </form>
         </div>
-
-      </div>
     </div>
   );
 };

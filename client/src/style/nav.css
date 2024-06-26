@@ -10,6 +10,7 @@ nav {
     top: 0; /* Position it at the top of the page */
     left: 0;
     height: 10%;
+    z-index: 1001;
   }
   
   
