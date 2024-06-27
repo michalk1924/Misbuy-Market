@@ -1,0 +1,21 @@
+import React from "react";
+import { useEffect } from "react";
+function SingleSelector(props) {
+    const { title, options, handleChange } = props;
+    useEffect(()=>{
+        console.log(options);
+    },[])
+    return (
+        <div>
+            <label className="addItemLabel" htmlFor={title}>{title}</label>
+            <select className="addItemInput" id={title} name={title} onChange={handleChange}>
+                <option value=""></option> {/* Empty option */}
+                {options.map((option, index) => (
+                    <option key={index} value={option}> {option} </option>
+                ))}
+            </select>
+        </div>
+    );
+}
+
+export default SingleSelector;

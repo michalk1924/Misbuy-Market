@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../style/addItem.css';
 import { useNavigate } from 'react-router-dom';
+import Selectors from './Selectors';
 //import { Token } from './TokenProvider';
 
 function AddItem() {
@@ -11,7 +12,20 @@ function AddItem() {
     const [wrong, setWrong] = useState(false);
     const [wrongExists, setWrongExists] = useState(false);
     const [token, setToken] = useState();
-
+    const shoesSelectors = [
+        { title: "type", options: ["sneakers", "boots", "sandals", "loafers", "heels", "flats", "oxfords", "slippers", "espadrilles", "flip-flops", "wedges", "moccasins", "athletic shoes", "pumps", "platforms", "mary janes"] },
+        { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] },
+        { title: "size", options: [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48] }
+    ]
+    const clothesSelectors = [
+        { title: "type", options: ["t-shirt", "shirt", "blouse", "tank top", "sweater", "hoodie", "jacket", "coat", "dress", "skirt", "jeans", "trousers", "shorts", "leggings", "suit", "tie", "scarf", "gloves", "hat", "socks", "swimsuit", "robe", "pajamas"] },
+        { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] },
+        { title: "size", options: ["XS", "S", "M", "L", "XL", "XXL"] }
+    ]
+    const accessoriesSelectors = [
+        { title: "type", options: ["necklace", "bracelet", "ring", "earrings", "watch", "belt", "scarf", "hat", "sunglasses", "gloves", "handbag", "backpack", "wallet", "tie", "bow tie", "hairpin", "headband", "umbrella"] },
+        { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] }
+    ]
     useEffect(() => {
         const token = localStorage.getItem('token');
         setToken(token)
@@ -75,36 +89,26 @@ function AddItem() {
                         <option value=""></option> {/* Empty option */}
                         <option value="shoes">Shoes</option>
                         <option value="clothes">Clothes</option>
-                        <option value="Accessories">Accessories</option>
+                        <option value="accessories">Accessories</option>
                     </select>
-                </div>
-                <div>
-                    <label className="addItemLabel" htmlFor="price">
-                        Price:
-                    </label>
+
+                    {formData.category == "shoes" && <Selectors selectors={shoesSelectors} handleChange={handleChange} />}
+                    {formData.category == "clothes" && <Selectors selectors={clothesSelectors} handleChange={handleChange} />}
+                    {formData.category == "accessories" && <Selectors selectors={accessoriesSelectors} handleChange={handleChange} />}  
+                    
+                    <label className="addItemLabel" htmlFor="price">Price:</label>
                     <input className="addItemInput" type="number" id="price" name="price" onChange={handleChange} />
-                </div>
-                <div>
-                    <label className="addItemLabel" htmlFor="title">
-                        Title:
-                    </label>
+                    
+                    <label className="addItemLabel" htmlFor="title"> Title:</label>
                     <input className="addItemInput" type="text" id="title" name="title" onChange={handleChange} />
-                </div>
-                <div>
-                    <label className="addItemLabel" htmlFor="description">
-                        Description:
-                    </label>
+                    
+                    <label className="addItemLabel" htmlFor="description">Description:</label>
                     <textarea className="addItemInput" id="description" name="description" onChange={handleChange} />
-                </div>
-                <div>
-                    <label className="addItemLabel" htmlFor="image">
-                        Upload Image:
-                    </label>
+                    
+                    <label className="addItemLabel" htmlFor="image">Upload Image:</label>
                     <input className="addItemInput" type="file" id="image" name="image" onChange={handleImageChange} />
                 </div>
-                <button className="addItemSubmitButton" type="submit">
-                    Submit
-                </button>
+                <button className="addItemSubmitButton" type="submit">Submit</button>
             </form>
         </div>
     );
