@@ -33,7 +33,7 @@ class Service {
     async get(id) {
         try {
             const product = await this.repository.get(id);
-            this.update(id, {"viewsCounter": product.viewsCounter + 1});
+            //this.update(id, {"viewsCounter": product.viewsCounter + 1});
             const user = await usersRepository.getById(product.userId);
             product.userName = user.name;
             product.phone = user.phone;
