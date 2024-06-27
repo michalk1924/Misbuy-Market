@@ -1,5 +1,21 @@
-#categories{
+#categories {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#title {
+    animation: slideIn 1s ease-out forwards;
 }

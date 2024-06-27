@@ -8,8 +8,10 @@ const ItemBox = ({ item }) => {
   return (
     <Link to={category && `../${item.category}/${item._id}` || `../items/${item.category}/${item._id}`} className="item-box">
       <img src={item.image} alt="image item" />
-      <p>Price: {item.price}</p>
-      <p>Area: {item.area}</p>
+      <div id="shortDescription">
+        <p>Price:<b> {item.price}</b></p>
+        <p>Area: {item.area}</p>
+      </div>
     </Link>
   );
 };
