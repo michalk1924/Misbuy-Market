@@ -9,7 +9,10 @@ import AddItem from './components/AddItem';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import CategoryItems from './components/CategoryItems'
+import ForgotPassword from './components/ForgotPassword';
+import NewPassword from './components/NewPassword';
 import { Token } from './components/TokenProvider';
+
 
 function App() {
 
@@ -20,6 +23,8 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route path='signin' element={<SignIn />} />
             <Route path='signup' element={<SignUp />} />
+            <Route path='forgotpassword' element={<ForgotPassword />} />
+            <Route path='newpassword' element={<NewPassword />} />
             <Route path='home' element={<Home />} />
             <Route path='items'>
               <Route index element={<Items />} />

@@ -1,10 +1,16 @@
 require('dotenv').config();
 const { MongoClient, ObjectId } = require('mongodb');
 const AccountAccessRepository = require('../repositories/AccountAccessRepository');
-const { Exception, UnauthorizedException, InternalServerException } = require('../Exception');
+const { Exception, UnauthorizedException, InternalServerException, BadRequestException } = require('../Exception');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const fs = require('fs');
+const UsersRepository = require('../repositories/UsersRepository');
+const { loadavg } = require('os');
+
+const sentCodes = {};
 
 class AccountAccessService {
 
@@ -12,7 +18,7 @@ class AccountAccessService {
         this.repository = repo;
     }
 
-    async SignIn({ email, password }) {
+    async signIn({ email, password }) {
         try {
             const user = await this.repository.SignIn(email);
             const userId = user._id;
@@ -40,7 +46,7 @@ class AccountAccessService {
         }
     }
 
-    async SignUp(user) {
+    async signUp(user) {
         try {
             const password = user.password;
             const saltRounds = 10 // process.env.SALT_ROUNDS;
@@ -70,6 +76,91 @@ class AccountAccessService {
             throw error;
         }
     }
+
+    async forgotPassword(email) {
+        try {
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
+            let data = await fs.promises.readFile('./files/codes.txt', 'utf8');
+            let lines = data.split('\n');
+            let found = false;
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                let [existingEmail, existingCode] = line.split(':');
+                if (existingEmail === email) {
+                    lines[i] = `${email}:${code}`;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                lines.push(`${email}:${code}`);
+            }
+            await fs.promises.writeFile('./files/codes.txt', lines.join('\n'));
+            await sendEmail(email, 'Here is your code', `Your code is: ${code}`);
+            console.log('Password reset code sent successfully');
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException(error);
+            throw error;
+        }
+    }
+
+
+    async checkCodeFromEmail(email, code) {
+        try {
+            const data = await fs.promises.readFile('./files/codes.txt', 'utf8');
+            const codes = data.split('\n').reduce((acc, line) => {
+                if (line.trim()) { // מתעלמים משורות ריקות
+                    const [mail, cd] = line.split(':');
+                    acc[mail.trim()] = cd.trim();
+                }
+                return acc;
+            }, {});
+
+            const savedCode = codes[email];
+
+            if (savedCode && savedCode == code) {
+                console.log('code is correct');
+                return true;
+            } else {
+                throw new BadRequestException('Invalid code');
+            }
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
+    }
+
+    async newPassword(email, password) {
+        try {
+            console.log("password" + password);
+            const saltRounds = 10 // process.env.SALT_ROUNDS;
+            const salt = await bcrypt.genSalt(saltRounds);
+            console.log("salt: ", salt);
+            const hashPassword = await bcrypt.hash(password, salt);
+            console.log("hashPassword " + hashPassword);
+            const user = await UsersRepository.get({"email":email})
+            const userId = user._id;
+            const userIdString = userId.toString();
+            await UsersRepository.update(userIdString, { "hashPassword": hashPassword, "salt": salt });
+            console.log("User Id: " + userId);
+            const tokenSecrete = process.env.TOKEN_SECRET;
+            const token = jwt.sign({
+                role: 'connected',
+            }, tokenSecrete, {
+                algorithm: 'HS256',
+                expiresIn: '60m',
+                issuer: 'my-api',
+                subject: userId.toString(),
+            })
+            return { token };
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            throw error;
+        }
+    }
 }
 
 generateSalt = async () => {
@@ -79,43 +170,10 @@ generateSalt = async () => {
     return salt;
 }
 
-
 generateTokenSecret = () => {
     return crypto.randomBytes(32).toString('hex');
 }
 
-const nodemailer = require('nodemailer');
-
-async function sendVerificationCodeEmail(emailAddress) {
-    // הגדרת משתני SMTP
-    const transporter = nodemailer.createTransport({
-        host: '172.253.63.27', // החלף בשרת SMTP שלך
-        port: 587,
-        secure: true, // השתמש ב-TLS
-        auth: {
-            user: 'mkastner@g.jct.ac.il', // כתובת הדואר האלקטרוני שלך
-            pass: 'MKmk1924' // סיסמת הדואר האלקטרוני שלך
-        }
-    });
-
-    // יצירת קוד אימות אקראי
-    const verificationCode = randomString(6); // פונקציה זו אינה מוגדרת בדוגמה זו
-
-    // יצירת תוכן הודעת הדואר האלקטרוני
-    const message = {
-        from: '"Misbuy - Market" <mkastner@g.jct.ac.il>', // שם ושליח
-        to: emailAddress,
-        subject: 'Verification Code',
-        text: `Your verification code is: ${verificationCode}`
-    };
-
-    // שליחת הודעת הדואר האלקטרוני
-    await transporter.sendMail(message);
-
-    console.log(`Verification code sent to ${emailAddress}`);
-}
-
-// פונקציה לדוגמה ליצירת מחרוזת אקראית
 function randomString(length) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
@@ -125,6 +183,31 @@ function randomString(length) {
     return result;
 }
 
-//sendVerificationCodeEmail("michalk1924@gmail.com")
+async function sendEmail(to, subject, text) {
+    // יצירת אובייקט משגר
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'mkastner@g.jct.ac.il', // המייל שלך
+            pass: 'MKmk1924'   // הסיסמא שלך או אפליקיישן פסוורד אם יש
+        }
+    });
+
+    // אפשרויות המייל
+    let mailOptions = {
+        from: 'mkastner@g.jct.ac.il', // המייל שלך
+        to: to,                       // כתובת הלקוח
+        subject: subject,             // נושא המייל
+        text: text                    // תוכן המייל
+    };
+
+    // שליחת המייל
+    try {
+        let info = await transporter.sendMail(mailOptions);
+        console.log('Email sent: ' + info.response);
+    } catch (error) {
+        console.error('Error sending email: ', error);
+    }
+}
 
 module.exports = new AccountAccessService(AccountAccessRepository);

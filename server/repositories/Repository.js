@@ -66,7 +66,7 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const o_id = new ObjectId(id);
-            const result = await database.collection(this.collection).updateOne({ "_id": o_id }, data);
+            const result = await database.collection(this.collection).updateOne({ "_id": o_id },{ $set: data });
             return result;
         }
         catch (error) {
