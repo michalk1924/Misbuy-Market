@@ -39,6 +39,7 @@ function SignUp() {
       //setToken(token);
       console.log(token);
       localStorage.setItem("currentUser", formData.email);
+      localStorage.setItem("token", token.token);
       navigate(`/home`, { state: token });
     };
   }

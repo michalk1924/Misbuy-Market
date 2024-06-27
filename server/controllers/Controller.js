@@ -1,8 +1,4 @@
 const { Exception, NotFoundException, InternalServerException } = require("../Exception");
-//const fileUpload = require('express-fileupload');
-const path = require('path');
-const fs = require('fs');
-
 
 class Controller {
 
@@ -13,7 +9,6 @@ class Controller {
     async getAll(req, res) {
         try {
             const response = await this.service.getAll(req.query);
-            console.log("response" + response);
             return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)
@@ -29,14 +24,12 @@ class Controller {
         console.log(id);
         try {
             const response = await this.service.get(id);
-            //console.log("response" + response.image.ToString());
             if (response == null)
                 throw new NotFoundException(null)
             return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
-            console.log(error?.message);
             return res.status(error.statusCode).json(error.message);
         }
     }

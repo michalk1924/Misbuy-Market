@@ -8,7 +8,10 @@ const db_name = process.env.MONGODB_DB_NAME;
 
 class UsersRepository {
 
-    async get(id) {
+    constructor(collection) {
+        this.collection = collection;
+    }
+    async getById(id) {
         try {
             await client.connect();
             const database = client.db(db_name);
@@ -23,7 +26,57 @@ class UsersRepository {
         finally {
             await client.close();
         }
+    }
+
+    async getAll(filter) {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const users = await database.collection(this.collection).find(filter).toArray();
+            return users;
+        }
+        catch (error) {
+            error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
     };
 
+    async get(filter) {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const user = await database.collection(this.collection).findOne(filter);
+            return user;
+        }
+        catch (error) {
+            error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
+    };
+
+    
+    async insert(data) {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const result = await database.collection(this.collection).insertOne(data);
+            console.log("res Id:"+ result.insertedId);
+            return result.insertedId;
+        }
+        catch (error) {
+            error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
+    }
+
 }
-module.exports = new UsersRepository();
+module.exports = new UsersRepository('Users');
