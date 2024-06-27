@@ -1,17 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
 import '../style/itemBox.css'
 
 
-const ItemBox = ({item}) => {
-
+const ItemBox = ({ item }) => {
+  const { category } = useParams();
   return (
-    <div className="item-box">
-      <Link to={`../${item.category}/${item._id}`}>
-        <img src={item.image} alt="image item" />
-        <p>Price: {item.price}</p>
+    <Link to={category && `../${item.category}/${item._id}` || `../items/${item.category}/${item._id}`} className="item-box">
+      <img src={item.image} alt="image item" />
+      <div id="shortDescription">
+        <p>Price:<b> {item.price}</b></p>
         <p>Area: {item.area}</p>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

@@ -18,7 +18,7 @@ function Items() {
     // Add new filter functions here (e.g., brand, color)
   };
 
-   const selectSortOptions = {
+  const selectSortOptions = {
     up: (item1, item2) => item1.price - item2.price,
     down: (item1, item2) => item2.price - item1.price,
   };
@@ -85,63 +85,61 @@ function Items() {
 
   return (
     <div>
-      {/* Search controls */}
-      <div>
-        <label htmlFor="price">Price: up to {searchValue.price[1]}</label>
-        <input
-          type="range"
-          min="0"
-          max="500"
-          value={searchValue.price[1]} // Use upper bound for slider
-          id="myRange"
-          onChange={handleRangeChange}
-          name="price"
-        />
-
-        {/* Type checkboxes */}
-        <form onChange={handleCheckboxChange} name="type">
-          <input type="checkbox" id="type1" value="Bike" />
-          <label htmlFor="type1">Bike</label>
-          <br />
-          <input type="checkbox" id="type2" value="Car" />
-          <label htmlFor="type2">Car</label>
-          <br />
-          <input type="checkbox" id="type3" value="Boat" />
-          <label htmlFor="type3">Boat</label>
-        </form>
-
-        {/* Area checkboxes (similar to type) */}
-        <form onChange={handleCheckboxChange} name="area">
-          <input type="checkbox" id="type1" value="fff" />
-          <label htmlFor="type1">fff</label>
-          <br />
-          <input type="checkbox" id="type2" value="Car" />
-          <label htmlFor="type2">Car</label>
-          <br />
-          <input type="checkbox" id="type3" value="Boat" />
-          <label htmlFor="type3">Boat</label>
-        </form>
-      </div>
-
       {/* sort */}
-      <div>
+      <div id='selectSort'>
         <label htmlFor="sort">
-          Select Category:
+          Sort By:
         </label>
         <select id="sort" name="category" onChange={handleSelectChange}>
           <option value="up">low to high</option>
           <option value="down">high to low</option>
         </select>
-      </div>
+      </div>     
+        {/* Item list */}
+        <div className="item-list">
+          {items.map((item, index) => (
+            <ItemBox key={item.id} item={item} />
+          ))}
+        </div>
+        
+        {/* Search controls */}
+        <div id='searchControls'>
+          <label htmlFor="price">Price: up to {searchValue.price[1]}</label>
+          <input
+            type="range"
+            min="0"
+            max="500"
+            value={searchValue.price[1]} // Use upper bound for slider
+            id="myRange"
+            onChange={handleRangeChange}
+            name="price"
+          />
 
-      {/* Item list */}
-      <div className="item-list">
-        {items.map((item, index) => (
-          <ItemBox key={item.id} item={item} />
-        ))}
-      </div>
+          {/* Type checkboxes */}
+          <form onChange={handleCheckboxChange} name="type">
+            <input type="checkbox" id="type1" value="Bike" />
+            <label htmlFor="type1">Bike</label>
+            <br />
+            <input type="checkbox" id="type2" value="Car" />
+            <label htmlFor="type2">Car</label>
+            <br />
+            <input type="checkbox" id="type3" value="Boat" />
+            <label htmlFor="type3">Boat</label>
+          </form>
+
+          {/* Area checkboxes (similar to type) */}
+          <form onChange={handleCheckboxChange} name="area">
+            <input type="checkbox" id="type1" value="fff" />
+            <label htmlFor="type1">fff</label>
+            <br />
+            <input type="checkbox" id="type2" value="Car" />
+            <label htmlFor="type2">Car</label>
+            <br />
+            <input type="checkbox" id="type3" value="Boat" />
+            <label htmlFor="type3">Boat</label>
+          </form>
+        </div>
     </div>
-    
   );
 };
 

@@ -5,3 +5,7 @@
     align-content: end;
     margin: 3vw;
 }
+
+.categoryBox:hover{
+    color: blue;
+}
