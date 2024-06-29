@@ -11,6 +11,7 @@ function CategoryItems() {
     const { category } = useParams();
     const [start, setStart] = useState(0)
     const [thereMoreItems, setThereMoreItems] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     async function getItems() {
         console.log(category);
@@ -20,6 +21,7 @@ function CategoryItems() {
             const data = await response.json();
             if (data.length > 0) {
                 setItems(items.concat(await data))
+                setLoading(false);
                 setStart(prevStart => prevStart + limit)
             }
             if (data.length < limit) {
@@ -37,10 +39,11 @@ function CategoryItems() {
 
     return (
         <div className="item-list">
-            {items.map((item, index) => (
+            {!loading && items.map((item, index) => (
                 <ItemBox key={item.id} item={item} />
             ))}
-            {thereMoreItems && <button onClick={getItems}>⏬</button>}
+            {loading && '🔃'}
+            {thereMoreItems && !loading && <button onClick={getItems}>⏬</button>}
         </div>
     )
 }
