@@ -78,5 +78,22 @@ class UsersRepository {
         }
     }
 
+    async update(id, data) {
+        try {
+            await client.connect();
+            const database = client.db(db_name);
+            const o_id = new ObjectId(id);
+            const result = await database.collection(this.collection).updateOne({ "_id": o_id }, { $set: data });
+            return result;
+        }
+        catch (error) {
+            error = new BadRequestException("Repository Error: " + error.message);
+            throw error;
+        }
+        finally {
+            await client.close();
+        }
+    }
+
 }
 module.exports = new UsersRepository('Users');

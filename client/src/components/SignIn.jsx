@@ -48,6 +48,27 @@ function SignIn() {
     };
   }
 
+  const forgotPassword = async () => {
+    const response = await fetch(`http://localhost:3000/forgotpassword`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          "email": formData.email
+        }
+      )
+    });
+    console.log(response.status);
+    if (response.status != 200) {
+      setWorng(true);
+    }
+    else {
+      navigate(`/forgotpassword`, { state: { email: formData.email } });
+    };
+  }
+
   return (
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignIn}>
@@ -56,6 +77,7 @@ function SignIn() {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name='password' onChange={handleChange} />
         <button className="submit-button">Sign In</button>
+        <a onClick={forgotPassword}>forgot your password</a>
         <Link to="/signup" className="link">Don't have an account? Sign Up</Link>
       </form>
       {worng && <p>email or password aren't correct!</p>}

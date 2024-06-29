@@ -33,7 +33,6 @@ class Service {
     async get(id) {
         try {
             const product = await this.repository.get(id);
-            //this.update(id, {"viewsCounter": product.viewsCounter + 1});
             const user = await usersRepository.getById(product.userId);
             product.userName = user.name;
             product.phone = user.phone;
@@ -41,6 +40,7 @@ class Service {
                 const image = await getProductImage(product.imageUrl);
                 product.image = image;
             }
+            await this.update(id, {"viewsCounter": product.viewsCounter + 1});
             return product;
         }
         catch (error) {

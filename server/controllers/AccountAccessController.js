@@ -7,13 +7,13 @@ class SignInController {
         this.service = service;
     }
 
-    async SignIn(req, res) {
+    async signIn(req, res) {
         try {
             const { email, password } = req.body;
             if (!email || !password) {
                 throw new BadRequestException("email or password not found");
-            } 
-            const token = await this.service.SignIn({ email: email, password: password});
+            }
+            const token = await this.service.signIn({ email: email, password: password });
             return res.status(200).send(token);
         } catch (error) {
             if (!error instanceof Exception)
@@ -23,13 +23,13 @@ class SignInController {
         }
     }
 
-    async SignUp(req, res) {
+    async signUp(req, res) {
         try {
             const user = req.body;
             if (!user.email || !user.password) {
                 throw new BadRequestException("email or password not found");
-            } 
-            const token = await this.service.SignUp(user);
+            }
+            const token = await this.service.signUp(user);
             return res.status(200).json(token);
         } catch (error) {
             if (!error instanceof Exception)
@@ -39,6 +39,54 @@ class SignInController {
         }
     }
 
+    async forgotPassword(req, res) {
+        try {
+            const { email } = req.body;
+            if (!email) {
+                throw new BadRequestException("email not found");
+            }
+            await this.service.forgotPassword(email);
+            return res.status(200).end();
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
+        }
+    }
+
+    async checkCodeFromEmail(req, res) {
+        try {
+            const { email, code } = req.body;
+            if (!email || !code) {
+                throw new BadRequestException("email or code not found");
+            }
+            const result = await this.service.checkCodeFromEmail(email, code);
+            if (result) return res.status(200).end();
+            else throw new BadRequestException("Invalid email or code");
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
+        }
+    }
+
+    async newPassword(req, res) {
+        try {
+            const { email, password } = req.body;
+            if (!password) {
+                throw new BadRequestException("new password not found");
+            }
+            const token = await this.service.newPassword(email, password);
+            return res.status(200).json(token);
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
+        }
+    }
 }
 
 module.exports = new SignInController(AccountAccessService);
