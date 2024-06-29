@@ -5,7 +5,7 @@ import ItemBox from './ItemBox';
 
 function CategoryItems() {
 
-    const limit = 10
+    const limit = 8
 
     const [items, setItems] = useState([]);
     const { category } = useParams();
