@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom'
 import {Token} from './TokenProvider'
 import CategoryBox from './CategoryBox';
 import '../style/home.css'
