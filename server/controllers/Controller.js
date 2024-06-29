@@ -8,8 +8,15 @@ class Controller {
 
     async getAll(req, res) {
         try {
-            const response = await this.service.getAll(req.query);
-            return res.status(200).json(response);
+            const { _limit, _start, ...filter } = req.query;
+            const result = await this.service.getAll(filter);
+            if (_limit != undefined && _start != undefined) {
+                const limit_n = parseInt(_limit);
+                const start_n = parseInt(_start);
+                const sliceResult = result.slice(start_n, start_n + limit_n);
+                return res.status(200).json(result ? sliceResult : []);
+            }
+            else res.status(200).json(result ? result : []);
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
