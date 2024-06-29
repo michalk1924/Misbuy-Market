@@ -57,6 +57,8 @@ class AccountAccessService {
             user.hashPassword = hashPassword;
             user.salt = salt;
             user.password = null;
+            user.wishList = [];
+            user.myProsuctsList = [];
             const userId = await this.repository.SignUp(user);
             console.log("User Id: " + userId);
             const tokenSecrete = process.env.TOKEN_SECRET;

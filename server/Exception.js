@@ -1,14 +1,15 @@
 class Exception {
     constructor(error) {
         this.error = error != undefined ? error = error : "";
-        this.message = error?.message!=undefined ? error.message = error.message : "Error";
+        this.message = error?.message!=undefined ? error.message
+        :error ? error : "Error";
         this.statusCode = 500;
     }
 }
 //בקשה לא תקינה- השרת לא הצליח להבין את הבקשה עקב נתונים חסרים, שגויים או לא חוקיים
 class BadRequestException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error : { message: 'bad request' });
+        super(error != undefined ? error : { message: 'bad request' });
         this.statusCode = 400;
     }
 }
@@ -16,7 +17,7 @@ class BadRequestException extends Exception {
 //אימות נכשל. המשתמש לא מורשה לבצע את הפעולה המבוקשת
 class UnauthorizedException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error : { message: 'Unauthorized' });
+        super(error != undefined ? error : { message: 'Unauthorized' });
         this.statusCode = 401;
     }
 }
@@ -24,7 +25,7 @@ class UnauthorizedException extends Exception {
 //גישה אסורה. המשאב המבוקש זמין, אך המשתמש אינו מורשה לגשת אליו
 class ForbiddenException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error :{ message: 'Forbidden' });
+        super(error != undefined ? error :{ message: 'Forbidden' });
         this.statusCode = 403;
     }
 }
@@ -32,7 +33,7 @@ class ForbiddenException extends Exception {
 //לא נמצא. המשאב המבוקש לא קיים
 class NotFoundException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error : { message: 'Not Found' });
+        super(error != undefined ? error : { message: 'Not Found' });
         this.statusCode = 404;
     }
 }
@@ -40,7 +41,7 @@ class NotFoundException extends Exception {
 //קונפליקט. המצב הנוכחי לא מאפשר את ביצוע הבקשה. לדוגמא- נסיון ליצור משאב שכבר קיים
 class ConflictException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error :{ message: 'conflict' });
+        super(error != undefined ? error :{ message: 'conflict' });
         this.statusCode = 409;
     }
 }
@@ -48,7 +49,7 @@ class ConflictException extends Exception {
 //שגיאת שרת פנימית. השרת נתקל בבעיה בלתי צפויה ואינו יכול לטפל בבקשה
 class InternalServerException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error :{ message: 'Internal Server' });
+        super(error != undefined ? error :{ message: 'Internal Server' });
         this.statusCode = 500;
     }
 }
@@ -56,7 +57,7 @@ class InternalServerException extends Exception {
 //השירות אינו זמין. השרת זמנית לא יכול לטפל בבקשות
 class ServiceUnavailableException extends Exception {
     constructor(error) {
-        super(error != undefined && error.message!=undefined ? error :{ message: 'Service unavailable' });
+        super(error != undefined ? error :{ message: 'Service unavailable' });
         this.statusCode = 503;
     }
 }

@@ -17,8 +17,11 @@ const auth = (requiredRole, action) => {
         if (action == 'post')
           req.body.userId = sub;
         else if (action == 'put' || action == 'delete')
-          if (req.body.userId != sub)
+          if (req.body.userId != sub && req.params.id != sub)
             throw new Exception('You are not authorized to do this action');
+        else if(action == 'get')
+          if (req.params.id != sub)
+            throw new Exception('You are not authorized to access this resource');
         next();
       } else {
         console.log('Token is invalid or has expired');
