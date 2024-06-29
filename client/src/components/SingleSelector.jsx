@@ -2,9 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 function SingleSelector(props) {
     const { title, options, handleChange } = props;
-    useEffect(()=>{
-        console.log(options);
-    },[])
     return (
         <div>
             <label className="addItemLabel" htmlFor={title}>{title}</label>
