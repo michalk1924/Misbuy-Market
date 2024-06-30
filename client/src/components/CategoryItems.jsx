@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import '../style/categoryItems.css'
 import ItemBox from './ItemBox';
-
+import Filters from "./Filters";
 function CategoryItems() {
 
     const [items, setItems] = useState([]);
@@ -21,10 +21,13 @@ function CategoryItems() {
     }, []);
 
     return (
+        <div>
+      <Filters setItems={setItems} allItems={items}/>
         <div className="item-list">
             {items.map((item, index) => (
                 <ItemBox key={item.id} item={item} />
             ))}
+        </div>
         </div>
     )
 }

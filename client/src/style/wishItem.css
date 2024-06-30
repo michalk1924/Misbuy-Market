@@ -1,0 +1,26 @@
+.icon:hover {
+    color: rgb(229, 202, 49);
+}
+
+.wishItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70vw;
+    border: 2px solid rgb(129, 127, 127);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    padding: 5vw;
+    margin: 2vw;
+}
+
+.wishItem:hover {
+    transform: scale(1.005);
+    border: 3px solid #0c0479;
+}
+
+.shortDescription {
+    display: flex;
+    flex-direction: column;
+}

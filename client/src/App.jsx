@@ -11,6 +11,8 @@ import SignUp from './components/SignUp';
 import CategoryItems from './components/CategoryItems'
 import ForgotPassword from './components/ForgotPassword';
 import NewPassword from './components/NewPassword';
+import WishList from './components/WishList';
+import UserProducts from './components/UserProducts';
 import { Token } from './components/TokenProvider';
 
 
@@ -26,11 +28,14 @@ function App() {
             <Route path='forgotpassword' element={<ForgotPassword />} />
             <Route path='newpassword' element={<NewPassword />} />
             <Route path='home' element={<Home />} />
+            <Route path='users/:userId'>
+              <Route path='wishList' element={<WishList/>} />
+              <Route path='myProducts' element={<UserProducts />} />
+            </Route>
             <Route path='items'>
               <Route index element={<Items />} />
-              <Route path=':category' element={<CategoryItems />}/>
-              <Route path=':category/:itemId' element={<Item/>} />
-              {/* </Route> */}
+              <Route path=':category' element={<CategoryItems />} />
+              <Route path=':category/:itemId' element={<Item />} />
               <Route path='addItem' element={<AddItem />} />
             </Route>
           </Route>

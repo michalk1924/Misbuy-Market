@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useState} from 'react'
 import {Token} from './TokenProvider'
 import CategoryBox from './CategoryBox';
 import '../style/home.css'
+
 function Home() {
 
-  //const { state } = useLocation()
   const token = useContext(Token);
 
 

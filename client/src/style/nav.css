@@ -13,6 +13,9 @@ nav {
     z-index: 1001;
   }
   
+  .icon:hover{
+    color: rgb(229, 202, 49);
+  }
   
   
   .logo img{
