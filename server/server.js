@@ -8,6 +8,7 @@ const accessoriesController = require('./routers/AccessoriesRouter');
 const clothesRouter = require('./routers/ClothesRouter');
 const accountAccessRouter = require('./routers/AccountAccess');
 const allItemsRouter = require('./routers/AllItemsRouter');
+const usersRouter = require('./routers/UsersRouter');
 
 const server = express();
 const host = process.env.HOST;
@@ -28,6 +29,7 @@ server.use('/api/shoes', shoesRouter);
 server.use('/api/clothes', clothesRouter);
 server.use('/api/accessories', accessoriesController);
 server.use('/api/allitems', allItemsRouter);
+server.use('/api/users', usersRouter);
 server.use('/', accountAccessRouter);
 
 server.get('/', (req, res) => {

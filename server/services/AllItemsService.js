@@ -16,23 +16,22 @@ class AllItemsService extends Service {
 
     async get(id) {
         try {
-            const shoes = 
-            await shoesRepository.get(id);
+            const shoes = await shoesRepository.get(id);
             log("1" + JSON.stringify(shoes));
             if (shoes) {
-                //await shoesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                await shoesRepository.update(id, { "viewsCounter": this.viewsCounter + 1 });
                 return shoes;
             }
             const bag = await bagsRepository.get(id);
             log("1" + JSON.stringify(shoes));
             if (bag) {
-                //await bagsRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                await bagsRepository.update(id, { "viewsCounter": this.viewsCounter + 1 });
                 return bag;
             }
             const cloth = await clothesRepository.get(id);
             log("3" + JSON.stringify(shoes));
             if (cloth) {
-                //await clothesRepository.update(id, { "viewsCounter": ++this.viewsCounter });
+                await clothesRepository.update(id, { "viewsCounter": this.viewsCounter + 1});
                 return cloth;
             }
             throw new NotFoundException("Item not found");
@@ -49,16 +48,13 @@ class AllItemsService extends Service {
             const accessories = await accessoriesRepository.getAll(filter);
             const clothes = await clothesRepository.getAll(filter);
 
-            // לוודא שכל אחת מהקריאות מחזירה מערך
             if (!Array.isArray(shoes) || !Array.isArray(accessories) || !Array.isArray(clothes)) {
                 throw new Error("One of the repositories did not return an array");
             }
 
             let products = [];
-            // צירוף המערכים למערך אחד
             products = products.concat(shoes, accessories, clothes);
 
-            // פונקציה לערבוב המערך
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -66,10 +62,8 @@ class AllItemsService extends Service {
                 }
             }
 
-            // ערבוב המערך
             shuffleArray(products);
 
-            // החזרת המערך המעורבב
             return products;
 
         } catch (error) {

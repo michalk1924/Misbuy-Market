@@ -1,6 +1,7 @@
 const { Exception, NotFoundException, InternalServerException } = require("../Exception");
+const usersService = require("../services/UsersService");
 
-class Controller {
+class UsersController {
 
     constructor(service) {
         this.service = service;
@@ -8,15 +9,8 @@ class Controller {
 
     async getAll(req, res) {
         try {
-            const { _limit, _start, ...filter } = req.query;
-            const result = await this.service.getAll(filter);
-            if (_limit != undefined && _start != undefined) {
-                const limit_n = parseInt(_limit);
-                const start_n = parseInt(_start);
-                const sliceResult = result.slice(start_n, start_n + limit_n);
-                return res.status(200).json(result ? sliceResult : []);
-            }
-            else res.status(200).json(result ? result : []);
+            const response = await this.service.getAll(req.query);
+            return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
@@ -25,12 +19,11 @@ class Controller {
         }
     }
 
-
     async get(req, res) {
         const { id } = req.params;
         console.log(id);
         try {
-            const response = await this.service.get(id);
+            const response = await this.service.getById(id);
             if (response == null)
                 throw new NotFoundException(null)
             return res.status(200).json(response);
@@ -40,6 +33,7 @@ class Controller {
             return res.status(error.statusCode).json(error.message);
         }
     }
+
     async insert(req, res) {
         try {
             let response = "";
@@ -55,6 +49,7 @@ class Controller {
             return res.status(error.statusCode).json(error.message);
         }
     }
+
     async update(req, res) {
         const { id } = req.params;
         try {
@@ -81,7 +76,19 @@ class Controller {
         }
     }
 
+    async getUserItems(req, res) {
+        const { id } = req.params;
+        try {
+            const response = await this.service.getUserItems(id);
+            return res.status(200).json(response);
+        } catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
+            console.log(error.message);
+            return res.status(error.statusCode).json(error.message);
+        }
+
+    }
 }
 
-
-module.exports = { Controller };
+module.exports = new UsersController(usersService);

@@ -17,6 +17,10 @@ class Service {
                 let image = null;
                 if (imageUrl) {
                     image = await getProductImage(imageUrl);
+                    if(image)
+                        product.image = image;
+                    else
+                        product.image = 'image not found';
                 }
                 return { ...productWithoutImg, image: image };
             }));
@@ -34,11 +38,16 @@ class Service {
         try {
             const product = await this.repository.get(id);
             const user = await usersRepository.getById(product.userId);
-            product.userName = user.name;
-            product.phone = user.phone;
+            product.phone = user?.phone;
+            product.name = user?.name;
+            product.email = user?.email;
+            product.userId = null;
             if (product.imageUrl) {
                 const image = await getProductImage(product.imageUrl);
-                product.image = image;
+                if(image)
+                    product.image = image;
+                else
+                    product.image = 'image not found';
             }
             await this.update(id, {"viewsCounter": product.viewsCounter + 1});
             return product;
@@ -117,7 +126,7 @@ async function uploadProductImage(file) {
         await fs.promises.writeFile(filePath, fileBuffer);
         return `./images/${newFileName}`;
     } catch (error) {
-        console.error('Error uploading product image:', error);
+        console.log('Error uploading product image: ' + newFileName);
         throw error;
     }
 }
@@ -143,8 +152,8 @@ async function getProductImage(filePath) {
         const base64Image = fileBuffer.toString('base64');
         return `data:image/png;base64,${base64Image}`;
     } catch (error) {
-        console.error('Error reading product image:', error);
-        throw error;
+        console.error('Error reading product image:', filePath);
+        return false;
     }
 }
 
