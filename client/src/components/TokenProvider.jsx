@@ -1,5 +1,22 @@
-import { createContext } from 'react';
+// TokenProvider.js
+import React, { createContext, useEffect, useState } from 'react';
 
-const Token = createContext({});
+export const TokenContext = createContext();
 
-export {Token};
+export const TokenProvider = ({ children }) => {
+
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const savedToken = localStorage.getItem("token");
+        if (savedToken) {
+          setToken(savedToken);
+        }
+    }, [])
+
+    return (
+        <TokenContext.Provider value={{ token, setToken }}>
+            {children}
+        </TokenContext.Provider>
+    );
+};

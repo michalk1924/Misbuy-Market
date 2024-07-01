@@ -2,16 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../style/addItem.css';
 import { useNavigate } from 'react-router-dom';
 import Selectors from './Selectors';
-//import { Token } from './TokenProvider';
+import { TokenContext } from './TokenProvider';
+
 
 function AddItem() {
-    //const tokenContext = useContext(Token);
+
     const navigate = useNavigate();
+
+    const { token } = useContext(TokenContext); // Use TokenContext
+
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);
     const [wrong, setWrong] = useState(false);
     const [wrongExists, setWrongExists] = useState(false);
-    const [token, setToken] = useState();
 
     const shoesSelectors = [
         { title: "type", options: ["sneakers", "boots", "sandals", "loafers", "heels", "flats", "oxfords", "slippers", "espadrilles", "flip-flops", "wedges", "moccasins", "athletic shoes", "pumps", "platforms", "mary janes"] },
@@ -27,10 +30,6 @@ function AddItem() {
         { title: "type", options: ["necklace", "bracelet", "ring", "earrings", "watch", "belt", "scarf", "hat", "sunglasses", "gloves", "handbag", "backpack", "wallet", "tie", "bow tie", "hairpin", "headband", "umbrella"] },
         { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] }
     ]
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setToken(token)
-    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -44,6 +43,7 @@ function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(token);
         const formDataWithImage = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             formDataWithImage.append(key, value);
@@ -69,9 +69,7 @@ function AddItem() {
                     setWrongExists(false);
                 }
             } else {
-                const data = await response.json();
-                setToken(data);
-                navigate(`/home`, { state: data });
+                navigate(`/home`);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -105,12 +103,6 @@ function AddItem() {
                     
                     <label className="addItemLabel" htmlFor="description">Description:</label>
                     <textarea className="addItemInput" id="description" name="description" onChange={handleChange} />
-
-                    <label className="addItemLabel" htmlFor="color">Color:</label>
-                    <input className="addItemInput" type="number" id="color" name="color" onChange={handleChange} />
-
-                    <label className="addItemLabel" htmlFor="size">Size:</label>
-                    <input className="addItemInput" type="number" id="size" name="size" onChange={handleChange} />
                     
                     <label className="addItemLabel" htmlFor="image">Upload Image:</label>
                     <input className="addItemInput" type="file" id="image" name="image" onChange={handleImageChange} />
