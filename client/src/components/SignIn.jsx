@@ -72,12 +72,17 @@ function SignIn() {
   return (
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignIn}>
+
         <label htmlFor="email">Email</label>
         <input type="text" id="email" name='email' onChange={handleChange} />
+
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name='password' onChange={handleChange} />
+
         <button className="submit-button">Sign In</button>
+
         <a onClick={forgotPassword}>forgot your password</a>
+        
         <Link to="/signup" className="link">Don't have an account? Sign Up</Link>
       </form>
       {worng && <p>email or password aren't correct!</p>}
