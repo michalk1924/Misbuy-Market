@@ -102,7 +102,7 @@ class UsersService {
         try {
             const user = await this.getById(id);
             let wishListItems;
-            if (user.wishList.length > 0) {
+            if (user.wishList && user.wishList.length > 0) {
                 wishListItems = await Promise.all(
                     user.wishList.map(async (itemId) => {
                         return await allItemsService.get(itemId);
@@ -115,6 +115,25 @@ class UsersService {
             if (!error instanceof Exception) {
                 error = new InternalServerException()
             }
+            throw error;
+        }
+    }
+
+    async updateWishList(userId, newItemWish) {
+        try {
+            const user = await this.getById(userId);
+            if (!user.wishList) {
+                user.wishList = [];
+            }
+            if (!user.wishList.includes(newItemWish)) {
+                user.wishList.push(newItemWish);
+            }
+            await this.update(userId, user);
+            return user.wishList;
+        }
+        catch (error) {
+            if (!error instanceof Exception)
+                error = new InternalServerException()
             throw error;
         }
     }

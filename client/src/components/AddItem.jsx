@@ -16,6 +16,19 @@ function AddItem() {
     const [wrong, setWrong] = useState(false);
     const [wrongExists, setWrongExists] = useState(false);
 
+    const form = {
+        category: "",
+        type: "",
+        color: "",
+        size: "",
+        price: "",
+        title: "",
+    }
+
+    useEffect(() => {
+        setFormData(form)
+    }, []);
+
     const shoesSelectors = [
         { title: "type", options: ["sneakers", "boots", "sandals", "loafers", "heels", "flats", "oxfords", "slippers", "espadrilles", "flip-flops", "wedges", "moccasins", "athletic shoes", "pumps", "platforms", "mary janes"] },
         { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] },
@@ -65,6 +78,7 @@ function AddItem() {
                     setWrongExists(true);
                     setWrong(false);
                 } else {
+                    if (response.status == 403) alert("user not connected")
                     setWrong(true);
                     setWrongExists(false);
                 }
@@ -94,17 +108,17 @@ function AddItem() {
 
                     {formData.category == "shoes" && <Selectors selectors={shoesSelectors} handleChange={handleChange} />}
                     {formData.category == "clothes" && <Selectors selectors={clothesSelectors} handleChange={handleChange} />}
-                    {formData.category == "accessories" && <Selectors selectors={accessoriesSelectors} handleChange={handleChange} />}  
-                    
+                    {formData.category == "accessories" && <Selectors selectors={accessoriesSelectors} handleChange={handleChange} />}
+
                     <label className="addItemLabel" htmlFor="price">Price:</label>
                     <input className="addItemInput" type="number" id="price" name="price" onChange={handleChange} />
-                    
+
                     <label className="addItemLabel" htmlFor="title"> Title:</label>
                     <input className="addItemInput" type="text" id="title" name="title" onChange={handleChange} />
-                    
+
                     <label className="addItemLabel" htmlFor="description">Description:</label>
                     <textarea className="addItemInput" id="description" name="description" onChange={handleChange} />
-                    
+
                     <label className="addItemLabel" htmlFor="image">Upload Image:</label>
                     <input className="addItemInput" type="file" id="image" name="image" onChange={handleImageChange} />
                 </div>
