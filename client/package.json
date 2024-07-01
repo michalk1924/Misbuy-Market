@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "form-data": "^4.0.0",
+    "fortawesome": "^0.0.1-security",
     "nodemailer": "^6.9.13",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",

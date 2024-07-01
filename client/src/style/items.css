@@ -8,15 +8,6 @@
     padding-top: 5vh;
 }
 
-#searchControls {
-    position: fixed;
-    top: 25vh;
-    right: 2vw;
-    z-index: 1000;
-    background-color: white;
-    padding: 10px;
-}
-
 .item-list {
     position: sticky;
     top: 40vh; /* Keeps .item-list 20vh from the top */

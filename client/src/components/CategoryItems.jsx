@@ -8,6 +8,7 @@ function CategoryItems() {
     const limit = 8
 
     const [items, setItems] = useState([]);
+    const [allItems, setAllItems] = useState([])
     const { category } = useParams();
     const [start, setStart] = useState(0)
     const [thereMoreItems, setThereMoreItems] = useState(true)
@@ -20,7 +21,7 @@ function CategoryItems() {
         if (response.ok) {
             const data = await response.json();
             if (data.length > 0) {
-                setItems(items.concat(await data))
+                setAllItems(items.concat(await data))
                 setLoading(false);
                 setStart(prevStart => prevStart + limit)
             }
@@ -28,18 +29,23 @@ function CategoryItems() {
                 setThereMoreItems(false)
             }
         } else {
-            setItems([])
+            setAllItems([])
             alert("error fetching!")
         }
     }
 
     useEffect(() => {
         getItems();
+        //setItems(allItems)
     }, []);
+
+    // useEffect(() => {
+    //     setItems(allItems);
+    // }, [allItems]);
 
     return (
         <div>
-      <Filters setItems={setItems} allItems={items}/>
+      {!loading && <Filters setItems={setItems} allItems={allItems} category={category}/>}
         <div className="item-list">
             {!loading && items.map((item, index) => (
                 <ItemBox key={item.id} item={item} />

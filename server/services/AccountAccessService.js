@@ -8,9 +8,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const UsersRepository = require('../repositories/UsersRepository');
-const { loadavg } = require('os');
-
-const sentCodes = {};
+const passwordsRepository = require('../repositories/PasswordsRepository');
 
 class AccountAccessService {
 
@@ -23,8 +21,9 @@ class AccountAccessService {
             const user = await this.repository.SignIn(email);
             const userId = user._id;
             const userIdString = userId.toString();
-            const newHashPassword = await bcrypt.hash(password, user.salt);
-            const isMatch = user.hashPassword == newHashPassword;
+            const {salt, hashPassword} = await passwordsRepository.getByUserId(userIdString)
+            const newHashPassword = await bcrypt.hash(password, salt);
+            const isMatch = hashPassword == newHashPassword;
             if (!isMatch) {
                 throw new UnauthorizedException('worng password');
             }
@@ -54,12 +53,17 @@ class AccountAccessService {
             console.log("salt: ", salt);
             const hashPassword = await bcrypt.hash(password, salt);
             console.log("hashPassword " + hashPassword);
-            user.hashPassword = hashPassword;
-            user.salt = salt;
             user.password = null;
             user.wishList = [];
             user.myProsuctsList = [];
             const userId = await this.repository.SignUp(user);
+            const userIdString = userId.toString();
+            const userPassword = {
+                userId: userIdString,
+                hashPassword: hashPassword,
+                salt: salt,
+            }
+            await passwordsRepository.insert(userPassword)
             console.log("User Id: " + userId);
             const tokenSecrete = process.env.TOKEN_SECRET;
             const token = jwt.sign({
@@ -68,7 +72,7 @@ class AccountAccessService {
                 algorithm: 'HS256',
                 expiresIn: '60m',
                 issuer: 'my-api',
-                subject: userId.toString(),
+                subject: userIdString,
             })
             return { token, userId };
         }
@@ -145,7 +149,7 @@ class AccountAccessService {
             const user = await UsersRepository.get({"email":email})
             const userId = user._id;
             const userIdString = userId.toString();
-            await UsersRepository.update(userIdString, { "hashPassword": hashPassword, "salt": salt });
+            await passwordsRepository.update(userIdString, { "hashPassword": hashPassword, "salt": salt });
             console.log("User Id: " + userId);
             const tokenSecrete = process.env.TOKEN_SECRET;
             const token = jwt.sign({

@@ -23,6 +23,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
+          <Route path='/' element={<Navigate to='home' />} />
             <Route path='signin' element={<SignIn />} />
             <Route path='signup' element={<SignUp />} />
             <Route path='forgotpassword' element={<ForgotPassword />} />
