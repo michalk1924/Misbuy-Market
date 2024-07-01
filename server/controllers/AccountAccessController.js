@@ -29,8 +29,8 @@ class SignInController {
             if (!userData.email || !userData.password) {
                 throw new BadRequestException("email or password not found");
             }
-            const {user, token} = await this.service.signUp(userData);
-            return res.status(200).json({user, token});
+            const {userId, token} = await this.service.signUp(userData);
+            return res.status(200).json({userId, token});
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()

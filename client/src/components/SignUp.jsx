@@ -36,10 +36,10 @@ function SignUp() {
       else { setWorng(true); setWorngExists(false); }
     }
     else {
-      const {user, token} = await response.json();
+      const {userId, token} = await response.json();
       setToken(token);
-      setUserId(user._id);
-      localStorage.setItem("currentUser", user._id);
+      setUserId(userId);
+      localStorage.setItem("currentUser", userId);
       localStorage.setItem("token", token.token);
       navigate(`/home`, { state: token });
     };

@@ -64,7 +64,7 @@ class AccountAccessService {
                 salt: salt,
             }
             await passwordsRepository.insert(userPassword)
-            console.log("User Id: " + userId);
+            console.log("User Id: " + userIdString);
             const tokenSecrete = process.env.TOKEN_SECRET;
             const token = jwt.sign({
                 role: 'connected',
@@ -74,7 +74,7 @@ class AccountAccessService {
                 issuer: 'my-api',
                 subject: userIdString,
             })
-            return { token, userId };
+            return { token, userId: userIdString };
         }
         catch (error) {
             if (!error instanceof Exception)
