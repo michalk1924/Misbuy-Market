@@ -69,6 +69,7 @@ function AddItem() {
                     setWrongExists(false);
                 }
             } else {
+                console.log();
                 navigate(`/home`);
             }
         } catch (error) {

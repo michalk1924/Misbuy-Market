@@ -21,8 +21,7 @@ class AccountAccessRipository {
         const userData = await usersRepository.get({"email" : user.email}); //use(user.email)//
         if(userData != null)
             throw new ConflictException("User exists");
-        const userId = usersRepository.insert(user);
-        console.log("userid" + userId);
+        const userId = await usersRepository.insert(user);
         return userId;
     }
 
