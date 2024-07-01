@@ -2,14 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust height as needed */
-  }
-
-  #moreItems{
-    justify-content: center;
-    display: block;
-  }
-
-  #categoryItems{
-    display: block;
+    margin:  10vh auto;
+    padding: 0;
   }

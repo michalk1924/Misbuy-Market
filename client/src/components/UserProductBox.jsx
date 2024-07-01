@@ -7,12 +7,12 @@ import UpdateAd from "./UpdateAd";
 
 function UserProductBox({ item }) {
     const [showAdDetails, setShowAdDetails] = useState(false);
-    const [showUpdateAd, setSshowUpdateAd] = useState(false);
+    const [showUpdateAd, setShowUpdateAd] = useState(false);
 
     return (
         <div className="item-box">
-            {showAdDetails && <AdDetails setShowAdDetails={setShowAdDetails} />}
-            {showUpdateAd && <UpdateAd setSshowUpdateAd={setSshowUpdateAd} />}
+            {showAdDetails && <AdDetails ad={item} setShowAdDetails={setShowAdDetails} setSshowUpdateAd={setSshowUpdateAd}/>}
+            {showUpdateAd && <UpdateAd ad={item} setShowUpdateAd={setShowUpdateAd} />}
             <img src={item.image} alt="image item" />
             <div id="shortDescription">
                 <p><b>{item.title}</b></p>

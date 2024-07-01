@@ -19,7 +19,6 @@ function Home() {
     if (response.ok) {
       const data = await response.json();
       const mostPouplerItems = data.sort((item1, item2) => item2.viewsCounter - item1.viewsCounter).splice(0, 8);
-      console.log(mostPouplerItems[0]);
       if (data.length > 0) {
         setPouplerItems(mostPouplerItems)
         setLoading(false);
@@ -43,8 +42,8 @@ function Home() {
         <CategoryBox category="Accessories" backgroundImage={accessoriesImage}  linkTo="../items/accessories" />
       </div>
       <h2>poupler items</h2>
-      <div className="item-list">
-        {!loading && pouplerItems.map((item, index) => (
+      <div className="popularItems">
+        {!loading && pouplerItems.map((item) => (
           <ItemBox key={item.id} item={item} />
         ))}
         {loading && (
