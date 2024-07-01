@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import '../style/categoryItems.css'
 import ItemBox from './ItemBox';
 import Filters from "./Filters";
+import { TailSpin } from 'react-loader-spinner';
 
 function CategoryItems() {
 
@@ -46,7 +47,11 @@ function CategoryItems() {
             {!loading && items.map((item, index) => (
                 <ItemBox key={item.id} item={item} />
             ))}
-            {loading && '🔃'}
+              {loading && (
+          <div className="loading-spinner">
+            <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
+          </div>
+        )}
             {thereMoreItems && !loading && <button onClick={getItems}>⏬</button>}
         </div>
         </div>
