@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import '../style/itemBox.css'
 
-
 const ItemBox = ({ item }) => {
 
   const { category } = useParams();

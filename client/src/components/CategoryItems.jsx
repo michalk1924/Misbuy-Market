@@ -24,6 +24,7 @@ function CategoryItems() {
             const data = await response.json();
             if (data.length > 0) {
                 setAllItems(items.concat(await data))
+                console.log(data);
                 setLoading(false);
                 setStart(prevStart => prevStart + limit)
             }
@@ -41,19 +42,19 @@ function CategoryItems() {
     }, []);
 
     return (
-        <div>
-      {!loading && <Filters setItems={setItems} allItems={allItems} category={category}/>}
-        <div className="item-list">
-            {!loading && items.map((item, index) => (
-                <ItemBox key={item.id} item={item} />
-            ))}
-              {loading && (
-          <div className="loading-spinner">
-            <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
-          </div>
-        )}
-            {thereMoreItems && !loading && <button onClick={getItems}>⏬</button>}
-        </div>
+        <div id='categoryItems'>
+            {!loading && <Filters setItems={setItems} allItems={allItems} category={category} />}
+            <div className="item-list">
+                {!loading && items.map((item, index) => (
+                    <ItemBox key={item.id} item={item} />
+                ))}
+                {loading && (
+                    <div className="loading-spinner">
+                        <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
+                    </div>
+                )}
+                {thereMoreItems && !loading && <button onClick={getItems}>⏬</button>}
+            </div>
         </div>
     )
 }
