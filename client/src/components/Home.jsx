@@ -18,7 +18,8 @@ function Home() {
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
-      const mostPouplerItems = data.sort(i => i.viewsCounter)
+      const mostPouplerItems = data.sort((item1, item2) => item2.viewsCounter - item1.viewsCounter).splice(0, 8);
+      console.log(mostPouplerItems[0]);
       if (data.length > 0) {
         setPouplerItems(mostPouplerItems)
         setLoading(false);
