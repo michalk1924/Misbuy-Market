@@ -36,6 +36,7 @@ function Filters(props) {
         ]
     };
 
+    const citiesInIsrael = ["Jerusalem", "Tel Aviv", "Haifa", "Rishon LeZion", "Petah Tikva", "Ashdod", "Netanya", "Beer Sheva", "Holon", "Bnei Brak", "Bat Yam", "Ramat Gan", "Ashkelon", "Herzliya", "Kfar Saba", "Modiin", "Nahariya", "Beit Shemesh", "Nazareth", "Tiberias", "Eilat", "Acre", "Lod", "Ra'anana", "Hadera", "Kiryat Gat", "Betar Illit", "Hod HaSharon", "Rosh HaAyin", "Qiryat Ata"];
 
     useEffect(() => {
         const filteredItems = applyFilter(props.allItems, searchValue);
@@ -116,34 +117,29 @@ function Filters(props) {
                     />
                 </div>
 
-                <div>
+                <div className='searchControls'>
                     {typesSelectors[props.category].map((filter) => (
-                        <div className='searchControls'>
-                        <form key={filter.title} onChange={handleCheckboxChange} name={filter.title}>
-                            <h4>{filter.title}</h4>
-                            {filter.options.map(option => (
-                                <div key={option} >
-                                    <input type="checkbox" id={`${filter.title}-${option}`} value={option} />
-                                    <label htmlFor={`${filter.title}-${option}`}>{option}</label>
-                                </div>
-                            ))}
-                        </form>
-                        </div>
+                            <form key={filter.title} onChange={handleCheckboxChange} name={filter.title}>
+                                <h4>{filter.title}</h4>
+                                {filter.options.map(option => (
+                                    <div key={option} className='checboxLabel'>
+                                        <input type="checkbox" id={`${filter.title}-${option}`} value={option} />
+                                        <label htmlFor={`${filter.title}-${option}`}>{option}</label>
+                                    </div>
+                                ))}
+                            </form>
                     ))}
-
                 </div>
 
                 <div className='searchControls'>
                     <form onChange={handleCheckboxChange} name="area">
-                    <h4>area</h4>
-                        <input type="checkbox" id="area1" value="jerusalem" />
-                        <label htmlFor="type1">jerusalem</label>
-                        <br />
-                        <input type="checkbox" id="area12" value="TLV" />
-                        <label htmlFor="type2">TLV</label>
-                        <br />
-                        <input type="checkbox" id="area3" value="Elad" />
-                        <label htmlFor="type3">Elad</label>
+                        <h4>area</h4>
+                        {citiesInIsrael.map((city, index) => (
+                            <div key={index} className='checboxLabel' >
+                                <input type="checkbox" id={city} value={city} />
+                                <label htmlFor={city}>{city}</label>
+                            </div>
+                        ))}
                     </form>
                 </div>
 

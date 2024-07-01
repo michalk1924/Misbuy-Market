@@ -7,7 +7,6 @@ export const UserProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        debugger
         const savedUser = localStorage.getItem("currentUser");
         if (savedUser) {
             setUserId(savedUser);

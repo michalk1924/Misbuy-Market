@@ -2,6 +2,8 @@ import React from 'react';
 import '../style/itemDetails.css'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart} from '@fortawesome/free-solid-svg-icons';
 
 function ItemDetails() {
   const [item, setItem] = useState({});
@@ -22,6 +24,13 @@ function ItemDetails() {
     }
   }
 
+  
+  function addToWishList(event){
+    event.stopPropagation();
+    alert("love");
+    //להוסיף לרשימת המשאלות
+  }
+  
   useEffect(() => {
     getItem(itemId)
   }, [itemId]);
@@ -29,6 +38,7 @@ function ItemDetails() {
   return (
     <div className="details-container">
       <div className="info-container">
+      <FontAwesomeIcon icon={faHeart} className='icon' title="Add to Wish List" onClick={addToWishList}/>
         <p><strong>id:</strong> {item && item._id}</p>
         <p><strong>Category:</strong> {item && item.category}</p>
         <p><strong>Price:</strong> {item && item.price}</p>
