@@ -20,7 +20,6 @@ class AllItemsController {
     async getAll(req, res){
         try {
             const response = await allItemsService.getAll(req.query);
-            console.log("response" + response);
             return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)

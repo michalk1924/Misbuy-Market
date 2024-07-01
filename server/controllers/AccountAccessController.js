@@ -13,8 +13,8 @@ class SignInController {
             if (!email || !password) {
                 throw new BadRequestException("email or password not found");
             }
-            const token = await this.service.signIn({ email: email, password: password });
-            return res.status(200).send(token);
+            const {user, token} = await this.service.signIn({ email: email, password: password });
+            return res.status(200).send({user, token});
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
@@ -25,12 +25,12 @@ class SignInController {
 
     async signUp(req, res) {
         try {
-            const user = req.body;
-            if (!user.email || !user.password) {
+            const userData = req.body;
+            if (!userData.email || !userData.password) {
                 throw new BadRequestException("email or password not found");
             }
-            const token = await this.service.signUp(user);
-            return res.status(200).json(token);
+            const {user, token} = await this.service.signUp(userData);
+            return res.status(200).json({user, token});
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()

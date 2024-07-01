@@ -1,33 +1,45 @@
-import  { React, useState , useEffect} from "react"
+import { React, useState, useEffect, useContext } from "react"
 import WishItem from "./WishItem";
+import { UserContext } from "./UserProvider";
+import { TokenContext } from "./TokenProvider";
 
 function WishList() {
-    const [userId, setUserId]=useState();
-    const [wishList, setWishList] = useState([]);
 
-    useEffect(() => {
-        setWishList([{_id:3, area:"gg", price:"5", category:"shoes"},{_id:3, area:"gg", price:"5", category:"shoes"}])
-       // getWishList();
-    }, []);
-  
-    async function getWishList() {
-      const url = `http://localhost:3000/users/${userId}wishList`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setWishList(data);
-    }
-    function removeItem(id){
-//מחיקת פריט מרשימת המשאלות
-    }
-  
-    return (
-      <div>
-        <div className="wish-list">
-          {wishList.map((item, index) => (
-            <WishItem item={item} removeItem={removeItem}/>
-          ))}
-        </div>
+  const { userId } = useContext(UserContext);
+  const { token } = useContext(TokenContext);
+
+  const [wishList, setWishList] = useState([]);
+
+  useEffect(() => {
+    getWishList();
+  }, []);
+
+  async function getWishList() {
+    const url = `http://localhost:3000/api/users/${userId}/wishlist`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: token,
+      }
+    });
+    if(response.ok)
+      {
+        const data = await response.json();
+        console.log(data);
+        setWishList(data);
+      }
+  }
+  function removeItem(id) {
+    //מחיקת פריט מרשימת המשאלות
+  }
+
+  return (
+    <div>
+      <div className="wish-list">
+        {wishList.map((item, index) => (
+          <WishItem item={item} removeItem={removeItem} />
+        ))}
       </div>
-    )
+    </div>
+  )
 }
 export default WishList

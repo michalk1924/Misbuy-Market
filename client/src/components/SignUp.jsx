@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
 import { TokenContext } from './TokenProvider';
+import { UserContext } from './UserProvider';
 
 function SignUp() {
 
   const navigate = useNavigate();
 
-  const { token, setToken } = useContext(TokenContext); // Use TokenContext
+  const { token, setToken } = useContext(TokenContext);
+  const { userId, setUserId } = useContext(UserContext);
 
   const [formData, setFormData] = useState({});
   const [worng, setWorng] = useState(false);
@@ -29,15 +31,15 @@ function SignUp() {
       },
       body: JSON.stringify(formData)
     });
-    console.log(response.status);
     if (response.status != 200) {
       if (response.status == 409) { setWorngExists(true); setWorng(false); }
       else { setWorng(true); setWorngExists(false); }
     }
     else {
-      const token = await response.json();
+      const {user, token} = await response.json();
       setToken(token);
-      localStorage.setItem("currentUser", formData.email);
+      setUserId(user._id);
+      localStorage.setItem("currentUser", user._id);
       localStorage.setItem("token", token.token);
       navigate(`/home`, { state: token });
     };

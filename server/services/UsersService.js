@@ -2,9 +2,10 @@ const { Exception, InternalServerException } = require('../Exception');
 const { ObjectId } = require('mongodb');
 
 const usersRepository = require('../repositories/UsersRepository');
-const shoesRepository = require('../repositories/ShoesRepository');
-const clothesRepository = require('../repositories/ClothesRepository');
-const accessoriesRepository = require('../repositories/AccessoriesRepository');
+const shoesService = require('../services/ShoesService');
+const clothesService = require('../services/ClothesService');
+const accessoriesService = require('../services/AccessoriesService');
+const allItemsService = require('./AllItemsService');
 
 class UsersService {
 
@@ -71,12 +72,11 @@ class UsersService {
         }
     }
 
-    async getUserItems(id)
-    {
+    async getUserItems(id) {
         try {
-            const shoes = await shoesRepository.getAll({"userId": id});
-            const accessories = await accessoriesRepository.getAll({"userId": id});
-            const clothes = await clothesRepository.getAll({"userId": id});
+            const shoes = await shoesService.getAll({ "userId": id });
+            const accessories = await accessoriesService.getAll({ "userId": id });
+            const clothes = await clothesService.getAll({ "userId": id });
             if (!Array.isArray(shoes) || !Array.isArray(accessories) || !Array.isArray(clothes)) {
                 throw new Error("One of the repositories did not return an array");
             }
@@ -94,6 +94,27 @@ class UsersService {
         catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
+            throw error;
+        }
+    }
+
+    async getUserWishList(id) {
+        try {
+            const user = await this.getById(id);
+            let wishListItems;
+            if (user.wishList.length > 0) {
+                wishListItems = await Promise.all(
+                    user.wishList.map(async (itemId) => {
+                        return await allItemsService.get(itemId);
+                    })
+                );
+            }
+            return wishListItems;
+        }
+        catch (error) {
+            if (!error instanceof Exception) {
+                error = new InternalServerException()
+            }
             throw error;
         }
     }

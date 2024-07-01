@@ -1,5 +1,8 @@
 const { Exception, InternalServerException, NotFoundException } = require('../Exception'); 4
 const { Service } = require('./Service');
+const shoesService = require('../services/ShoesService');
+const accessoriesService = require('../services/AccessoriesService');
+const clothesService = require('../services/ClothesService');
 const shoesRepository = require('../repositories/ShoesRepository');
 const accessoriesRepository = require('../repositories/AccessoriesRepository');
 const clothesRepository = require('../repositories/ClothesRepository');
@@ -16,22 +19,16 @@ class AllItemsService extends Service {
 
     async get(id) {
         try {
-            const shoes = await shoesRepository.get(id);
-            log("1" + JSON.stringify(shoes));
+            const shoes = await shoesService.get(id);
             if (shoes) {
-                await shoesRepository.update(id, { "viewsCounter": this.viewsCounter + 1 });
                 return shoes;
             }
-            const bag = await bagsRepository.get(id);
-            log("1" + JSON.stringify(shoes));
-            if (bag) {
-                await bagsRepository.update(id, { "viewsCounter": this.viewsCounter + 1 });
+            const accessories = await accessoriesService.get(id);
+            if (accessories) {
                 return bag;
             }
-            const cloth = await clothesRepository.get(id);
-            log("3" + JSON.stringify(shoes));
+            const cloth = await clothesService.get(id);
             if (cloth) {
-                await clothesRepository.update(id, { "viewsCounter": this.viewsCounter + 1});
                 return cloth;
             }
             throw new NotFoundException("Item not found");
@@ -44,9 +41,9 @@ class AllItemsService extends Service {
 
     async getAll(filter) {
         try {
-            const shoes = await shoesRepository.getAll(filter);
-            const accessories = await accessoriesRepository.getAll(filter);
-            const clothes = await clothesRepository.getAll(filter);
+            const shoes = await shoesService.getAll(filter);
+            const accessories = await accessoriesService.getAll(filter);
+            const clothes = await clothesService.getAll(filter);
 
             if (!Array.isArray(shoes) || !Array.isArray(accessories) || !Array.isArray(clothes)) {
                 throw new Error("One of the repositories did not return an array");
