@@ -10,9 +10,11 @@
     z-index: 1000;
     padding: 0 3vw;
     max-height: 900px;
-    overflow-y: auto;
+    overflow-y: auto;   
+     background-color: #fff;
 }
 
 .checboxLabel{
     display: flex;
 }
+

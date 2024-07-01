@@ -89,7 +89,7 @@ function Filters(props) {
     // Sort logic remains the same (selectSortOptions object)
 
     return (
-        <div>
+        <div id='filters'>
             {/* sort */}
             <div id='selectSort'>
                 <label htmlFor="sort">

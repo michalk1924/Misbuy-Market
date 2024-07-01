@@ -44,5 +44,10 @@ nav {
   
   /* Hover effect */
   nav ul li a:hover {
-    text-decoration: underline;
+    /* text-decoration: underline; */
+    color: #c8bb0c;
+  }
+
+  #navLogo{
+    border: #c8bb0c solid 3px;
   }

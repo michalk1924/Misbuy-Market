@@ -2,5 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust height as needed */
+    margin:  10vh auto;
+    padding: 0;
   }
