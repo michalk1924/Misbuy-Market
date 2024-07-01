@@ -1,13 +1,17 @@
-import {React, useState} from 'react';
+import {React, useContext, useState} from 'react';
 import {Link } from 'react-router-dom';
 import logo from '../images/logoWithText.png'; 
 import '../style/nav.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faPaperclip} from '@fortawesome/free-solid-svg-icons';
+import { UserContext } from './UserProvider';
 
 function Nav() {
+
     const [isRegistered, setIsRegistered]=useState(true);
-    const [userId, setUserId]=useState("3");
+
+    const {userId} = useContext(UserContext);
+
     return (
             <nav>
                 <div className="logo">

@@ -1,20 +1,33 @@
-import { React, useState, useEffect } from "react"
+import { React, useState, useEffect, useContext } from "react"
 import UserProductBox from "./UserProductBox";
 import '../style/userProducts.css'
+import { TokenContext } from "./TokenProvider";
+import { UserContext } from "./UserProvider";
+import { TailSpin } from 'react-loader-spinner';
+
 function UserProducts() {
-    const [userId, setUserId] = useState();
+
+    const { token } = useContext(TokenContext);
+    const { userId } = useContext(UserContext);
+
     const [userProductsList, setUserProductsList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setUserProductsList([{ _id: 3, area: "gg", price: "5", category: "shoes" }, { _id: 3, area: "gg", price: "5", category: "shoes" }])
-        // getUserProducts();
+        getUserProducts();
     }, []);
 
     async function getUserProducts() {
-        const url = `http://localhost:3000/users/${userId}/items`;
-        const response = await fetch(url);
+        setLoading(true)
+        const url = `http://localhost:3000/api/users/${userId}/items`;
+        const response = await fetch(url, {
+            headers: {
+                Authorization: token,
+            }
+        });
         const data = await response.json();
-        setWishList(data);
+        setUserProductsList(data);
+        setLoading(false);
     }
     function removeItem(id) {
         //מחיקת פריט מרשימת המשאלות
@@ -23,9 +36,14 @@ function UserProducts() {
     return (
         <div>
             <div className="products-list">
-                {userProductsList.map((item, index) => (
+                {!loading && userProductsList.map((item, index) => (
                     <UserProductBox item={item} removeItem={removeItem} key={index} />
                 ))}
+                {loading && (
+                    <div className="loading-spinner">
+                        <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
+                    </div>
+                )}
             </div>
         </div>
     )
