@@ -1,0 +1,10 @@
+.products-list {
+    position: sticky;
+    top: 40vh; /* Keeps .item-list 20vh from the top */
+    /* margin-top: 0; Remove the margin-top to prevent extra space */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: 10vw;
+    z-index: 999;
+}

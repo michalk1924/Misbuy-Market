@@ -1,0 +1,46 @@
+.item-box {
+    width: calc(25% - 20px);
+    /* 25% width for each item with 20px margin between items */
+    margin-bottom: 20px;
+    height: 60vh;
+    border: 3px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-box:hover {
+    transform: scale(1.005);
+    border: 3px solid #0c0479;
+}
+
+.item-box img {
+    width: 100%;
+    height: 80%;
+    /* adjust the height as needed */
+    object-fit: cover;
+}
+
+.item-box p {
+    margin: 0;
+    padding: 10px;
+}
+
+.item-box a {
+    text-decoration: none;
+    color: #333;
+}
+
+#shortDescription{
+    display: flex;
+    align-items: center;
+}
+
+.icon{
+    margin: 0 1vw;
+}
