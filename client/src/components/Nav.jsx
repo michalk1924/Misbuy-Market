@@ -3,7 +3,7 @@ import {Link } from 'react-router-dom';
 import logo from '../images/logoWithText.png'; 
 import '../style/nav.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart,faAddressBook} from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPaperclip} from '@fortawesome/free-solid-svg-icons';
 
 function Nav() {
     const [isRegistered, setIsRegistered]=useState(true);
@@ -20,7 +20,7 @@ function Nav() {
                     {/* {isRegistered&&<li><Link to="/SignIn">Logout</Link></li>} */}
                     <li><Link to="items/addItem">Add Item</Link></li>
                     {isRegistered&&<li><Link to={`/users/${userId}/wishList`}><FontAwesomeIcon icon={faHeart} className='icon' title="Wish List"/></Link></li>}
-                    {isRegistered&&<li><Link to={`/users/${userId}/myProducts`}><FontAwesomeIcon icon={faAddressBook} className='icon' title="My Products"/></Link></li>}
+                    {isRegistered&&<li><Link to={`/users/${userId}/myProducts`}><FontAwesomeIcon icon={faPaperclip} className='icon' title="My Products"/></Link></li>}
                 </ul>
             </nav>
     );
