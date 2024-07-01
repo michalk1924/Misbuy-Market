@@ -1,11 +1,11 @@
-.categoryBox{
-    height: 60vh;
-    width: 20vw;
+.categoryBox {
+    width: 25vw;
+    height: 40vh;
     color: white;
     align-content: end;
-    margin: 3vw;
+    margin: 1vw;
 }
 
-.categoryBox:hover{
+.categoryBox:hover {
     color: blue;
 }
