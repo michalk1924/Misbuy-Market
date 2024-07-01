@@ -194,14 +194,14 @@ async function sendEmail(to, subject, text) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'misbuymarket@gmail.com', // המייל שלך
-            pass: 'misbuy!market1'   // הסיסמא שלך או אפליקיישן פסוורד אם יש
+            user: 'mkastner@g.jct.ac.il',
+            pass: 'MKmk1924'   // הסיסמא שלך או אפליקיישן פסוורד אם יש
         }
     });
 
     // אפשרויות המייל
     let mailOptions = {
-        from: 'misbuymarket@gmail.com', // המייל שלך
+        from: 'mkastner@g.jct.ac.il', 
         to: to,                       // כתובת הלקוח
         subject: subject,             // נושא המייל
         text: text                    // תוכן המייל

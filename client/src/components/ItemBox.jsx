@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router-dom';
 
 import '../style/itemBox.css'
 
-
 const ItemBox = ({ item }) => {
   const { category } = useParams();
   return (
