@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Token} from './TokenProvider'
 import CategoryBox from './CategoryBox';
 import '../style/home.css'
+import { TokenContext } from './TokenProvider';
+import { UserContext } from './UserProvider';
+
 
 function Home() {
 
-  const token = useContext(Token);
-
+  const { token } = useContext(TokenContext);
 
   useEffect(() => { console.log("token" + console.log(JSON.stringify(token))) }, [])
 

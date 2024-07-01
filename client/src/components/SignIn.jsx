@@ -1,17 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
-import {Token} from './TokenProvider';
+import { TokenContext } from './TokenProvider';
 
 function SignIn() {
 
   const navigate = useNavigate();
 
-  const tokenContext = useContext(Token);
+  const { token, setToken } = useContext(TokenContext); // Use TokenContext
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [worng, setWorng] = useState(false);
-  const [token, setToken] = useState(tokenContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,11 +38,11 @@ function SignIn() {
       setWorng(true);
     }
     else {
-      const token = await response.json();
-      setToken(token.token);
-      console.log(token.token);
+      const {user, token} = await response.json();
+      console.log(token);
+      setToken(token); // Set the token
       localStorage.setItem("currentUser", formData.email);
-      localStorage.setItem("token", token.token);
+      localStorage.setItem("token", token);
       navigate(`/home`, { state: token });
     };
   }
@@ -73,7 +72,7 @@ function SignIn() {
     <div className="container">
       <form className='signInUpForm' onSubmit={saveSignIn}>
         <label htmlFor="email">Email</label>
-        <input type="text" id="email" name='email' onChange={handleChange}/>
+        <input type="text" id="email" name='email' onChange={handleChange} />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name='password' onChange={handleChange} />
         <button className="submit-button">Sign In</button>

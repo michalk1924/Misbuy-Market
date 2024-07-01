@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../style/signInUp.css'
-import { Token } from './TokenProvider';
+import { TokenContext } from './TokenProvider';
 
 function SignUp() {
 
   const navigate = useNavigate();
 
-  const { token, setToken } = useContext(Token);
+  const { token, setToken } = useContext(TokenContext); // Use TokenContext
 
   const [formData, setFormData] = useState({});
   const [worng, setWorng] = useState(false);
@@ -36,8 +36,7 @@ function SignUp() {
     }
     else {
       const token = await response.json();
-      //setToken(token);
-      console.log(token);
+      setToken(token);
       localStorage.setItem("currentUser", formData.email);
       localStorage.setItem("token", token.token);
       navigate(`/home`, { state: token });

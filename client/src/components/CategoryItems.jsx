@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import '../style/categoryItems.css'
 import ItemBox from './ItemBox';
 import Filters from "./Filters";
+
 function CategoryItems() {
 
     const limit = 8
@@ -36,12 +37,7 @@ function CategoryItems() {
 
     useEffect(() => {
         getItems();
-        //setItems(allItems)
     }, []);
-
-    // useEffect(() => {
-    //     setItems(allItems);
-    // }, [allItems]);
 
     return (
         <div>
