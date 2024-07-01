@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react"
+import { useParams } from "react-router-dom";
 import UserProductBox from "./UserProductBox";
 import '../style/userProducts.css'
 function UserProducts() {
-    const [userId, setUserId] = useState();
+    const {userId}=useParams();
     const [userProductsList, setUserProductsList] = useState([]);
 
     useEffect(() => {
@@ -14,7 +15,7 @@ function UserProducts() {
         const url = `http://localhost:3000/users/${userId}/items`;
         const response = await fetch(url);
         const data = await response.json();
-        setWishList(data);
+        setUserProductsList(data);
     }
     function removeItem(id) {
         //מחיקת פריט מרשימת המשאלות
