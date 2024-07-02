@@ -14,7 +14,7 @@
     /* margin-top: 0; Remove the margin-top to prevent extra space */
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     z-index: 999;
     margin-right: 10vw;
 }
