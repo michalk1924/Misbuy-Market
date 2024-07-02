@@ -81,10 +81,11 @@ const accessoriesSelectors = [
 ];
 
 const userIds = [
-  "6683f5867164dd96c9b79c99",
-  "6683f5867164dd96c9b79c9d",
-  "6683f5867164dd96c9b79c9f",
-  "6683f5877164dd96c9b79ca1"
+  "6684446b248034cbfa0e28f3",
+  "6684446b248034cbfa0e28f5",
+  "6684446b248034cbfa0e28f7",
+  "6684446c248034cbfa0e28f9",
+  "6684446c248034cbfa0e28fb"
 ];
 
 function getRandomOption(options) {
@@ -188,10 +189,10 @@ async function insertAccessories() {
 }
 
 async function initDB() {
-  insertUsers();
-  insertClothes();
-  insertShoes();
-  insertAccessories();
+  //await insertUsers();
+  await insertClothes();
+  await insertShoes();
+  await insertAccessories();
 }
 
 module.exports = { insertUsers, insertClothes, insertShoes, insertAccessories, initDB }

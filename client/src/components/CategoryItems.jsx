@@ -53,7 +53,7 @@ function CategoryItems() {
                         <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
                     </div>
                 )}
-                {thereMoreItems && !loading && <button onClick={getItems}>⏬</button>}
+                {thereMoreItems && !loading && <button onClick={getItems}>See More</button>}
             </div>
         </div>
     )
