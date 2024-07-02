@@ -124,7 +124,7 @@ const clothesSelectors = [
   }
   
   async function insertClothes() {
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 38; i <= 45; i++) {
       const product = {
         category: "clothes",
         type: getRandomOption(clothesSelectors.find(selector => selector.title === "type").options),
@@ -134,7 +134,7 @@ const clothesSelectors = [
         title: getRandomTitle(),
         description: getRandomDescription(),
         userId: userIds[Math.floor(Math.random() * userIds.length)],
-        imageUrl: `./image/${i}`
+        imageUrl: `./images/${i}.png`
       };
   
       await clothesService.insert(product);

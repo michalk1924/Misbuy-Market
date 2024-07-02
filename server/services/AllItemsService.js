@@ -19,6 +19,10 @@ class AllItemsService extends Service {
 
     async get(id) {
         try {
+            const cloth = await clothesService.get(id);
+            if (cloth) {
+                return cloth;
+            }
             const shoes = await shoesService.get(id);
             if (shoes) {
                 return shoes;
@@ -26,10 +30,6 @@ class AllItemsService extends Service {
             const accessories = await accessoriesService.get(id);
             if (accessories) {
                 return bag;
-            }
-            const cloth = await clothesService.get(id);
-            if (cloth) {
-                return cloth;
             }
             throw new NotFoundException("Item not found");
         } catch (error) {
