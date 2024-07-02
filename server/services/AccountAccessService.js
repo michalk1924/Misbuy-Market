@@ -53,7 +53,8 @@ class AccountAccessService {
             console.log("salt: ", salt);
             const hashPassword = await bcrypt.hash(password, salt);
             console.log("hashPassword " + hashPassword);
-            user.password = null;
+            delete user.password;
+            delete user.verifyPassword;
             user.wishList = [];
             user.myProsuctsList = [];
             const userId = await this.repository.SignUp(user);

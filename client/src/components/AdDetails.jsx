@@ -12,11 +12,6 @@ function AdDetails({ ad, setShowAdDetails }) {
                 <p><strong>Price:</strong> {ad && ad.price}</p>
                 <p><strong>Area:</strong> {ad && ad.area}</p>
                 <p> {ad && ad.description}</p>
-                <div>
-                    <p><strong>Name:</strong> {ad.name}</p>
-                    <p><strong>Email:</strong> {ad.email}</p>
-                    <p><strong>Phone:</strong> {ad.phone}</p>
-                </div>
             </div>
             <div className="image-container">
                 <img src={ad.image} alt="image" />

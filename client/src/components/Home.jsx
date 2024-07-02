@@ -14,12 +14,13 @@ function Home() {
 
   async function getMostPouplerItems() {
     setLoading(true);
+    debugger
     const url = `http://localhost:3000/api/allItems`;
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
       const mostPouplerItems = data.sort((item1, item2) => item2.viewsCounter - item1.viewsCounter).splice(0, 8);
-      if (data.length > 0) {
+      if (mostPouplerItems.length > 0) {
         setPouplerItems(mostPouplerItems)
         setLoading(false);
       }

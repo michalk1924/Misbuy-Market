@@ -27,11 +27,12 @@
     color: #333;
 }
 
-#shortDescription{
+/* .productTitle{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: baseline;
-}
+} */
 
 .icon{
     margin: 0 1vw;

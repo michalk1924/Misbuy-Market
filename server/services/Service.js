@@ -17,7 +17,7 @@ class Service {
                 let image = null;
                 if (imageUrl) {
                     image = await getProductImage(imageUrl);
-                    if(image)
+                    if (image)
                         product.image = image;
                     else
                         product.image = 'image not found';
@@ -33,10 +33,12 @@ class Service {
     }
 
 
-
     async get(id) {
         try {
             const product = await this.repository.get(id);
+            if (product == null) {
+                return false;
+            }
             const user = await usersRepository.getById(product.userId);
             product.phone = user?.phone;
             product.name = user?.name;
@@ -44,12 +46,12 @@ class Service {
             product.userId = null;
             if (product.imageUrl) {
                 const image = await getProductImage(product.imageUrl);
-                if(image)
+                if (image)
                     product.image = image;
                 else
                     product.image = 'image not found';
             }
-            await this.update(id, {"viewsCounter": product.viewsCounter + 1});
+            await this.update(id, { "viewsCounter": product.viewsCounter + 1 });
             return product;
         }
         catch (error) {
