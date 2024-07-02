@@ -9,7 +9,7 @@ function AddItem() {
 
     const navigate = useNavigate();
 
-    const { token } = useContext(TokenContext); // Use TokenContext
+    const { token } = useContext(TokenContext);t
 
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);

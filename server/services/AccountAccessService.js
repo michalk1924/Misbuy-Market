@@ -190,7 +190,6 @@ function randomString(length) {
 }
 
 async function sendEmail(to, subject, text) {
-    // יצירת אובייקט משגר
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -199,15 +198,13 @@ async function sendEmail(to, subject, text) {
         }
     });
 
-    // אפשרויות המייל
     let mailOptions = {
         from: 'misbuymarket@gmail.com',
-        to: to,                       // כתובת הלקוח
-        subject: subject,             // נושא המייל
-        text: text                    // תוכן המייל
+        to: to,                      
+        subject: subject,           
+        text: text                    
     };
 
-    // שליחת המייל
     try {
         let info = await transporter.sendMail(mailOptions);
         console.log('Email sent: ' + info.response);

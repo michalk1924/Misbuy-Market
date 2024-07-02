@@ -4,12 +4,9 @@ const AccountAccessService = require('./services/AccountAccessService');
 const clothesService = require('./services/clothesService');
 const accessoriesService = require('./services/AccessoriesService');
 
-
-// List of areas
 const areas = ["Jerusalem", "Tel Aviv", "Haifa", "Rishon LeZion", "Petah Tikva", "Ashdod", "Netanya", "Beer Sheva", "Holon", "Bnei Brak", "Bat Yam", "Ramat Gan", "Ashkelon", "Herzliya", "Kfar Saba", "Modiin", "Nahariya", "Beit Shemesh", "Nazareth", "Tiberias", "Eilat", "Acre", "Lod", "Ra'anana", "Hadera", "Kiryat Gat", "Betar Illit", "Hod HaSharon", "Rosh HaAyin", "Qiryat Ata"];
 
 async function insertUsers() {
-  // Sample users with different values
   const users = [
     {
       email: "michalk195265546@gmail.com",
@@ -189,7 +186,7 @@ async function insertAccessories() {
 }
 
 async function initDB() {
-  //await insertUsers();
+  await insertUsers();
   await insertClothes();
   await insertShoes();
   await insertAccessories();

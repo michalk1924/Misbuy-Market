@@ -62,20 +62,19 @@ function Filters(props) {
 
     const applyFilter = (items, searchValue) => {
         return items.filter((item) => {
-            // Iterate over each searchValue property and apply the corresponding filter function
             for (const [key, value] of Object.entries(searchValue)) {
                 if (!filters[key](item, value)) {
-                    return false; // Discard the item if any filter fails
+                    return false;
                 }
             }
-            return true; // All filters passed, keep the item
+            return true;
         });
     };
 
     const handleCheckboxChange = (event) => {
         const checkbox = event.target;
-        const form = checkbox.closest('form'); // Get the closest parent form element
-        const filterType = form.getAttribute('name'); // Get the name of the form
+        const form = checkbox.closest('form');
+        const filterType = form.getAttribute('name');
         setSearchValue((prevSearchValue) => ({
             ...prevSearchValue,
             [filterType]:
@@ -96,11 +95,9 @@ function Filters(props) {
         setSelectSort(event.target.value);
     };
 
-    // Sort logic remains the same (selectSortOptions object)
 
     return (
         <div id='filters'>
-            {/* sort */}
             <div id='selectSort'>
                 <label htmlFor="sort">
                     Sort By:
@@ -111,7 +108,6 @@ function Filters(props) {
                 </select>
             </div>
 
-            {/* Search controls */}
             <div id='searchControls' >
                 <div className='searchControls'>
                     <label htmlFor="price">Price: up to {searchValue.price[1]}</label>
@@ -119,7 +115,7 @@ function Filters(props) {
                         type="range"
                         min="0"
                         max="500"
-                        value={searchValue.price[1]} // Use upper bound for slider
+                        value={searchValue.price[1]}
                         id="myRange"
                         onChange={handleRangeChange}
                         name="price"
