@@ -1,18 +1,15 @@
-.icon:hover {
-    color: rgb(229, 202, 49);
-}
 
 .wishItem {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 70vw;
     border: 2px solid rgb(129, 127, 127);
     border-radius: 8px;
     text-decoration: none;
     transition: transform 0.3s ease;
-    padding: 2vw;
-    margin: 2vw;
+    padding: 1vw 1vw;
+    margin: 2vw auto;
     box-sizing: border-box;
 }
 
@@ -24,11 +21,26 @@
 .shortDescription {
     display: flex;
     flex-direction: column;
+    align-items: start;
+    margin-left: 10%;
+}
+
+.shortDescription p{
+    margin: 0;
+    padding: 0;
 }
 
 .wishItem img{
-    width: 100%;
-    height: 80%;
-    /* adjust the height as needed */
-    object-fit: cover;
+    max-width: 15%;
+    height: 90%;
+    /* object-fit: cover; */
+}
+
+.trashIcon{
+    align-self: flex-start;
+    margin-left: 60%;
+}
+
+.trashIcon:hover {
+    color: rgb(229, 202, 49);
 }

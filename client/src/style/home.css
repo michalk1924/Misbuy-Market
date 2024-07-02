@@ -16,7 +16,7 @@
     }
 }
 
-#title {
+.webTitle {
     animation: slideIn 1s ease-out forwards;
 }
 

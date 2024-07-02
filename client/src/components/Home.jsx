@@ -35,7 +35,7 @@ function Home() {
 
   return (
     <div>
-      <h1 id="title">Misbuy Market</h1>
+      <h1 className="webTitle">Misbuy Market</h1>
       <div id="categories">
         <CategoryBox category="Shoes" backgroundImage={shoesImage} linkTo="../items/shoes" />
         <CategoryBox category="Clothes" backgroundImage={clothesImage}  linkTo="../items/clothes" />
