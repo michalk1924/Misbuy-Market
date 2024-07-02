@@ -13,6 +13,9 @@
     margin: auto;
 }
 
+.ad-box input, textarea{
+    width: 40vw;
+}
 
 
 .info-container {
