@@ -18,7 +18,6 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
     }
 
     useEffect(() => {
-        console.log(form);
         setFormData(form);
         setImage(ad.image);
     }, []);
@@ -38,6 +37,7 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
                 formDataWithImage.append('image', image);
             }
             formDataWithImage.append('userId', ad.userId)
+            debugger
             const url = `http://localhost:3000/api/${ad.category}/${ad._id}`;
             const response = await fetch(url, {
                 method: 'PUT',

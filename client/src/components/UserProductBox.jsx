@@ -7,7 +7,7 @@ import UpdateAd from "./UpdateAd";
 import { UserContext } from "./UserProvider";
 import { TokenContext } from './TokenProvider';
 
-function UserProductBox({ item, getUserProducts}) {
+function UserProductBox({ item, setItem,  getUserProducts}) {
 
     const {token} = useContext(TokenContext);
     const { userId } = useContext(UserContext);

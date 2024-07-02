@@ -22,8 +22,11 @@ function SignUp() {
   };
 
   const saveSignUp = async (e) => {
-    console.log(formData);
     e.preventDefault();
+    if(formData.password != formData.verifyPassword) {
+      alert('the verify password is different from the password');
+      return false;
+    }
     const response = await fetch(`http://localhost:3000/signup`, {
       method: 'POST',
       headers: {
