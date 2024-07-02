@@ -57,9 +57,10 @@ class Controller {
         }
     }
     async update(req, res) {
+        const image = req.file;
         const { id } = req.params;
         try {
-            const response = await this.service.update(id, req.body);
+            const response = await this.service.update(id, req.body, image);
             return res.status(200).json(response);
         } catch (error) {
             if (!error instanceof Exception)

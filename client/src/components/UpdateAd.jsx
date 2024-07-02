@@ -4,12 +4,13 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TokenContext } from './TokenProvider';
 import '../style/updateAd.css'
 
-function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
+function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails, getUserProducts }) {
 
     const { token } = useContext(TokenContext);
 
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
 
     const form = {
         price: ad.price || "",
@@ -18,6 +19,7 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
     }
 
     useEffect(() => {
+        console.log(image);
         setFormData(form);
         setImage(ad.image);
     }, []);
@@ -27,15 +29,30 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
+    const handleImage = (e) => {
+        const file = event.target.files[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const dataURL = e.target.result;
+                setImage(dataURL);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            console.error('No file selected');
+        }
+    };
+
     const update = async () => {
         try {
             const formDataWithImage = new FormData();
             Object.entries(formData).forEach(([key, value]) => {
                 formDataWithImage.append(key, value);
             });
-            // if (image) {
-            //     formDataWithImage.append('image', image);
-            // }
+            if (imageFile) {
+                formDataWithImage.append('image', imageFile);
+            }
             formDataWithImage.append('userId', ad.userId)
             const url = `http://localhost:3000/api/${ad.category}/${ad._id}`;
             const response = await fetch(url, {
@@ -73,8 +90,8 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
             <div className="image-container">
                 <img src={image} alt="image" />
                 <label>
-                    <strong>Image URL:</strong>
-                    <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+                    <strong>change image :</strong>
+                    <input type="file" id="image" name="image" onChange={handleImage} />
                 </label>
             </div>
         </div >

@@ -79,9 +79,14 @@ class Service {
         }
     }
 
-    async update(id, data) {
+    async update(id, data, image) {
         try {
-            return this.repository.update(id, data);
+            let productDataWithImg = data;
+            if (image) {
+                const imgName = await uploadProductImage(image);
+                productDataWithImg = { ...data, imageUrl: imgName };
+            }
+            return this.repository.update(id, productDataWithImg);
         }
         catch (error) {
             if (!error instanceof Exception)
