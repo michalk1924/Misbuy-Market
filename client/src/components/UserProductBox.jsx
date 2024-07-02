@@ -12,21 +12,26 @@ function UserProductBox({ item, getUserProducts, setAdDetails, setShowAdDetails,
 
     async function deleteItem() {
         try {
-            const url = `http://localhost:3000/api/${item.category}/${item._id}`;
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: token,
-                    'Content-Type': 'application/json',
+            event.stopPropagation();
+            const ans = window.confirm("Are You Sure That You Want To Delete This Item From Your Wish List?");
+            console.log(ans);
+            if (ans) {
+                const url = `http://localhost:3000/api/${item.category}/${item._id}`;
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: token,
+                        'Content-Type': 'application/json',
 
-                },
-                body: JSON.stringify({ userId: userId }),
-            });
-            if (response.ok) {
-                console.log('Item deleted successfully');
-                getUserProducts();
-            } else {
-                throw new Error('Failed to delete item');
+                    },
+                    body: JSON.stringify({ userId: userId }),
+                });
+                if (response.ok) {
+                    console.log('Item deleted successfully');
+                    getUserProducts();
+                } else {
+                    throw new Error('Failed to delete item');
+                }
             }
         } catch (e) {
             console.error('Error deleting item');

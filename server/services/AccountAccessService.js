@@ -32,7 +32,7 @@ class AccountAccessService {
                 role: 'connected',
             }, tokenSecrete, {
                 algorithm: 'HS256',
-                expiresIn: '5m',
+                expiresIn: '60m',
                 issuer: 'my-api',
                 subject: userIdString
             })

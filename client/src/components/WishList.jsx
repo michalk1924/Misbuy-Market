@@ -23,13 +23,11 @@ function WishList() {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       if(data) setWishList(data);
     }
   }
 
   async function removeItem(item) {
-    debugger
     const url = `http://localhost:3000/api/users/${userId}/update-wishlist/${item._id}`;
     const response = await fetch(url, {
       method: 'DELETE',

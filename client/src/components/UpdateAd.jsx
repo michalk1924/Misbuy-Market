@@ -4,7 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TokenContext } from './TokenProvider';
 import '../style/updateAd.css'
 
-function UpdateAd({ ad, setShowUpdateAd }) {
+function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
 
     const { token } = useContext(TokenContext);
 
@@ -33,11 +33,10 @@ function UpdateAd({ ad, setShowUpdateAd }) {
             Object.entries(formData).forEach(([key, value]) => {
                 formDataWithImage.append(key, value);
             });
-            if (image) {
-                formDataWithImage.append('image', image);
-            }
+            // if (image) {
+            //     formDataWithImage.append('image', image);
+            // }
             formDataWithImage.append('userId', ad.userId)
-            debugger
             const url = `http://localhost:3000/api/${ad.category}/${ad._id}`;
             const response = await fetch(url, {
                 method: 'PUT',
@@ -49,6 +48,7 @@ function UpdateAd({ ad, setShowUpdateAd }) {
             if (response.ok) {
                 setShowAdDetails(false);
                 setShowUpdateAd(false);
+                getUserProducts();
             }
         } catch (err) {
             console.error(err);

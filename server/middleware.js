@@ -10,14 +10,13 @@ const auth = (requiredRole, action) => {
     }
 
     try {
-      console.log('Token:', token);
       const tokenSecret = process.env.TOKEN_SECRET;
       const { exp, iss, role, sub } = jwt.verify(token, tokenSecret);
       if (iss === 'my-api' && exp > Date.now() / 1000 && role === requiredRole) {
         if (action == 'post')
           req.body.userId = sub;
         else if (action == 'put') {
-          if (req.body.userId != sub && req.params.id != sub)
+          if (req?.body?.userId != sub && req?.params?.id != sub)
             throw new Exception('You are not authorized to do this action');
         }
         else if (action == 'get') {
