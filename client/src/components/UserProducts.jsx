@@ -40,7 +40,8 @@ function UserProducts() {
     return (
         <div>
             {showAdDetails && <AdDetails ad={adDetails} setShowAdDetails={setShowAdDetails} setShowUpdateAd={setShowUpdateAd} />}
-            {showUpdateAd && <UpdateAd ad={adDetails} setShowUpdateAd={setShowUpdateAd} setShowAdDetails={setShowAdDetails} />}
+            {showUpdateAd && <UpdateAd ad={adDetails} setShowUpdateAd={setShowUpdateAd} setShowAdDetails={setShowAdDetails}
+            getUserProducts={getUserProducts} />}
             {userId && <div className="products-list">
                 {!loading && userProductsList.map((item, index) => (
                     <UserProductBox item={item} removeItem={removeItem} key={index} getUserProducts={getUserProducts} setShowUpdateAd={setShowUpdateAd} setShowAdDetails={setShowAdDetails} setAdDetails={setAdDetails}/>

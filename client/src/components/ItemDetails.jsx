@@ -15,17 +15,14 @@ function ItemDetails() {
   const [seeDescription, setSeeDescription] = useState(false);
   const [seeSellerDetails, setSeeSellerDetails] = useState(false);
 
-  const { itemId, category } = useParams(); // Accessing URL parameter directly
-
+  const { itemId, category } = useParams();
 
   async function getItem(id) {
     if (id) {
       try {
-        console.log(id);
         const url = `http://localhost:3000/api/${category}/${id}`;
         const response = await fetch(url);
         const data = await response.json()
-        console.log(data);
         setItem(data)
       }
       catch (error) {
@@ -63,7 +60,6 @@ function ItemDetails() {
     <div className="details-container">
       <div className="info-container">
         <FontAwesomeIcon icon={faHeart} className='icon' title="Add to Wish List" onClick={addToWishList} />
-        <p><strong>Id:</strong> {item && item._id}</p>
         <p><strong>Category:</strong> {item && item.category}</p>
         <p><strong>Type:</strong> {item && item.type}</p>
         {item.size && <p><strong>Size:</strong> {item && item.size}</p>}

@@ -102,14 +102,17 @@ class UsersService {
         try {
             const user = await this.getById(id);
             let wishListItems = user.wishList;
-            let wishListGetItems;
+            let wishListGetItems = [];
             if (wishListItems && wishListItems.length > 0) {
-                wishListGetItems = Promise.all(
-                    wishListItems.map(async (itemId) => {
+                for (const itemId of wishListItems) {
+                    try {
                         const item = await allItemsService.get(itemId);
-                        return item;
-                    })
-                );
+                        console.log(item);
+                        wishListGetItems.push(item);
+                    } catch (error) {
+                        console.error(`Error fetching item with ID ${itemId}`);
+                    }
+                }
             }
             return wishListGetItems;
         }

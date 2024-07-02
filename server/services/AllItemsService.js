@@ -20,16 +20,19 @@ class AllItemsService extends Service {
     async get(id) {
         try {
             const cloth = await clothesService.get(id);
+            console.log("cloth", cloth);
             if (cloth) {
                 return cloth;
             }
             const shoes = await shoesService.get(id);
+            console.log("shoes", shoes);
             if (shoes) {
                 return shoes;
             }
-            const accessories = await accessoriesService.get(id);
-            if (accessories) {
-                return bag;
+            const accessoriesItem = await accessoriesService.get(id);
+            console.log("accessoriesItem", accessoriesItem);
+            if (accessoriesItem) {
+                return accessoriesItem;
             }
             throw new NotFoundException("Item not found");
         } catch (error) {
@@ -73,11 +76,11 @@ class AllItemsService extends Service {
     async deleteAll() {
         try {
             const shoes = shoesRepository.deleteAll();
-            const bags = bagsRepository.deleteAll();
+            const accessories = accessoriesRepository.deleteAll();
             const clothes = clothesRepository.deleteAll();
             const products = new Array();
             products.push(shoes);
-            products.push(bags);
+            products.push(accessories);
             products.push(clothes);
             //לערבב את המערך
             return products;
