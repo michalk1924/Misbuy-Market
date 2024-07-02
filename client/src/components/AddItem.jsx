@@ -62,6 +62,7 @@ function AddItem() {
             formDataWithImage.append(key, value);
         });
         if (image) {
+            console.log(image);
             formDataWithImage.append('image', image);
         }
         try {
