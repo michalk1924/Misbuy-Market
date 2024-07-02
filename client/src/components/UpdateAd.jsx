@@ -74,26 +74,29 @@ function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails, getUserProducts }) {
 
     return (
         <div className="ad-box">
-            <FontAwesomeIcon icon={faXmark} className='icon' title="close" onClick={() => setShowUpdateAd(false)} />
+            <FontAwesomeIcon icon={faXmark} className='icon' title="close" onClick={() => setShowUpdateAd(false)} /><br />
+            <div id="main-content">
+                <div className="info-container">
+                    <label className="addItemLabel" htmlFor="price">Price:</label>
+                    <input className="addItemInput" type="number" id="price" name="price" value={formData.price} onChange={handleChange} />
+
+                    <label className="addItemLabel" htmlFor="title"> Title:</label>
+                    <input className="addItemInput" type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
+
+                    <label className="addItemLabel" htmlFor="description">Description:</label>
+                    <textarea className="addItemInput" id="description" name="description" value={formData.description} onChange={handleChange} />
+
+                </div>
+                <div className="image-container">
+                    <label>
+                        <strong>change image:</strong>
+                        <input type="file" id="image" name="image" onChange={handleImage} />
+                    </label>
+                    <img src={image} alt="image" />
+                </div>
+            </div>
             <button onClick={update}>Save Changes</button>
-            <div className="info-container">
-                <label className="addItemLabel" htmlFor="price">Price:</label>
-                <input className="addItemInput" type="number" id="price" name="price" value={formData.price} onChange={handleChange} />
 
-                <label className="addItemLabel" htmlFor="title"> Title:</label>
-                <input className="addItemInput" type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
-
-                <label className="addItemLabel" htmlFor="description">Description:</label>
-                <textarea className="addItemInput" id="description" name="description" value={formData.description} onChange={handleChange} />
-
-            </div>
-            <div className="image-container">
-                <img src={image} alt="image" />
-                <label>
-                    <strong>change image :</strong>
-                    <input type="file" id="image" name="image" onChange={handleImage} />
-                </label>
-            </div>
         </div >
     );
 }
