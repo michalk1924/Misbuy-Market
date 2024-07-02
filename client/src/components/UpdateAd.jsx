@@ -4,7 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TokenContext } from './TokenProvider';
 
 
-function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails, getUserProducts }) {
+function UpdateAd({ ad, setShowUpdateAd, setShowAdDetails }) {
 
     const { token } = useContext(TokenContext);
 
