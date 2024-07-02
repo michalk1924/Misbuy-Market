@@ -112,7 +112,6 @@ function Filters(props) {
 
             {/* Search controls */}
             <div id='searchControls' >
-
                 <div className='searchControls'>
                     <label htmlFor="price">Price: up to {searchValue.price[1]}</label>
                     <input
