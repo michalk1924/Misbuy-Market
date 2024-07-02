@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const {auth} = require('./middleware');
-const {insertUsers, inserClothes, insertClothes} = require('./initDB')
+const {insertUsers, insertClothes} = require('./initDB')
 
 const shoesRouter = require('./routers/ShoesRouter');
 const accessoriesController = require('./routers/AccessoriesRouter');
@@ -34,7 +34,8 @@ server.use('/api/users', usersRouter);
 server.use('/', accountAccessRouter);
 
 server.get('/', (req, res) => {
-    //insertClothes();  // Initializing users table if it doesn't exist.
+    //insertUsers();
+   insertClothes();  // Initializing users table if it doesn't exist.
     res.send('main page!');
 });
 

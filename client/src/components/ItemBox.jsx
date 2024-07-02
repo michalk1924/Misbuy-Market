@@ -11,8 +11,8 @@ const ItemBox = ({ item }) => {
 
   const { category } = useParams();
 
-  const {token} = useContext(TokenContext);
-  const {userId} = useContext(UserContext);
+  const { token } = useContext(TokenContext);
+  const { userId } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const ItemBox = ({ item }) => {
           <p>Area: {item.area}</p>
         </div>
         <FontAwesomeIcon icon={faHeart} className='icon' title="Add to Wish List"
-        onClick={(event) => addToWishList(event, userId, item._id, token)} />
+          onClick={(event) => addToWishList(event, userId, item._id, token)} />
       </div>
     </div>
   );
