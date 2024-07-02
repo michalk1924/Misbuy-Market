@@ -21,7 +21,7 @@ class Controller {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             console.log(error.message);
-            return res.status(error.statusCode).json(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
         }
     }
 
@@ -37,7 +37,7 @@ class Controller {
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
-            return res.status(error.statusCode).json(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
         }
     }
     async insert(req, res) {
@@ -52,7 +52,7 @@ class Controller {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             console.log(error.message);
-            return res.status(error.statusCode).json(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
         }
     }
     async update(req, res) {
@@ -64,7 +64,7 @@ class Controller {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             console.log(error.message);
-            return res.status(error.statusCode).json(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
         }
     }
 
@@ -77,7 +77,7 @@ class Controller {
             if (!error instanceof Exception)
                 error = new InternalServerException()
             console.log(error.message);
-            return res.status(error.statusCode).json(error.message);
+            return res.status(error.statusCode || 500).json(error.message);
         }
     }
 
