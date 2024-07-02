@@ -35,8 +35,8 @@ function SignUp() {
       body: JSON.stringify(formData)
     });
     if (response.status != 200) {
-      if (response.status == 409) { setWorngExists(true); setWorng(false); }
-      else { setWorng(true); setWorngExists(false); }
+      if (response.status == 409) { alert("user already exists"); }
+      else { alert("worng"); }
     }
     else {
       const {userId, token} = await response.json();
@@ -76,8 +76,6 @@ function SignUp() {
         <button className="submit-button">Sign Up</button>
         <Link to="/signin" className="link">Already have an account? Sign In</Link>
       </form>
-      {worngExists && <p>user already exists</p>}
-      {worng && <p>worng</p>}
     </div>
   );
 }

@@ -48,8 +48,7 @@ class AccountAccessService {
     async signUp(user) {
         try {
             const password = user.password;
-            const saltRounds = 10 // process.env.SALT_ROUNDS;
-            const salt = await bcrypt.genSalt(saltRounds);
+            const salt = await bcrypt.genSalt(10);
             console.log("salt: ", salt);
             const hashPassword = await bcrypt.hash(password, salt);
             console.log("hashPassword " + hashPassword);

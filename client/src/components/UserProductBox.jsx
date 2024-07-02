@@ -27,7 +27,6 @@ function UserProductBox({ item, getUserProducts, setAdDetails, setShowAdDetails,
                     body: JSON.stringify({ userId: userId }),
                 });
                 if (response.ok) {
-                    console.log('Item deleted successfully');
                     getUserProducts();
                 } else {
                     throw new Error('Failed to delete item');

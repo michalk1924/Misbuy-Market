@@ -32,7 +32,6 @@ class Service {
         }
     }
 
-
     async get(id) {
         try {
             const product = await this.repository.get(id);

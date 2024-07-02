@@ -1,4 +1,4 @@
-const {Service} = require('./Service.js');
+const { Service } = require('./Service.js');
 const shoesServiceRepository = require('../repositories/ShoesRepository.js');
 
 class ShoesService extends Service {

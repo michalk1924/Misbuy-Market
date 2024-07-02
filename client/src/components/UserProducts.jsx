@@ -33,9 +33,6 @@ function UserProducts() {
         setUserProductsList(data);
         setLoading(false);
     }
-    function removeItem(id) {
-        //מחיקת פריט מרשימת המשאלות
-    }
 
     return (
         <div>
@@ -44,7 +41,9 @@ function UserProducts() {
             getUserProducts={getUserProducts} />}
             {userId && <div className="products-list">
                 {!loading && userProductsList.map((item, index) => (
-                    <UserProductBox item={item} removeItem={removeItem} key={index} getUserProducts={getUserProducts} setShowUpdateAd={setShowUpdateAd} setShowAdDetails={setShowAdDetails} setAdDetails={setAdDetails}/>
+                    <UserProductBox item={item} key={index}
+                     getUserProducts={getUserProducts} setShowUpdateAd={setShowUpdateAd}
+                     setShowAdDetails={setShowAdDetails} setAdDetails={setAdDetails}/>
                 ))}
                 {loading && (
                     <div className="loading-spinner">

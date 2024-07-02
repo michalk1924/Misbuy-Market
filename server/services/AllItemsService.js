@@ -7,30 +7,19 @@ const shoesRepository = require('../repositories/ShoesRepository');
 const accessoriesRepository = require('../repositories/AccessoriesRepository');
 const clothesRepository = require('../repositories/ClothesRepository');
 
-// פונקציה לערבוב המערך
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
 class AllItemsService extends Service {
 
     async get(id) {
         try {
             const cloth = await clothesService.get(id);
-            console.log("cloth", cloth);
             if (cloth) {
                 return cloth;
             }
             const shoes = await shoesService.get(id);
-            console.log("shoes", shoes);
             if (shoes) {
                 return shoes;
             }
             const accessoriesItem = await accessoriesService.get(id);
-            console.log("accessoriesItem", accessoriesItem);
             if (accessoriesItem) {
                 return accessoriesItem;
             }
@@ -82,7 +71,6 @@ class AllItemsService extends Service {
             products.push(shoes);
             products.push(accessories);
             products.push(clothes);
-            //לערבב את המערך
             return products;
         }
         catch (error) {
