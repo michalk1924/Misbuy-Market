@@ -58,13 +58,13 @@ class UsersRepository {
             await client.close();
         }
     };
-    
+
     async insert(data) {
         try {
             await client.connect();
             const database = client.db(db_name);
             const result = await database.collection(this.collection).insertOne(data);
-            console.log("res Id:"+ result.insertedId);
+            console.log("res Id:" + result.insertedId);
             return result.insertedId;
         }
         catch (error) {

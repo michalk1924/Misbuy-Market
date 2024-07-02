@@ -22,7 +22,6 @@ function Items() {
   return (
     <div>
       <Filters setItems={setItems} allItems={items}/>
-      {/* Item list */}
       <div className="item-list">
         {items.map((item, index) => (
           <ItemBox key={item.id} item={item} />

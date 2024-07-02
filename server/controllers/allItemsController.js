@@ -1,4 +1,4 @@
-const {Controller} = require("./Controller");
+const { Controller } = require("./Controller");
 const allItemsService = require('../services/AllItemsService');
 const { Exception, InternalServerException } = require("../Exception");
 
@@ -17,7 +17,7 @@ class AllItemsController {
         }
     }
 
-    async getAll(req, res){
+    async getAll(req, res) {
         try {
             const response = await allItemsService.getAll(req.query);
             return res.status(200).json(response);
