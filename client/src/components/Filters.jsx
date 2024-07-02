@@ -5,13 +5,21 @@ import '../style/filters.css';
 
 function Filters(props) {
 
-    const [searchValue, setSearchValue] = useState({ price: [0, 500], type: [], area: [] });
+    const [searchValue, setSearchValue] = useState( {
+        price: [0, 500],
+        type: [],
+        area: [],
+        size: [],
+        color: [],
+    });
     const [selectSort, setSelectSort] = useState('serial');
 
     const filters = {
         price: (item, priceRange) => !item.price || (item.price >= priceRange[0] && item.price <= priceRange[1]),
         type: (item, types) => types.length === 0 || types.includes(item.type),
         area: (item, areas) => areas.length === 0 || areas.includes(item.area),
+        size: (item, sizes) => sizes.length === 0 || sizes.includes(item.size),
+        color: (item, colors) => colors.length === 0 || colors.includes(item.color),
     };
 
     const selectSortOptions = {
@@ -43,6 +51,7 @@ function Filters(props) {
         const sortFilteredItems = filteredItems.sort(selectSortOptions[selectSort])
         props.setItems(sortFilteredItems);
     }, [searchValue, props.allItems]);
+
 
     useEffect(() => {
         props.setItems((prevItems) => {

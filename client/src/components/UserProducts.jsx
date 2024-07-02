@@ -37,7 +37,7 @@ function UserProducts() {
         <div>
             <div className="products-list">
                 {!loading && userProductsList.map((item, index) => (
-                    <UserProductBox item={item} removeItem={removeItem} key={index} />
+                    <UserProductBox item={item} removeItem={removeItem} key={index} getUserProducts={getUserProducts} />
                 ))}
                 {loading && (
                     <div className="loading-spinner">

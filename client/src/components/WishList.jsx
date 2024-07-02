@@ -21,15 +21,26 @@ function WishList() {
         Authorization: token,
       }
     });
-    if(response.ok)
-      {
-        const data = await response.json();
-        console.log(data);
-        setWishList(data);
-      }
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      if(data) setWishList(data);
+    }
   }
-  function removeItem(id) {
-    //מחיקת פריט מרשימת המשאלות
+
+  async function removeItem(item) {
+    debugger
+    const url = `http://localhost:3000/api/users/${userId}/update-wishlist/${item._id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: token,
+      }
+    });
+    if (response.ok) {
+      getWishList();
+      alert("item deleted successfully")
+    }
   }
 
   return (

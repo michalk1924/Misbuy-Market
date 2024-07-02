@@ -9,10 +9,24 @@ const ItemBox = ({ item }) => {
 
   const navigate = useNavigate();
 
-  function addToWishList(event) {
+  async function addToWishList(event) {
     event.stopPropagation();
-    alert("love");
-    //להוסיף לרשימת המשאלות
+    try {
+      const url = `http://localhost:3000/api/users/${userId}/update-wishlist`;
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ itemId: itemId })
+      });
+      if (response.ok)
+        alert("Item added to wishlist");
+    }
+    catch (error) {
+      alret("Error adding item to wishlist");
+    }
   }
   return (
     <div onClick={() => { navigate(category && `../${item.category}/${item._id}` || `../items/${item.category}/${item._id}`) }} className="item-box">

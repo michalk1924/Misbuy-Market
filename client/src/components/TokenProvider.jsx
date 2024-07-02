@@ -8,6 +8,7 @@ export const TokenProvider = ({ children }) => {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
+        debugger
         const savedToken = localStorage.getItem("token");
         if (savedToken) {
           setToken(savedToken);

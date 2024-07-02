@@ -12,7 +12,7 @@ function WishItem({ item, removeItem }) {
         const ans = window.confirm("Are You Sure That You Want To Delete This Item From Your Wish List?");
         console.log(ans);
         if (ans)
-            removeItem(item._id);
+            removeItem(item);
     }
 
     function navigateToItem(){
