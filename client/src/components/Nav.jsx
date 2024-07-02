@@ -6,10 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from './UserProvider';
 function Nav() {
+    
     const { userId } = useContext(UserContext);
+
     useEffect(() => {
         console.log(userId);
     }, [userId])
+
     return (
         <nav>
             <div className="logo">
