@@ -35,7 +35,7 @@ function UserProducts() {
 
     return (
         <div>
-            <div className="products-list">
+            {userId && <div className="products-list">
                 {!loading && userProductsList.map((item, index) => (
                     <UserProductBox item={item} removeItem={removeItem} key={index} getUserProducts={getUserProducts} />
                 ))}
@@ -44,7 +44,8 @@ function UserProducts() {
                         <TailSpin height="80" width="80" color="blue" ariaLabel="loading" />
                     </div>
                 )}
-            </div>
+            </div>}
+            {!userId && <h1>This Page is not Available</h1>}
         </div>
     )
 }

@@ -45,11 +45,13 @@ function WishList() {
 
   return (
     <div>
-      <div className="wish-list">
+      {userId&&<div className="wish-list">
+        <h1 className="webTitle">Your Wish List</h1>
         {wishList.map((item, index) => (
-          <WishItem item={item} removeItem={removeItem} />
+          <WishItem item={item} removeItem={removeItem} key={index}/>
         ))}
-      </div>
+      </div>}
+      {!userId&&<h1>This Page is not Available</h1>}
     </div>
   )
 }

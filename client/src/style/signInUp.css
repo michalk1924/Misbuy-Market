@@ -65,4 +65,7 @@
     color: #0056b3;
   }
   
-  
+  a:hover{
+    cursor: pointer;
+    color: #0056b3;
+  }

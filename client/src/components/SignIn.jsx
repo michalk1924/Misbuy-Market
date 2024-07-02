@@ -81,7 +81,7 @@ function SignIn() {
 
         <button className="submit-button">Sign In</button>
 
-        <a onClick={forgotPassword}>forgot your password</a>
+        <a onClick={forgotPassword}>forgot your password?</a>
         
         <Link to="/signup" className="link">Don't have an account? Sign Up</Link>
       </form>
