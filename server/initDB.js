@@ -2,6 +2,7 @@
 const ShoesService = require('./services/ShoesService');
 const AccountAccessService = require('./services/AccountAccessService');
 const clothesService = require('./services/clothesService');
+const accessoriesService = require('./services/AccessoriesService');
 
 
 // List of areas
@@ -62,7 +63,6 @@ async function insertUsers() {
   }
 }
 
-
 const clothesSelectors = [
   { title: "type", options: ["t-shirt", "shirt", "blouse", "tank top", "sweater", "hoodie", "jacket", "coat", "dress", "skirt", "jeans", "trousers", "shorts", "leggings", "suit", "tie", "scarf", "gloves", "hat", "socks", "swimsuit", "robe", "pajamas"] },
   { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] },
@@ -72,7 +72,12 @@ const clothesSelectors = [
 const shoesSelectors = [
   { title: "type", options: ["sneakers", "boots", "sandals", "loafers", "heels", "flats", "oxfords", "slippers", "espadrilles", "flip-flops", "wedges", "moccasins", "athletic shoes", "pumps", "platforms", "mary janes"] },
   { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] },
-  { title: "size", options: [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48] }
+  { title: "size", options: ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"] }
+];
+
+const accessoriesSelectors = [
+  { title: "type", options: ["necklace", "bracelet", "ring", "earrings", "watch", "belt", "scarf", "hat", "sunglasses", "gloves", "handbag", "backpack", "wallet", "tie", "bow tie", "hairpin", "headband", "umbrella"] },
+  { title: "color", options: ["black", "blue", "red", "green", "yellow", "orange", "purple", "pink", "brown", "gray", "white"] }
 ];
 
 const userIds = [
@@ -163,4 +168,30 @@ async function insertShoes() {
 
 }
 
-module.exports = { insertUsers, insertClothes, insertShoes }
+async function insertAccessories() {
+  for (let i = 19; i <= 38; i++) {
+    const product = {
+      category: "accessories",
+      type: getRandomOption(accessoriesSelectors.find(selector => selector.title === "type").options),
+      color: getRandomOption(accessoriesSelectors.find(selector => selector.title === "color").options),
+      price: getRandomPrice(10, 200),
+      title: getRandomTitle(),
+      description: getRandomDescription(),
+      userId: userIds[Math.floor(Math.random() * userIds.length)],
+      imageUrl: `./images/${i}.png`
+    };
+
+    await accessoriesService.insert(product);
+  }
+
+  console.log('Accessories items have been inserted successfully.');
+}
+
+async function initDB() {
+  insertUsers();
+  insertClothes();
+  insertShoes();
+  insertAccessories();
+}
+
+module.exports = { insertUsers, insertClothes, insertShoes, insertAccessories, initDB }
