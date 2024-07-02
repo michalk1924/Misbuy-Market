@@ -1,10 +1,10 @@
 import React from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-
-function AdDetails({ ad, setShowAdDetails }) {
+import '../style/adDetails.css'
+function AdDetails({ ad, setShowAdDetails, setShowUpdateAd }) {
     return (
-        <div className="details-container">
+        <div className="ad-container">
             <FontAwesomeIcon icon={faXmark} className='icon' title="close" onClick={() => setShowAdDetails(false)} />
             <button onClick={() => { setShowAdDetails(false); setShowUpdateAd(true); }}>Update Ad</button>
             <div className="info-container">
