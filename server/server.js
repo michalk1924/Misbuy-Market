@@ -34,8 +34,7 @@ server.use('/api/users', usersRouter);
 server.use('/', accountAccessRouter);
 
 server.get('/', (req, res) => {
-    //insertUsers();
-   insertClothes();  // Initializing users table if it doesn't exist.
+    //insertClothes();  // Initializing users table if it doesn't exist.
     res.send('main page!');
 });
 
