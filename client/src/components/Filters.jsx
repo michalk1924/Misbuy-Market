@@ -47,6 +47,7 @@ function Filters(props) {
     const citiesInIsrael = ["Jerusalem", "Tel Aviv", "Haifa", "Rishon LeZion", "Petah Tikva", "Ashdod", "Netanya", "Beer Sheva", "Holon", "Bnei Brak", "Bat Yam", "Ramat Gan", "Ashkelon", "Herzliya", "Kfar Saba", "Modiin", "Nahariya", "Beit Shemesh", "Nazareth", "Tiberias", "Eilat", "Acre", "Lod", "Ra'anana", "Hadera", "Kiryat Gat", "Betar Illit", "Hod HaSharon", "Rosh HaAyin", "Qiryat Ata"];
 
     useEffect(() => {
+        debugger
         const filteredItems = applyFilter(props.allItems, searchValue);
         const sortFilteredItems = filteredItems.sort(selectSortOptions[selectSort])
         props.setItems(sortFilteredItems);
