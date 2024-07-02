@@ -107,7 +107,6 @@ class UsersService {
                 for (const itemId of wishListItems) {
                     try {
                         const item = await allItemsService.get(itemId);
-                        console.log(item);
                         wishListGetItems.push(item);
                     } catch (error) {
                         console.error(`Error fetching item with ID ${itemId}`);
