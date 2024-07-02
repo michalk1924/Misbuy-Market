@@ -1,27 +1,30 @@
 .details-container {
   margin: 5vw;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .image-container {
-    width: 40vw;
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .info-container {
-    width: 60vw;
-    text-align: start;
-  }
-  
-  .seeMoreLess{
-    cursor: pointer;
-  }
- 
-  .seeMoreLess:hover{
-    color: rgb(229, 158, 36);
-  }
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .itemDetailsImg {
+} */
+
+.itemDetailsImg {
+  width:40vw; /* Set the width of the container to 40% of the viewport width */
+  max-height: 50vh; /* Automatically adjusts the height to maintain aspect ratio */
+  margin: 0;
+
+}
+.itemDetailsImg img{
+  width: 100%;
+}
+.info-container {
+  width: 60vw; /* Set the width of the info container to 60% of the viewport width */
+  text-align: start; /* Align text to the left */
+}
+
+.seeMoreLess {
+  cursor: pointer;
+}
+
+.seeMoreLess:hover {
+  color: rgb(229, 158, 36); /* Color change on hover */
+}
