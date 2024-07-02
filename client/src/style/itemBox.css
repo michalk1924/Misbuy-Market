@@ -35,3 +35,9 @@
     color: #333;
 }
 
+#shortDescription {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between ;
+    margin-top: 5%;
+}

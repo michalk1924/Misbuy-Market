@@ -14,7 +14,6 @@ function Home() {
 
   async function getMostPouplerItems() {
     setLoading(true);
-    debugger
     const url = `http://localhost:3000/api/allItems`;
     const response = await fetch(url);
     if (response.ok) {
