@@ -1,3 +1,6 @@
 .icon:hover{
+    position: absolute;
+    top: auto;
+    left: auto;
     color: rgb(229, 202, 49);
 }
