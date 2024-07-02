@@ -3,14 +3,14 @@
 }
 
 .ad-container {
-    background-color: rgb(234, 242, 242);
+    background-color: rgb(247, 248, 248);
     display: flex;
     flex-direction: column;
-    padding: 5vw;
+    padding: 3vw 5vw;
     position: fixed;
     z-index: 1002;
     width: 80%;
-    height: 60%;
+    height: 70%;
     margin-top: 6vh;
     box-sizing: border-box;
     border: 3px solid black;
@@ -19,24 +19,10 @@
 
 .ad-container button {
     width: 20%;
-    margin: auto;
+    margin: 2vw auto 0;
+
 }
 
-.main-content {
+#main-content{
     display: flex;
-    flex: 1; /* Take up remaining space */
-}
-
-.image-container {
-    flex: 1; /* Take up remaining space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Hide any overflow */
-}
-
-.image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Maintain aspect ratio and fit within container */
 }

@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
-import '../style/itemDetails.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from './UserProvider';
 import { TokenContext } from './TokenProvider';
+import '../style/itemDetails.css'
 function ItemDetails() {
 
   const { userId } = useContext(UserContext);
@@ -75,8 +74,8 @@ function ItemDetails() {
           <p><strong>Phone:</strong> {item.phone}</p>
         </div>}
       </div>
-      <div className="image-container">
-        <img src={item.image} alt="image" />
+      <div className="itemDetailsImg">
+        <img src={item.image} alt="image"  />
       </div>
     </div>
   );
