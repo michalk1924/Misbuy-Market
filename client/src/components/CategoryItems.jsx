@@ -21,15 +21,17 @@ function CategoryItems() {
         const url = `http://localhost:3000/api/${category}?_start=${start}&_limit=${limit}`;
         const response = await fetch(url);
         if (response.ok) {
-            const data = await response.json();
+            const {data, length} = await response.json();
+            let mergeAllItems;
             if (data.length > 0) {
-                setAllItems(items.concat(await data))
+                mergeAllItems = items.concat(await data)
+                setAllItems(mergeAllItems)
                 console.log(data);
                 setLoading(false);
                 setStart(prevStart => prevStart + limit)
             }
-            if (data.length < limit) {
-                setThereMoreItems(false)
+            if (length - mergeAllItems.length == 0) {
+                setThereMoreItems(false);
             }
         } else {
             setAllItems([])

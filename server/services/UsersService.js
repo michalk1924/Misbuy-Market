@@ -143,12 +143,11 @@ class UsersService {
         }
     }
 
-    async deleteFromWishList(userId, itemId)
-    {
+    async deleteFromWishList(userId, itemId) {
         try {
             const user = await this.getById(userId);
             if (user.wishList && user.wishList.includes(itemId)) {
-                user.wishList = user.wishList.filter((id) => id.toString()!== itemId.toString());
+                user.wishList = user.wishList.filter((id) => id.toString() !== itemId.toString());
             }
             await this.update(userId, user);
             return user.wishList;

@@ -37,7 +37,6 @@ function WishList() {
     });
     if (response.ok) {
       getWishList();
-      alert("item deleted successfully")
     }
   }
 
