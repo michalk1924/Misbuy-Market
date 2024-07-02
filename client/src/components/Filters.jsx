@@ -103,7 +103,6 @@ function Filters(props) {
 
             {/* Search controls */}
             <div id='searchControls' >
-
                 <div className='searchControls'>
                     <label htmlFor="price">Price: up to {searchValue.price[1]}</label>
                     <input
@@ -119,15 +118,15 @@ function Filters(props) {
 
                 <div className='searchControls'>
                     {typesSelectors[props.category].map((filter) => (
-                            <form key={filter.title} onChange={handleCheckboxChange} name={filter.title}>
-                                <h4>{filter.title}</h4>
-                                {filter.options.map(option => (
-                                    <div key={option} className='checboxLabel'>
-                                        <input type="checkbox" id={`${filter.title}-${option}`} value={option} />
-                                        <label htmlFor={`${filter.title}-${option}`}>{option}</label>
-                                    </div>
-                                ))}
-                            </form>
+                        <form key={filter.title} onChange={handleCheckboxChange} name={filter.title}>
+                            <h4>{filter.title}</h4>
+                            {filter.options.map(option => (
+                                <div key={option} className='checboxLabel'>
+                                    <input type="checkbox" id={`${filter.title}-${option}`} value={option} />
+                                    <label htmlFor={`${filter.title}-${option}`}>{option}</label>
+                                </div>
+                            ))}
+                        </form>
                     ))}
                 </div>
 
