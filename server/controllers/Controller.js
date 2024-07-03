@@ -26,7 +26,6 @@ class Controller {
         }
     }
 
-
     async get(req, res) {
         const { id } = req.params;
         console.log(id);
