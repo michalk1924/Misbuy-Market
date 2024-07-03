@@ -34,7 +34,6 @@ server.use('/api/users', usersRouter);
 server.use('/', accountAccessRouter);
 
 server.get('/', (req, res) => {
-    //initDB();
     res.send('main page!');
 });
 

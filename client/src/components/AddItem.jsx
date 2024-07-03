@@ -9,7 +9,7 @@ function AddItem() {
 
     const navigate = useNavigate();
 
-    const { token } = useContext(TokenContext); // Use TokenContext
+    const { token } = useContext(TokenContext);
 
     const [formData, setFormData] = useState({});
     const [image, setImage] = useState(null);
@@ -50,7 +50,7 @@ function AddItem() {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0]; // Get the first file from the array
+        const file = e.target.files[0];
         setImage(file);
     };
 
@@ -101,7 +101,7 @@ function AddItem() {
                         Select Category:
                     </label>
                     <select className="addItemInput" id="category" name="category" onChange={handleChange} required>
-                        <option value=""></option> {/* Empty option */}
+                        <option value=""></option>
                         <option value="shoes">Shoes</option>
                         <option value="clothes">Clothes</option>
                         <option value="accessories">Accessories</option>

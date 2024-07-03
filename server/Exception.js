@@ -6,7 +6,8 @@ class Exception {
         this.statusCode = 500;
     }
 }
-//בקשה לא תקינה- השרת לא הצליח להבין את הבקשה עקב נתונים חסרים, שגויים או לא חוקיים
+
+//Invalid request - the server could not understand the request due to missing, incorrect or invalid data
 class BadRequestException extends Exception {
     constructor(error) {
         super(error != undefined ? error : { message: 'bad request' });
@@ -14,7 +15,7 @@ class BadRequestException extends Exception {
     }
 }
 
-//אימות נכשל. המשתמש לא מורשה לבצע את הפעולה המבוקשת
+//Authentication failed. The user is not authorized to perform the requested action
 class UnauthorizedException extends Exception {
     constructor(error) {
         super(error != undefined ? error : { message: 'Unauthorized' });
@@ -22,7 +23,7 @@ class UnauthorizedException extends Exception {
     }
 }
 
-//גישה אסורה. המשאב המבוקש זמין, אך המשתמש אינו מורשה לגשת אליו
+//Access is prohibited. The requested resource is available, but the user is not authorized to access it
 class ForbiddenException extends Exception {
     constructor(error) {
         super(error != undefined ? error :{ message: 'Forbidden' });
@@ -30,7 +31,7 @@ class ForbiddenException extends Exception {
     }
 }
 
-//לא נמצא. המשאב המבוקש לא קיים
+//Not found. The requested resource does not exist
 class NotFoundException extends Exception {
     constructor(error) {
         super(error != undefined ? error : { message: 'Not Found' });
@@ -38,7 +39,7 @@ class NotFoundException extends Exception {
     }
 }
 
-//קונפליקט. המצב הנוכחי לא מאפשר את ביצוע הבקשה. לדוגמא- נסיון ליצור משאב שכבר קיים
+//conflict. The current situation does not allow the execution of the request. For example - an attempt to create a resource that already exists
 class ConflictException extends Exception {
     constructor(error) {
         super(error != undefined ? error :{ message: 'conflict' });
@@ -46,7 +47,7 @@ class ConflictException extends Exception {
     }
 }
 
-//שגיאת שרת פנימית. השרת נתקל בבעיה בלתי צפויה ואינו יכול לטפל בבקשה
+//Internal server error. The server encountered an unexpected problem and cannot process the request
 class InternalServerException extends Exception {
     constructor(error) {
         super(error != undefined ? error :{ message: 'Internal Server' });
@@ -54,7 +55,7 @@ class InternalServerException extends Exception {
     }
 }
 
-//השירות אינו זמין. השרת זמנית לא יכול לטפל בבקשות
+//The service is not available. The server is temporarily unable to handle requests
 class ServiceUnavailableException extends Exception {
     constructor(error) {
         super(error != undefined ? error :{ message: 'Service unavailable' });

@@ -49,7 +49,7 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const result = await database.collection(this.collection).insertOne(data);
-            console.log("res Id:"+ result.insertedId);
+            console.log("res Id:" + result.insertedId);
             return result.insertedId;
         }
         catch (error) {
@@ -66,7 +66,7 @@ class Repository {
             await client.connect();
             const database = client.db(db_name);
             const o_id = new ObjectId(id);
-            const result = await database.collection(this.collection).updateOne({ "_id": o_id },{ $set: data });
+            const result = await database.collection(this.collection).updateOne({ "_id": o_id }, { $set: data });
             return result;
         }
         catch (error) {
@@ -90,7 +90,7 @@ class Repository {
             return result;
         }
         catch (error) {
-            if(!error instanceof Exception)
+            if (!error instanceof Exception)
                 error = new BadRequestException("Repository Error: " + error.message);
             throw error;
         }
@@ -109,7 +109,7 @@ class Repository {
             }
         }
         catch (error) {
-            if(!error instanceof Exception)
+            if (!error instanceof Exception)
                 error = new BadRequestException("Repository Error: " + error.message);
             throw error;
         }
@@ -117,7 +117,7 @@ class Repository {
             await client.close();
         }
     }
-    
+
 }
 
 module.exports = { Repository };

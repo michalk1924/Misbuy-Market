@@ -6,7 +6,6 @@ function ForgotPassword() {
     const location = useLocation();
     const email = location.state?.email;
     const [code, setCode] = useState('');
-    const [wrong, setWrong] = useState(false);
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -27,7 +26,7 @@ function ForgotPassword() {
         });
 
         if (response.status !== 200) {
-            setWrong(true);
+            alert('Password reset code is incorrect!')
         } else {
             navigate(`/newpassword`, { state: { email: email } });
         }
@@ -40,7 +39,6 @@ function ForgotPassword() {
                 <input type="text" id="code" name="code" value={code} onChange={handleChange} />
                 <button type="submit" className="submit-button">Submit</button>
             </form>
-            {wrong && <p>Password reset code is incorrect!</p>}
         </div>
     );
 }

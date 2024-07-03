@@ -21,7 +21,7 @@ class AccountAccessService {
             const user = await this.repository.SignIn(email);
             const userId = user._id;
             const userIdString = userId.toString();
-            const {salt, hashPassword} = await passwordsRepository.getByUserId(userIdString)
+            const { salt, hashPassword } = await passwordsRepository.getByUserId(userIdString)
             const newHashPassword = await bcrypt.hash(password, salt);
             const isMatch = hashPassword == newHashPassword;
             if (!isMatch) {
@@ -146,7 +146,7 @@ class AccountAccessService {
             console.log("salt: ", salt);
             const hashPassword = await bcrypt.hash(password, salt);
             console.log("hashPassword " + hashPassword);
-            const user = await UsersRepository.get({"email":email})
+            const user = await UsersRepository.get({ "email": email })
             const userId = user._id;
             const userIdString = userId.toString();
             await passwordsRepository.update(userIdString, { "hashPassword": hashPassword, "salt": salt });
@@ -160,7 +160,7 @@ class AccountAccessService {
                 issuer: 'my-api',
                 subject: userId.toString(),
             })
-            return { token };
+            return { token, user_Id : userId};
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
@@ -190,7 +190,6 @@ function randomString(length) {
 }
 
 async function sendEmail(to, subject, text) {
-    // יצירת אובייקט משגר
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -199,15 +198,13 @@ async function sendEmail(to, subject, text) {
         }
     });
 
-    // אפשרויות המייל
     let mailOptions = {
-        from: 'misbuymarket@gmail.com', 
-        to: to,                       // כתובת הלקוח
-        subject: subject,             // נושא המייל
-        text: text                    // תוכן המייל
+        from: 'misbuymarket@gmail.com',
+        to: to,                      
+        subject: subject,           
+        text: text                    
     };
 
-    // שליחת המייל
     try {
         let info = await transporter.sendMail(mailOptions);
         console.log('Email sent: ' + info.response);

@@ -117,7 +117,7 @@ class UsersController {
         }
     }
 
-    async deleteFromWishList(req, res){
+    async deleteFromWishList(req, res) {
         const { id, itemId } = req.params;
         try {
             const response = await this.service.deleteFromWishList(id, itemId);

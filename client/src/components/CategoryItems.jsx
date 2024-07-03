@@ -29,9 +29,9 @@ function CategoryItems() {
                 console.log(data);
                 setLoading(false);
                 setStart(prevStart => prevStart + limit)
-            }
-            if (length - mergeAllItems.length == 0) {
-                setThereMoreItems(false);
+                if (length - mergeAllItems.length == 0) {
+                    setThereMoreItems(false);
+                }
             }
         } else {
             setAllItems([])

@@ -15,9 +15,9 @@ class Controller {
                 const limit_n = parseInt(_limit);
                 const start_n = parseInt(_start);
                 const sliceResult = result.slice(start_n, start_n + limit_n);
-                return res.status(200).json({data: result ? sliceResult : [], length: length});
+                return res.status(200).json({ data: result ? sliceResult : [], length: length });
             }
-            else res.status(200).json({data : result ? result : [], length: length});
+            else res.status(200).json({ data: result ? result : [], length: length });
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()
@@ -25,7 +25,6 @@ class Controller {
             return res.status(error.statusCode || 500).json(error.message);
         }
     }
-
 
     async get(req, res) {
         const { id } = req.params;

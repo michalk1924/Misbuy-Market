@@ -6,7 +6,7 @@ function SingleSelector(props) {
         <div>
             <label className="addItemLabel" htmlFor={title}>{title}</label>
             <select className="addItemInput" id={title} name={title} onChange={handleChange}>
-                <option value=""></option> {/* Empty option */}
+                <option value=""></option>
                 {options.map((option, index) => (
                     <option key={index} value={option}> {option} </option>
                 ))}
