@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { TokenContext } from './TokenProvider';
+import { UserContext } from './UserProvider';
 
 function NewPassword() {
+
+    const { token, setToken } = useContext(TokenContext);
+    const { userId, setUserId } = useContext(UserContext);
+
     const navigate = useNavigate();
     const location = useLocation();
     const email = location.state?.email;
     const [password, setPassword] = useState('');
-    const [wrong, setWrong] = useState(false);
-    const [token, setToken] = useState();
+    const [verifyPassword, setVerifyPassword] = useState('');
 
-    const handleChange = (e) => {
+    const handleChangePassword = (e) => {
         const { value } = e.target;
         setPassword(value);
     };
 
+    const handleChangeVerifyPassword = (e) => {
+        const { value } = e.target;
+        setVerifyPassword(value);
+    };
+
     const savePassword = async (e) => {
         e.preventDefault();
+        if (password != verifyPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
         const response = await fetch(`http://localhost:3000/newpassword`, {
             method: 'POST',
             headers: {
@@ -28,11 +42,11 @@ function NewPassword() {
         });
 
         if (response.status !== 200) {
-            setWrong(true);
+            alert('Failed to save password!')
         } else {
-            const token = await response.json();
-            setToken(token.token);
-            console.log(token.token);
+            const {token, user_Id} = await response.json();
+            setToken(token);
+            setUserId(user_Id);
             localStorage.setItem("currentUser", email);
             localStorage.setItem("token", token.token);
             navigate(`/home`, { state: token });
@@ -44,14 +58,13 @@ function NewPassword() {
             <form onSubmit={savePassword}>
 
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" name='password' onChange={handleChange} />
+                <input type="password" id="password" name='password' onChange={handleChangePassword} />
 
                 <label htmlFor="verifyPassword">Verify Password</label>
-                <input type="password" id="verifyPassword" name='verifyPassword' onChange={handleChange} />
+                <input type="password" id="verifyPassword" name='verifyPassword' onChange={handleChangeVerifyPassword} />
 
                 <button type="submit" className="submit-button">Save</button>
             </form>
-            {wrong && <p>Failed to save password!</p>}
         </div>
     );
 }

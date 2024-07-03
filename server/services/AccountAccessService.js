@@ -160,7 +160,7 @@ class AccountAccessService {
                 issuer: 'my-api',
                 subject: userId.toString(),
             })
-            return { token };
+            return { token, user_Id : userId};
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()

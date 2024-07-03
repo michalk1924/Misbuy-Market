@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from './UserProvider';
 import { TokenContext } from './TokenProvider';
+import { addToWishList } from '../functions';
 import '../style/itemDetails.css'
 function ItemDetails() {
 
@@ -30,27 +31,6 @@ function ItemDetails() {
     }
   }
 
-
-  async function addToWishList(event) {
-    event.stopPropagation();
-    try {
-      const url = `http://localhost:3000/api/users/${userId}/update-wishlist`;
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Authorization': token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ itemId: itemId })
-      });
-      if (response.ok)
-        alert("Item added to wishlist");
-    }
-    catch (error) {
-      alret("Error adding item to wishlist");
-    }
-  }
-
   useEffect(() => {
     getItem(itemId)
   }, [itemId]);
@@ -58,7 +38,8 @@ function ItemDetails() {
   return (
     <div className="details-container">
       <div className="info-container">
-        <FontAwesomeIcon icon={faHeart} className='icon' title="Add to Wish List" onClick={addToWishList} />
+        <FontAwesomeIcon icon={faHeart} className='icon' title="Add to Wish List"
+          onClick={(event) => addToWishList(event, userId, item._id, token)}  />
         <p><strong>Category:</strong> {item && item.category}</p>
         <p><strong>Type:</strong> {item && item.type}</p>
         {item.size && <p><strong>Size:</strong> {item && item.size}</p>}

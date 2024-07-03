@@ -78,8 +78,8 @@ class SignInController {
             if (!password) {
                 throw new BadRequestException("new password not found");
             }
-            const token = await this.service.newPassword(email, password);
-            return res.status(200).json(token);
+            const {token, user_Id} = await this.service.newPassword(email, password);
+            return res.status(200).json({token, user_Id});
         } catch (error) {
             if (!error instanceof Exception)
                 error = new InternalServerException()

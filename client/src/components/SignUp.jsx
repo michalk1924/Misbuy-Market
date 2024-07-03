@@ -15,6 +15,8 @@ function SignUp() {
   const [worng, setWorng] = useState(false);
   const [worngExists, setWorngExists] = useState(false);
 
+  const areas = ["Jerusalem", "Tel Aviv", "Haifa", "Rishon LeZion", "Petah Tikva", "Ashdod", "Netanya", "Beer Sheva", "Holon", "Bnei Brak", "Bat Yam", "Ramat Gan", "Ashkelon", "Herzliya", "Kfar Saba", "Modiin", "Nahariya", "Beit Shemesh", "Nazareth", "Tiberias", "Eilat", "Acre", "Lod", "Ra'anana", "Hadera", "Kiryat Gat", "Betar Illit", "Hod HaSharon", "Rosh HaAyin", "Qiryat Ata"];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -62,9 +64,8 @@ function SignUp() {
 
         <label htmlFor="area">Area</label>
         <select id="area" name="area" onChange={handleChange}>
-          <option value="jerusalem">jerusalem</option>
-          <option value="TLV">TLV</option>
-          <option value="Elad">Elad</option>
+          {areas.map(area => 
+          <option value={area}>{area}</option>)}
         </select>
 
         <label htmlFor="password">Password</label>
