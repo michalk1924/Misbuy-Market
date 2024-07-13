@@ -11,6 +11,8 @@ const accountAccessRouter = require('./routers/AccountAccess');
 const allItemsRouter = require('./routers/AllItemsRouter');
 const usersRouter = require('./routers/UsersRouter');
 
+const specialController = require('./controllers/SpecialController');
+
 const server = express();
 const host = process.env.HOST;
 const port = process.env.PORT;
@@ -36,6 +38,16 @@ server.use('/', accountAccessRouter);
 server.get('/', (req, res) => {
     res.send('main page!');
 });
+
+process.on('SIGINT', async () => {
+    await specialController.close();
+    process.exit(0);
+  });
+  
+  process.on('SIGTERM', async () => {
+    await specialController.close();
+    process.exit(0);
+  });
 
 server.listen(port, () => {
     console.log(`listening to requests at http://${host}:${port}`);

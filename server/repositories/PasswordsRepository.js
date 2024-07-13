@@ -1,9 +1,8 @@
-require('dotenv').config();
-const { MongoClient, ObjectId } = require('mongodb');
-const url = process.env.MONGODB_URL;
-const client = new MongoClient(url);
-const { BadRequestException, NotFoundException, Exception } = require('../Exception');
-const db_name = process.env.MONGODB_DB_NAME;
+
+const { connect } = require('./connectMongoDB');
+const { BadRequestException } = require('../Exception');
+const { ObjectId } = require('mongodb');
+
 
 class UsersRepository {
 
@@ -12,8 +11,7 @@ class UsersRepository {
     }
     async getByUserId(id) {
         try {
-            await client.connect();
-            const database = client.db(db_name);
+            const database = await connect();
             let user = await database.collection(this.collection).findOne({"userId": id});
             return user;
         }
@@ -21,15 +19,11 @@ class UsersRepository {
             error = new BadRequestException("Repository Error: " + error.message);
             throw error;
         }
-        finally {
-            await client.close();
-        }
     }
     
     async insert(data) {
         try {
-            await client.connect();
-            const database = client.db(db_name);
+            const database = await connect();
             const result = await database.collection(this.collection).insertOne(data);
             console.log("res Id:"+ result.insertedId);
             return result.insertedId;
@@ -38,24 +32,17 @@ class UsersRepository {
             error = new BadRequestException("Repository Error: " + error.message);
             throw error;
         }
-        finally {
-            await client.close();
-        }
     }
 
     async update(userId, data) {
         try {
-            await client.connect();
-            const database = client.db(db_name);
+            const database = await connect();
             const result = await database.collection(this.collection).updateOne({ "userId": userId }, { $set: data });
             return result;
         }
         catch (error) {
             error = new BadRequestException("Repository Error: " + error.message);
             throw error;
-        }
-        finally {
-            await client.close();
         }
     }
 

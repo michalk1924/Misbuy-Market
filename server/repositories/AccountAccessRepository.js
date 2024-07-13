@@ -1,10 +1,5 @@
 
-const { NotFoundException, BadRequestException, ConflictException } = require('../Exception');
-
-const { MongoClient, ObjectId } = require('mongodb');
-const url = process.env.MONGODB_URL;
-const client = new MongoClient(url);
-const db_name = process.env.MONGODB_DB_NAME;
+const { NotFoundException, ConflictException } = require('../Exception');
 
 const usersRepository = require('../repositories/UsersRepository');
 
