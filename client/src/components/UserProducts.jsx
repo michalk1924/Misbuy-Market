@@ -18,8 +18,10 @@ function UserProducts() {
     const [adDetails, setAdDetails] = useState(null);
 
     useEffect(() => {
-        getUserProducts();
-    }, []);
+        if (userId && token) {
+            getUserProducts();
+        }
+      }, [userId, token]);
 
     async function getUserProducts() {
         setLoading(true)

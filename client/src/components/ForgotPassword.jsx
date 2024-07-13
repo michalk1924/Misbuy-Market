@@ -35,6 +35,7 @@ function ForgotPassword() {
     return (
         <div className="container">
             <form onSubmit={checkCode}>
+                <h4>enter the code you get in your email</h4>
                 <label htmlFor="code">Code</label>
                 <input type="text" id="code" name="code" value={code} onChange={handleChange} />
                 <button type="submit" className="submit-button">Submit</button>

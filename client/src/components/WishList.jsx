@@ -11,10 +11,14 @@ function WishList() {
   const [wishList, setWishList] = useState([]);
 
   useEffect(() => {
-    getWishList();
-  }, []);
+    if (userId && token) {
+      getWishList();
+    }
+  }, [userId, token]);
 
   async function getWishList() {
+    console.log(userId);
+    console.log(token);
     const url = `http://localhost:3000/api/users/${userId}/wishlist`;
     const response = await fetch(url, {
       headers: {

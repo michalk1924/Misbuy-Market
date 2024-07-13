@@ -111,7 +111,6 @@ class AccountAccessService {
         }
     }
 
-
     async checkCodeFromEmail(email, code) {
         try {
             const data = await fs.promises.readFile('./files/codes.txt', 'utf8');

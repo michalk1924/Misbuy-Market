@@ -13,17 +13,6 @@ export const TokenProvider = ({ children }) => {
         }
     }, [])
 
-    useEffect(() => {
-        return () => {
-            window.addEventListener("beforeunload", function (e) {
-                localStorage.setItem("token", null)
-                let confirmationMessage = "o/";
-                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                return confirmationMessage
-            });
-        }
-    });
-
     return (
         <TokenContext.Provider value={{ token, setToken }}>
             {children}
