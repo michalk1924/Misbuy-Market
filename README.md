@@ -52,4 +52,7 @@ npm start
 Once both the server and the client are running, you can access the application at http://localhost:3000.
 
 
+## Contributors
 
+- Michal Kastner ([@michalk1924](https://github.com/michalk1924))
+- Yoni Stern ([@Yoni4517](https://github.com/Yoni4517))
