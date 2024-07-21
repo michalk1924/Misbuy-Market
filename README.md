@@ -28,7 +28,7 @@ The project is designed to demonstrate modern web development technologies with 
 - [Node.js](https://nodejs.org/) version 14 or higher.
 - [MongoDB](https://www.mongodb.com/) version 4.4 or higher.
 
-## Installation and Running
+### Installation and Running
 
 ## 1. Clone the Repository
 git clone https://github.com/michalk1924/Misbuy-Market.git
