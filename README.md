@@ -28,26 +28,26 @@ The project is designed to demonstrate modern web development technologies with 
 - [Node.js](https://nodejs.org/) version 14 or higher.
 - [MongoDB](https://www.mongodb.com/) version 4.4 or higher.
 
-## Installation and Running
+### Installation and Running
 
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/michalk1924/Misbuy-Market.git
 cd Misbuy-Market
 
-### 2. Install Dependencies
+## 2. Install Dependencies
 cd client
 npm install
 cd ../server
 npm install
 
-### 3.  Set Up Environment Variables
+## 3.  Set Up Environment Variables
 Create a .env file in the server directory with the following variables:
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 
-### 4. Start the Server and Frontend
+## 4. Start the Server and Frontend
 cd server
 npm start
 cd ../client
