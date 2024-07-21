@@ -1,11 +1,5 @@
 # Misbuy-Market
 
-## Contributors
-
-- Michal Kastner ([@michalk1924](https://github.com/michalk1924))
-- Yoni Stern ([@Yoni4517](https://github.com/Yoni4517))
-
-## 
 **Misbuy-Market** is an e-commerce project built with React and Node.js that allows users to browse, search, and filter products, add items to a shopping cart, and make online purchases.
 The project is designed to demonstrate modern web development technologies with an advanced user interface and data management features.
 
@@ -54,3 +48,7 @@ npm start
 
 ### 5. Access the Application
 Once both the server and the client are running, you can access the application at http://localhost:3000.
+
+## Contributors
+- Michal Kastner ([@michalk1924](https://github.com/michalk1924))
+- Yoni Stern ([@Yoni4517](https://github.com/Yoni4517))
