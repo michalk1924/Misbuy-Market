@@ -31,8 +31,6 @@ The project is designed to demonstrate modern web development technologies with 
 ## Installation and Running
 
 ## 1. Clone the Repository
-
-```bash
 git clone https://github.com/michalk1924/Misbuy-Market.git
 cd Misbuy-Market
 
